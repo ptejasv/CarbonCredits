@@ -11,6 +11,7 @@ import Storage from "./components/storage/storage";
 import History from "./components/history/history";
 import { CONTRACT_ABI, CONTRACT_ADDRESS } from "./contracts/config";
 import Market from "./components/Marketplace/Market";
+import Sell from "./components/sell/sell";
 
 export default function App() {
     const [haveMetamask, setHaveMetamask] = useState(true);     // check if the browser has MetaMask installed. 
@@ -345,6 +346,16 @@ const purchaseList = async () => {
         )
     }
 
+    const SellDisplay = () => {
+        return (
+            <Sell 
+                isConnected = {isConnected}
+                // recordList = {marketRecord}
+                // recordLen = {marketlistLen}
+            />
+        )
+    }
+
 
     return (
         // <BrowserRouter>
@@ -355,6 +366,7 @@ const purchaseList = async () => {
                     <Route path = "/ee4032project/storage" element = {<StorageDisplay/>}></Route>
                     <Route path = "/ee4032project/history" element = {<HistoryDisplay/>}></Route>
                     <Route path = "/ee4032project/Marketplace" element = {<MarketDisplay/>}></Route>
+                    <Route path = "/ee4032project/Sell" element = {<SellDisplay/>}></Route>
                 </Routes>
             </div>
         // </BrowserRouter>s
