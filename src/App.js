@@ -107,10 +107,13 @@ export default function App() {
     }
     /// New contract functions put here 1st
     const userData = async () => {
-        const res = await contract.methods.registerUser(address).call();
+        const res = await contract.methods.registerUser(address).send();
         return res;
     }
-
+    const buyListing = async (inputVal) => {
+        const res = await contract.methods.purchaseListing(inputVal).send({from: address});
+        return res;
+    }
 
 ////// history recording. 
     const RecordOverFlow = () => {

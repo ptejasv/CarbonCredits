@@ -11,7 +11,6 @@ export default function Market(props){
         return (
             <div className = "market-menu">
                 <div className = "market-listNumber">#</div>
-                <div className = "market-listAccountID">ID</div>
                 <div className = "market-listCredits">Credits</div>
                 <div className = "market-listPrice">Price</div>
                 <div className = "market-description">Description</div>
@@ -48,7 +47,6 @@ export default function Market(props){
         return (
             <div className = "market-elementInner">
                 <div className = "market-listNumber">{curRecord.id}</div>
-                <div className = "market-listAccountID">{curRecord.address}</div>
                 <div className = "market-listCredits">{curRecord.operation}</div>
                 <div className = "market-listPrice">{curRecord.value}</div>
                 <div className = "market-description">{curRecord.cost}</div>
