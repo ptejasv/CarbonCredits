@@ -21,8 +21,6 @@ export const GlobalToolBar = () => {
             <Link to = "/ee4032project/history">History</Link>
             &nbsp;|&nbsp;
             <Link to = "/ee4032project/Marketplace">Market</Link>
-            &nbsp;|&nbsp;
-            <Link to = "/ee4032project/Purchase">Purchase</Link>
         </div>
     )
 }

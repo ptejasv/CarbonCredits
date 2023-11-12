@@ -2,11 +2,6 @@
 pragma solidity >=0.8.2 <0.9.0;
 
 contract CarbonCredits {
-    // struct User {
-    //     address payable ad;
-    //     uint creditBalance; // carbon credits balance
-    // }
-
     struct Listing {
         address owner;
         string description;
@@ -16,30 +11,20 @@ contract CarbonCredits {
 
     mapping(address => uint) public allUsers;
     Listing[] public allListings; // index = listing ID
-    // User[] public allUsers;
-    uint public defaultCredits = 10;
+    uint public defaultCredits = 100;
     bool public locked = false;
 
     event CreditsListed(uint id, address owner, uint quantity, uint price);
     event CreditsPurchased(uint id, address purchaser, address owner, uint quantity, uint price);
-    event CreditsDeleted(uint id, address owner);
+    // event CreditsDeleted(uint id, address owner);
 
     constructor (uint _defaultCredits) {
         defaultCredits = _defaultCredits;
     }
 
-    modifier validCredits(uint creditAmount) {
-        require(creditAmount > 0, "Credits amount cannot be less than 0.");
-        _;
-    }
-
     modifier newUser() {
         require(allUsers[msg.sender] == 0, "User already registered");
         _;
-    }
-
-    function registerUser(uint creditAmount) newUser validCredits(creditAmount) public {
-        allUsers[msg.sender] = creditAmount;
     }
 
     function registerUser() newUser public {
@@ -82,12 +67,12 @@ contract CarbonCredits {
         return allListings[id];
     }
 
-    function deleteListing(uint id) public validId(id) {
+    function deleteListing(uint id) private validId(id) {
         for (uint i = id; i < allListings.length - 1; i++) {
             allListings[i] = allListings[i + 1];
         }
         allListings.pop();
-        emit CreditsDeleted(id, msg.sender);
+        // emit CreditsDeleted(id, msg.sender);
     }
 
     modifier noReentrancy() {
@@ -98,14 +83,14 @@ contract CarbonCredits {
         locked = false;
     }
 
-    modifier noSelfBuy(uint id) {
-        require(allListings[id].owner != msg.sender, "Cannot purchase your own listing.");
-        _;
-    }
+    // modifier noSelfBuy(uint id) {
+    //     require(allListings[id].owner != msg.sender, "Cannot purchase your own listing.");
+    //     _;
+    // }
 
-    function purchaseListing(uint id) public noReentrancy noSelfBuy(id) validId(id) returns (bool) {
+    function purchaseListing(uint id) public noReentrancy validId(id) returns (bool) {
         (bool sent, bytes memory data) = allListings[id].owner.call{value: allListings[id].price}(""); // send ether to listing owner
-        allUsers[msg.sender] = allUsers[msg.sender] + allListings[id].price; // transfer credit to purchaser
+        allUsers[msg.sender] = allUsers[msg.sender] + allListings[id].price; // transfer credits to purchaser
         allUsers[allListings[id].owner] = allUsers[allListings[id].owner] - allListings[id].price; // deduct credits from owner
 
         emit CreditsPurchased(id, msg.sender, allListings[id].owner, allListings[id].quanitity, allListings[id].price);

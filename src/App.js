@@ -11,7 +11,6 @@ import Storage from "./components/storage/storage";
 import History from "./components/history/history";
 import { CONTRACT_ABI, CONTRACT_ADDRESS } from "./contracts/config";
 import Market from "./components/Marketplace/Market";
-import Purchase from "./components/Purchase/Purchase";
 
 export default function App() {
     const [haveMetamask, setHaveMetamask] = useState(true);     // check if the browser has MetaMask installed. 
@@ -208,7 +207,7 @@ export default function App() {
 
 //////////////////// new functions.//////////////////////////
 
-////// history recording. 
+////// Market Listing. 
 const MarketListing = () => {
     if (recordLen > maxRecordLen){
         let outlierNum = recordLen - maxRecordLen;
@@ -269,8 +268,29 @@ const ListPush = (opr, val, detail) => {
     }
 }
 
+const purchaseList = async () => {
+    const inputVal = document.getElementById('inputVal').value;
+    setListPending(false);
+    setListDone(false);
 
-
+    if (inputVal.length === 0) {
+        const detail = 'null';
+        RecordPush('store', inputVal, detail);
+    }
+    else {
+        setListPending(true);
+        setStoredVal(inputVal);
+        
+        try{
+            const detail = await storeData(inputVal);   // contract deployed. 
+            RecordPush('store', inputVal, detail);      // recorded. 
+        }
+        catch(err){
+            const detail = 'null';                      // no detail info. 
+            RecordPush('store', inputVal, detail);      // recorded. 
+        }
+    }
+}
   
 ////// display functions. 
     const ProfileDisplay = () => {
@@ -317,6 +337,7 @@ const ListPush = (opr, val, detail) => {
         )
     }
 
+
     return (
         // <BrowserRouter>
             <div className="App">
@@ -326,7 +347,6 @@ const ListPush = (opr, val, detail) => {
                     <Route path = "/ee4032project/storage" element = {<StorageDisplay/>}></Route>
                     <Route path = "/ee4032project/history" element = {<HistoryDisplay/>}></Route>
                     <Route path = "/ee4032project/Marketplace" element = {<MarketDisplay/>}></Route>
-                    <Route path = "/ee4032project/Purchase" element = {<Purchase/>}></Route>
                 </Routes>
             </div>
         // </BrowserRouter>s

@@ -114,7 +114,16 @@ export default function Market(props){
                         <ListUnitDisplay index = {10}/>
                     </div>
                 </div>
-    
+            <h4 style={ {color: "red"}}>Please ensure that the ID is correct before purchasing.
+            </h4>
+            <p>            
+                Please type in the Listing you would like to Purchase.
+            </p>
+                <input width = "5px" type = "number" id = "inputIDVal"></input>
+                <br />
+                <button className = "btn" onClick = {props.buyHandle}> 
+                    Purchase This ID
+                </button>
                 <GlobalToolBar/>
             </div>
         )
