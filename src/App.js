@@ -105,6 +105,11 @@ export default function App() {
         const res = await contract.methods.get().call();
         return res;
     }
+    /// New contract functions put here 1st
+    const userData = async () => {
+        const res = await contract.methods.registerUser(address).call();
+        return res;
+    }
 
 
 ////// history recording. 
