@@ -19,27 +19,6 @@ export default function Market(props){
         )
     }
 
-    const RecordStatusDisplay = (propsStatus) => {
-        const curRecord = propsStatus.record;
-
-        if (curRecord.status === 1){
-            return (
-                <div className = "market-approved">A</div>
-            );
-        }
-        else{
-            if (curRecord.status === 0){
-                return (
-                    <div className = "market-invalid">I</div>
-                );
-            }
-            else{
-                return (
-                    <div className = "market-rejected">R</div>
-                );
-            }
-        }
-    }
 
     const RecordDisplay = (propsDisplay) => {
         const curRecord = propsDisplay.record;
@@ -50,9 +29,7 @@ export default function Market(props){
                 <div className = "market-listCredits">{curRecord.operation}</div>
                 <div className = "market-listPrice">{curRecord.value}</div>
                 <div className = "market-description">{curRecord.cost}</div>
-                <div className = "market-listOwner">
-                    <RecordStatusDisplay record = {curRecord}/>
-                </div>
+                <div className = "market-listOwner">{curRecord.address}</div>
             </div>
         )
     }
@@ -121,6 +98,9 @@ export default function Market(props){
                 <br />
                 <button className = "btn" onClick = {props.buyHandle}> 
                     Purchase This ID
+                </button>
+                <button className = "btn" onClick = {props.showMarketHandle}> 
+                    Refresh
                 </button>
                 <GlobalToolBar/>
             </div>

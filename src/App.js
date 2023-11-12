@@ -274,19 +274,21 @@ const purchaseList = async () => {
     const inputList = document.getElementById('inputList');
     setListPending(false);
     setListDone(false);
-
-    if (inputList.length === 0) {
-        <h3>You did not select anything</h3>
-    }
-    else {
-        setListPending(true);
-        try{
-            const detail = await buyListing(inputList);   // contract deployed. 
+    try{
+        if (inputList.length == 0) {
+            <h3>You did not select anything</h3>
         }
-        catch(err){
-            const detail = 'null';                      // no detail info.  
+        else {
+            setListPending(true);
+            try{
+                const detail = await buyListing(inputList);   // contract deployed. 
+            }
+            catch(err){
+                const detail = 'null';                      // no detail info.  
+            }
         }
     }
+    catch(err){}
 }
   
 const showMarket = async () => {
