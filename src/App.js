@@ -122,6 +122,11 @@ export default function App() {
         return res;
     }
 
+    const showMarketList = async () => {
+        const res = await contract.methods.viewListings().call();
+        return res;
+    }
+
 ////// history recording. 
     const RecordOverFlow = () => {
         if (recordLen > maxRecordLen){
@@ -231,7 +236,7 @@ const MarketListing = () => {
     }
 }
 
-const ListPush = (opr, val, detail) => {
+const ListPush = (cred, prc, descrp) => {
     let stat = 1;
     let cost = 0;
     if (val.length === 0){
@@ -264,11 +269,10 @@ const ListPush = (opr, val, detail) => {
 
     const newRecord = {
         id: recordLen + 1, 
+        credit: cred,  
+        price: prc, 
+        description: descrp, 
         address: address, 
-        operation: opr, 
-        value: val, 
-        cost: cost, 
-        status: stat
     };
     if (recordLen === 0){
         setMarketRecord([newRecord, newRecord]);
@@ -289,24 +293,26 @@ const purchaseList = async () => {
     setListDone(false);
 
     if (inputVal.length === 0) {
-        const detail = 'null';
-        RecordPush('store', inputVal, detail);
+        <h3>You did not select anything</h3>
     }
     else {
         setListPending(true);
-        setStoredVal(inputVal);
-        
         try{
-            const detail = await storeData(inputVal);   // contract deployed. 
-            RecordPush('store', inputVal, detail);      // recorded. 
+            const detail = await buyListing(inputVal);   // contract deployed. 
         }
         catch(err){
-            const detail = 'null';                      // no detail info. 
-            RecordPush('store', inputVal, detail);      // recorded. 
+            const detail = 'null';                      // no detail info.  
         }
     }
 }
   
+const showMarket = async () => {
+    const ans = await showMarketList();
+    setShowVal(ans);
+    ListPush(ans);
+}
+
+
 ////// display functions. 
     const ProfileDisplay = () => {
         return (
@@ -349,6 +355,7 @@ const purchaseList = async () => {
                 isConnected = {isConnected}
                 recordList = {marketRecord}
                 recordLen = {marketlistLen}
+                showMarketHandle = {showMarket} 
                 buyHandle ={purchaseList}
             />
         )
@@ -358,7 +365,7 @@ const purchaseList = async () => {
         return (
             <Sell 
                 isConnected = {isConnected}
-                //recordList = {marketRecord}
+                recordmarketList = {marketRecord}
                 //recordLen = {marketlistLen}
             />
         )
