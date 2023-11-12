@@ -106,6 +106,7 @@ export default function App() {
         const res = await contract.methods.get().call();
         return res;
     }
+
     /// New contract functions put here 1st
     const userData = async () => {
         const res = await contract.methods.registerUser(address).send();
@@ -342,20 +343,20 @@ const purchaseList = async () => {
                 isConnected = {isConnected}
                 recordList = {marketRecord}
                 recordLen = {marketlistLen}
+                buyHandle ={purchaseList}
             />
         )
     }
 
     const SellDisplay = () => {
         return (
-            <Sell 
+            <Market 
                 isConnected = {isConnected}
-                // recordList = {marketRecord}
-                // recordLen = {marketlistLen}
+                //recordList = {marketRecord}
+                //recordLen = {marketlistLen}
             />
         )
     }
-
 
     return (
         // <BrowserRouter>
@@ -366,7 +367,7 @@ const purchaseList = async () => {
                     <Route path = "/ee4032project/storage" element = {<StorageDisplay/>}></Route>
                     <Route path = "/ee4032project/history" element = {<HistoryDisplay/>}></Route>
                     <Route path = "/ee4032project/Marketplace" element = {<MarketDisplay/>}></Route>
-                    <Route path = "/ee4032project/Sell" element = {<SellDisplay/>}></Route>
+                    <Route path = "/ee4032project/sell" element = {<SellDisplay/>}></Route>
                 </Routes>
             </div>
         // </BrowserRouter>s
