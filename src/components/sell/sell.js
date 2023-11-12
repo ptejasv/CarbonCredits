@@ -94,7 +94,7 @@ export default function Sell(props){
     // Price of credits in eth 
     const SellTitle = () => {
         return (
-            <div className="sellTitle"> <h1>Sell your credits!😊 </h1>
+            <div className="sellTitle"> <h1>Sell your 🌳!😊 </h1>
             
             </div>
         )
@@ -103,7 +103,7 @@ export default function Sell(props){
     const PriceInput = () => {
         return (
             <div className="priceInputContainer">
-                <p>Price:</p>
+                <p>Price 💎 (eth):</p>
                 <input style={{ marginLeft: '5px', borderRadius: '5px' }} type="number" id="inputIDVal" />
             </div>
         );
@@ -118,7 +118,7 @@ export default function Sell(props){
                     <div className = "sell-menuFramework">
                         {/* <hr color = "black" width = "100%"/> */}
                    
-                        <p> Credits to sell 🌳: </p>   
+                        <p> 🌳 to sell: </p>   
                         <input type = "number" id = "inputIDVal"></input>
                                    
                         <PriceInput/>  
