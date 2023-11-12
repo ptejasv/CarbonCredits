@@ -6,17 +6,17 @@ import { GlobalToolBar } from "../../global";
 
 export default function Sell(props){
 
-    const SellMenu = () => {
-        return (
-            <div className = "sell-menu">
-                {/* <div className = "listNumber">#</div> */}
-                {/* <div className = "listAccount">Account 😀 </div> */}
-                <div className = "listCredit">Credits 🌳 </div>
-                <div className = "listDescription">Description 💬 </div>
-                <div className = "listPrice">Price </div>
-            </div>
-        )
-    }
+    // const SellMenu = () => {
+    //     return (
+    //         <div className = "sell-menu">
+    //             {/* <div className = "listNumber">#</div> */}
+    //             {/* <div className = "listAccount">Account 😀 </div> */}
+    //             <div className = "listCredit">Credits 🌳 </div>
+    //             <div className = "listDescription">Description 💬 </div>
+    //             <div className = "listPrice">Price </div>
+    //         </div>
+    //     )
+    // }
 
     // const RecordStatusDisplay = (propsStatus) => {
     //     const curRecord = propsStatus.record;
@@ -58,27 +58,89 @@ export default function Sell(props){
     //     )
     // }
 
+    // Amount of Credits to Sell
+    const InputCredits = () => {
+        return(
+
+            <div className = "sellCredit">
+                <input width = "5px" type = "number" id = "inputIDVal"></input>
+            </div>
+
+        )
+    }
+
+    const InputDescription = () => {
+        return(
+
+            <div className = "sellDescription">
+                <input width = "5px" type = "text" id = "inputIDVal"></input>
+            </div>
+
+        )
+    }
+
+    const InputPrice = () => {
+
+        return(
+
+            <div className = "sellPrice">
+                <input width = "5px" type = "number" id = "inputIDVal"></input>
+            </div>
+        )
+
+    }
+
+    // Description of listing 
+    // Price of credits in eth 
+    const SellTitle = () => {
+        return (
+            <div className="sellTitle"> <h1>Sell your credits!😊 </h1>
+            
+            </div>
+        )
+    }
+
+    const PriceInput = () => {
+        return (
+            <div className="priceInputContainer">
+                <p>Price:</p>
+                <input style={{ marginLeft: '5px', borderRadius: '5px' }} type="number" id="inputIDVal" />
+            </div>
+        );
+    }
+
+
     const SellPage = () => {
         return (
             <div className = "sell-background">
                 <div className = "sell-menu">
-                    <h1>Make a Listing!😊 </h1>
+                    <SellTitle/>
                     <div className = "sell-menuFramework">
-                        <hr color = "black" width = "100%"/>
+                        {/* <hr color = "black" width = "100%"/> */}
                    
-                        <p> Please enter the A, B and C you would like to sell. </p>         
-                        <input width = "5px" type = "number" id = "inputIDVal"></input>
-                        <input width = "5px" type = "number" id = "inputIDVal"></input>
-                        <input width = "5px" type = "flaot" id = "inputIDVal"></input>
+                        <p> Credits to sell 🌳: </p>   
+                        <input type = "number" id = "inputIDVal"></input>
+                                   
+                        <PriceInput/>  
+                        
+                        <p> Description:</p>   
+                        <textarea 
+                            rows="5" 
+                            cols="50" 
+                            id="inputIDVal" 
+                            style={{ borderRadius: '20px', padding: '8px' }}
+                        />                       
                         <br />
-
-                        <button className = "btn" onClick = {props.buyHandle}> 
-                            Publish Listing
+                        <button 
+                            className = "btn" 
+                            onClick = {props.buyHandle}
+                            style={
+                                { backgroundColor: 'green', borderRadius: '8px', padding: '10px' }
+                            }
+                        >
+                            List now
                             
                         </button>
-
-                        <hr color = "black" width = "100%"/>
-
                     </div>
                 </div>
 
