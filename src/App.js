@@ -19,7 +19,6 @@ export default function App() {
     const [network, setNetwork] = useState(null);               // network the account is using. 
     const [balance, setBalance] = useState(0);                  // balance of connected MetaMask account. 
     const [isConnected, setIsConnected] = useState(false);      // check if is connected to MetaMask account. 
-
     const [storedPending, setStoredPending] = useState(false);        // check if a value is pending. 
     const [storedDone, setStoredDone] = useState(false);        // check if a value is stored. 
     // eslint-disable-next-line
@@ -86,6 +85,7 @@ export default function App() {
             setAddress(accounts[0]);
             setBalance(bal);
             setIsConnected(true);
+            
 
             navigate('/ee4032project/profile');
         }
@@ -114,6 +114,11 @@ export default function App() {
     }
     const buyListing = async (inputVal) => {
         const res = await contract.methods.purchaseListing(inputVal).send({from: address});
+        return res;
+    }
+
+    const getCCBalance = async () => {
+        const res = await contract.methods.getUserCredits().call();
         return res;
     }
 
@@ -310,6 +315,7 @@ const purchaseList = async () => {
                 address = {address} 
                 networkType = {network} 
                 balance = {balance}
+                carbonCredits = {getCCBalance}
             />
         )
     }

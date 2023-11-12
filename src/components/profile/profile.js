@@ -27,7 +27,12 @@ export default function Profile(props){
                         <br/>
                         Balance:&nbsp;
                         <span className = "global-message">{props.balance}</span>
-                        &nbsp;ETH
+                        &nbsp;ETH 
+                        <br/>
+
+                        🌳:&nbsp;
+                        <span className = "global-message">{props.carbonCredits}</span>
+                        
                     </p>
                 </div>
             </div>
