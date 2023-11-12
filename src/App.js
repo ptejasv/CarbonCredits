@@ -112,13 +112,18 @@ export default function App() {
         const res = await contract.methods.registerUser(address).send();
         return res;
     }
-    const buyListing = async (inputVal) => {
-        const res = await contract.methods.purchaseListing(inputVal).send({from: address});
+    const buyListing = async (inputList) => {
+        const res = await contract.methods.purchaseListing(inputList).send({from: address});
         return res;
     }
 
     const getCCBalance = async () => {
         const res = await contract.methods.getUserCredits().call();
+        return res;
+    }
+
+    const showMarketList = async () => {
+        const res = await contract.methods.viewListings().call();
         return res;
     }
 
@@ -231,44 +236,16 @@ const MarketListing = () => {
     }
 }
 
-const ListPush = (opr, val, detail) => {
-    let stat = 1;
-    let cost = 0;
-    if (val.length === 0){
-        val = 'NA';
-        cost = 'NA';
-        stat = 0;
-    }
-    else{
-        if (opr === 'get'){
-            cost = 0;
-            stat = 1;
-        }
-        else{
-            if (detail === 'null'){
-                setListPending(false);
-                setListDone(true);
-                console.log('Rejected');
-                cost = 'NA';
-                stat = 2;
-            }
-            else{
-                setListDone(true);
-                console.log('Done');
-                console.log(detail);    // show the details of transaction. 
-                cost = detail.gasUsed;
-                stat = 1;
-            }
-        }
-    }
+const ListPush = (cred, prc, descrp) => {
+    setListDone(true);
+    console.log('Done');
 
     const newRecord = {
         id: recordLen + 1, 
+        credit: cred,  
+        price: prc, 
+        description: descrp, 
         address: address, 
-        operation: opr, 
-        value: val, 
-        cost: cost, 
-        status: stat
     };
     if (recordLen === 0){
         setMarketRecord([newRecord, newRecord]);
@@ -284,29 +261,31 @@ const ListPush = (opr, val, detail) => {
 }
 
 const purchaseList = async () => {
-    const inputVal = document.getElementById('inputVal').value;
+    const inputList = document.getElementById('inputList');
     setListPending(false);
     setListDone(false);
 
-    if (inputVal.length === 0) {
-        const detail = 'null';
-        RecordPush('store', inputVal, detail);
+    if (inputList.length === 0) {
+        <h3>You did not select anything</h3>
     }
     else {
         setListPending(true);
-        setStoredVal(inputVal);
-        
         try{
-            const detail = await storeData(inputVal);   // contract deployed. 
-            RecordPush('store', inputVal, detail);      // recorded. 
+            const detail = await buyListing(inputList);   // contract deployed. 
         }
         catch(err){
-            const detail = 'null';                      // no detail info. 
-            RecordPush('store', inputVal, detail);      // recorded. 
+            const detail = 'null';                      // no detail info.  
         }
     }
 }
   
+const showMarket = async () => {
+    const ans = await showMarketList();
+    setShowVal(ans);
+    ListPush(ans);
+}
+
+
 ////// display functions. 
     const ProfileDisplay = () => {
         return (
@@ -349,6 +328,7 @@ const purchaseList = async () => {
                 isConnected = {isConnected}
                 recordList = {marketRecord}
                 recordLen = {marketlistLen}
+                showMarketHandle = {showMarket} 
                 buyHandle ={purchaseList}
             />
         )
@@ -358,6 +338,8 @@ const purchaseList = async () => {
         return (
             <Sell 
                 isConnected = {isConnected}
+                recordmarketList = {marketRecord} ///You need the equivalent of storeValHandle = {storedValUpdate}  in StorageDisplay for the button to work
+                //recordLen = {marketlistLen}
             />
         )
     }
