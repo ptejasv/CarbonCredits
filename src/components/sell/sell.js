@@ -143,49 +143,34 @@ export default function Sell(props){
     //     )
     // }
 
-
-    const SellPage = () => {
-
-        const [price, setPrice] = useState('');
-        const [credits, setCredits] = useState('');
-        const [description, setDescription] = useState('');
-    
-        const handleListNow = () => {
-            // Do something with the stored values (price, credits, description)
-            console.log('Price:', price);
-            console.log('Credits:', credits);
-            console.log('Description:', description);
-        };
-
+    const SellPage = ({sellData, updateSellData, handleSellListingNow }) => {
         return (
             <div className = "sell-background">
                 <div className = "sell-menu">
                     <SellTitle/>
                     <div className = "sell-menuFramework">
-                        {/* <hr color = "black" width = "100%"/> */}
-                   
                         <p> 🌳 to sell: </p>   
                         <input 
                             type = "number" 
-                            value={price}
-                            onChange={(e) => setPrice(e.target.value)}
+                            value={sellData.credits}
+                            onChange={(e) => updateSellData('credits', e.target.value)}
                         
                         />
                                    
-                        <PriceInput value={credits} onChange={(value) => setCredits(value)} /> 
+                        <PriceInput type = "number" value={sellData.price} onChange={(value) => updateSellData('price',value)} /> 
                         
                         <p> Description:</p>   
                         <textarea 
                             rows="5" 
                             cols="50" 
-                            value={description}
-                            onChange={(e) => setDescription(e.target.value)}
+                            value={sellData.description}
+                            onChange={(e) => updateSellData('description', e.target.value)}
                             style={{ borderRadius: '20px', padding: '8px' }}
                         />                       
                         <br />
                         <button 
                             className = "btn" 
-                            onClick = {handleListNow}
+                            onClick = {() => handleSellListingNow(sellData)}
                             style={
                                 { backgroundColor: 'green', borderRadius: '8px', padding: '10px' }
                             }

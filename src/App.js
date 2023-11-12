@@ -29,11 +29,17 @@ export default function App() {
     const [recordLen, setRecordLen] = useState(0);              // length of record. 
     const maxRecordLen = 50;                                    // maximum length of record list. 
 
-    const [marketRecord, setMarketRecord] = useState(null);   // record of market.
+    const [marketRecord, setMarketRecord] = useState(null);       // record of market.
     const [marketlistLen, setListLen] = useState(0);              // length of record.
-    const maxListLen = 50;                                    // maximum length of record list. 
+    const maxListLen = 50;                                        // maximum length of record list. 
     const [listPending, setListPending] = useState(false);        // check if a value is pending. 
-    const [listDone, setListDone] = useState(false);        // check if a value is stored.
+    const [listDone, setListDone] = useState(false);              // check if a value is stored.
+
+    // Sell.js
+    const [price, setPrice] = useState(0);                     // Selling Price
+    const [credits, setCredits] = useState(0);                 // Amount of credits to be sold
+    const [description, setDescription] = useState('');        // Description of listing
+    const [sellData, setSellData] = useState({ price: 0, credits: 0, description: '',}); 
 
     const navigate = useNavigate();
     const {ethereum} = window;
@@ -126,6 +132,8 @@ export default function App() {
         const res = await contract.methods.viewListings().call();
         return res;
     }
+
+
 
 ////// history recording. 
     const RecordOverFlow = () => {
@@ -224,6 +232,8 @@ export default function App() {
         RecordPush('get', ans);
     }
 
+    
+
 
 //////////////////// new functions.//////////////////////////
 
@@ -285,6 +295,34 @@ const showMarket = async () => {
     ListPush(ans);
 }
 
+////// Sell functions
+
+const handleSellListingNow = (sellData) => {
+    // Do something with sellData from Sell.js in App.js
+    console.log('Sell Data in App:', sellData);
+};
+
+const updateSellData = (updatedFields) => {
+    setSellData((prevSellData) => ({
+        ...prevSellData,
+        ...updatedFields,
+    }));
+};
+
+// Publish sell listing to blockchain 
+const publishtoBC = async (sellData) => {
+    const res = await contract.methods.makeListing(
+        sellData.description,
+        sellData.credits,
+        sellData.price
+        ).send({from: address});
+    return res;
+}
+
+
+// Add new listing to total number of 
+
+
 
 ////// display functions. 
     const ProfileDisplay = () => {
@@ -340,6 +378,7 @@ const showMarket = async () => {
                 isConnected = {isConnected}
                 recordmarketList = {marketRecord} ///You need the equivalent of storeValHandle = {storedValUpdate}  in StorageDisplay for the button to work
                 //recordLen = {marketlistLen}
+                
             />
         )
     }
