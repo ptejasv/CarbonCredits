@@ -358,8 +358,6 @@ const purchaseList = async () => {
         return (
             <Sell 
                 isConnected = {isConnected}
-                //recordList = {marketRecord}
-                //recordLen = {marketlistLen}
             />
         )
     }

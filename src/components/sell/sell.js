@@ -3,6 +3,7 @@ import { Navigate } from "react-router-dom";
 import "./sell.css";
 import "../../global.css";
 import { GlobalToolBar } from "../../global";   
+import React, { useState } from 'react';
 
 export default function Sell(props){
 
@@ -109,8 +110,53 @@ export default function Sell(props){
         );
     }
 
+    // const StoreSellValues = () => {
+    //     return (
+    //         <div>
+    //             Input price in eth:
+    //             <br />
+    //             <input width = "30px" type = "number" id = "inputVal"></input>
+    //             <br />
+    //             <div className = "storage-storeBox">
+    //                 <button className = "btn" onClick = {props.storedPrice}>
+    //                     store
+    //                 </button>
+    //                 {
+    //                     props.storedPending ?
+    //                     <span>
+    //                         {
+    //                             props.storedDone ?
+    //                             <span>Done! </span>:
+    //                             <span>Pending... </span>
+    //                         }
+    //                     </span> : 
+    //                     <span>
+    //                         {
+    //                             props.storedDone ?
+    //                             <span>Rejected! </span>:
+    //                             <span>Please try again. </span>
+    //                         }
+    //                     </span>
+    //                 }
+    //             </div>
+    //         </div>
+    //     )
+    // }
+
 
     const SellPage = () => {
+
+        const [price, setPrice] = useState('');
+        const [credits, setCredits] = useState('');
+        const [description, setDescription] = useState('');
+    
+        const handleListNow = () => {
+            // Do something with the stored values (price, credits, description)
+            console.log('Price:', price);
+            console.log('Credits:', credits);
+            console.log('Description:', description);
+        };
+
         return (
             <div className = "sell-background">
                 <div className = "sell-menu">
@@ -119,21 +165,27 @@ export default function Sell(props){
                         {/* <hr color = "black" width = "100%"/> */}
                    
                         <p> 🌳 to sell: </p>   
-                        <input type = "number" id = "inputIDVal"></input>
+                        <input 
+                            type = "number" 
+                            value={price}
+                            onChange={(e) => setPrice(e.target.value)}
+                        
+                        />
                                    
-                        <PriceInput/>  
+                        <PriceInput value={credits} onChange={(value) => setCredits(value)} /> 
                         
                         <p> Description:</p>   
                         <textarea 
                             rows="5" 
                             cols="50" 
-                            id="inputIDVal" 
+                            value={description}
+                            onChange={(e) => setDescription(e.target.value)}
                             style={{ borderRadius: '20px', padding: '8px' }}
                         />                       
                         <br />
                         <button 
                             className = "btn" 
-                            onClick = {props.buyHandle}
+                            onClick = {handleListNow}
                             style={
                                 { backgroundColor: 'green', borderRadius: '8px', padding: '10px' }
                             }
