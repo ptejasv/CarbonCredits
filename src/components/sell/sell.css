@@ -1,0 +1,90 @@
+@import "../../global.css";
+
+.sell-menu { 
+    width: 100%;
+    flex-direction: column;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.makesellListing{
+    font-size:100%;
+    text-align: center;
+    background-color: var(--BackgroundUncovered);
+    width: 80%;
+    flex-direction: column;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    padding-top: 50px;
+    padding-bottom: 50px;
+}
+
+/* .listNumber { 
+    font-size: 20px;
+    width: 5%;
+    text-align: center;
+    color: var(--MessageColorUncovered);
+    background-color: var(--BackgroundMasked);
+} */
+
+.sellAccount{ 
+
+    text-align: center;
+    width: 100%;
+    flex-direction: column;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+}
+
+.sellCredit{ 
+
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    
+}
+
+.sellDescription{ 
+
+    width: 100%;
+    display: flex;
+    padding-top: 5px;
+    align-items: center;
+    justify-content: center;
+    padding-left: 50px;
+    padding-right: 50px;
+}
+
+.sellPrice{
+    width: 100%;
+    display: flex;
+    padding-top: 5px;
+    align-items: center;
+    justify-content: center;
+}
+
+.sell-background{
+    text-align: center;
+    background-color: var(--BackgroundUncovered);
+    min-height: 100vh;
+    width: 100%;
+    flex-direction: column;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.sell-menuFramework{
+    font-family: Basel, sans-serif;
+    width: 100%;
+    flex-direction: column;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
