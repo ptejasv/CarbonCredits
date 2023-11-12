@@ -10,6 +10,8 @@ import Profile from "./components/profile/profile";
 import Storage from "./components/storage/storage";
 import History from "./components/history/history";
 import { CONTRACT_ABI, CONTRACT_ADDRESS } from "./contracts/config";
+import Market from "./components/Marketplace/Market";
+import Purchase from "./components/Purchase/Purchase";
 
 export default function App() {
     const [haveMetamask, setHaveMetamask] = useState(true);     // check if the browser has MetaMask installed. 
@@ -20,12 +22,19 @@ export default function App() {
 
     const [storedPending, setStoredPending] = useState(false);        // check if a value is pending. 
     const [storedDone, setStoredDone] = useState(false);        // check if a value is stored. 
+    // eslint-disable-next-line
     const [storedVal, setStoredVal] = useState(0);              // value that is stored right now. 
     const [showVal, setShowVal] = useState(0);                  // value that is showed on screen. 
 
     const [historyRecord, setHistoryRecord] = useState(null);   // record of history operations. 
     const [recordLen, setRecordLen] = useState(0);              // length of record. 
     const maxRecordLen = 50;                                    // maximum length of record list. 
+
+    const [marketRecord, setMarketRecord] = useState(null);   // record of market.
+    const [marketlistLen, setListLen] = useState(0);              // length of record.
+    const maxListLen = 50;                                    // maximum length of record list. 
+    const [listPending, setListPending] = useState(false);        // check if a value is pending. 
+    const [listDone, setListDone] = useState(false);        // check if a value is stored.
 
     const navigate = useNavigate();
     const {ethereum} = window;
@@ -45,6 +54,7 @@ export default function App() {
     // }, []);
 
 ////// connect to MetaMask. 
+
     const connectWallet = async () => {         // function that connect to METAMASK account, activated when clicking on 'connect'. 
         try {
             if (!ethereum){
@@ -159,6 +169,7 @@ export default function App() {
         }
     }
 
+    
 
 ////// store and get value. 
     const storedValUpdate = async () => {
@@ -195,6 +206,72 @@ export default function App() {
     }
 
 
+//////////////////// new functions.//////////////////////////
+
+////// history recording. 
+const MarketListing = () => {
+    if (recordLen > maxRecordLen){
+        let outlierNum = recordLen - maxRecordLen;
+        setMarketRecord(current => current.splice(1, outlierNum));
+        setListLen(maxListLen);
+    }
+}
+
+const ListPush = (opr, val, detail) => {
+    let stat = 1;
+    let cost = 0;
+    if (val.length === 0){
+        val = 'NA';
+        cost = 'NA';
+        stat = 0;
+    }
+    else{
+        if (opr === 'get'){
+            cost = 0;
+            stat = 1;
+        }
+        else{
+            if (detail === 'null'){
+                setListPending(false);
+                setListDone(true);
+                console.log('Rejected');
+                cost = 'NA';
+                stat = 2;
+            }
+            else{
+                setListDone(true);
+                console.log('Done');
+                console.log(detail);    // show the details of transaction. 
+                cost = detail.gasUsed;
+                stat = 1;
+            }
+        }
+    }
+
+    const newRecord = {
+        id: recordLen + 1, 
+        address: address, 
+        operation: opr, 
+        value: val, 
+        cost: cost, 
+        status: stat
+    };
+    if (recordLen === 0){
+        setMarketRecord([newRecord, newRecord]);
+    }
+    else{
+        setMarketRecord(current => [...current, newRecord]);
+    }
+    setListLen(recordLen + 1);
+
+    if (recordLen > maxRecordLen){
+        MarketListing();
+    }
+}
+
+
+
+  
 ////// display functions. 
     const ProfileDisplay = () => {
         return (
@@ -230,6 +307,15 @@ export default function App() {
         )
     }
 
+    const MarketDisplay = () => {
+        return (
+            <Market 
+                isConnected = {isConnected}
+                recordList = {marketRecord}
+                recordLen = {marketlistLen}
+            />
+        )
+    }
 
     return (
         // <BrowserRouter>
@@ -239,9 +325,11 @@ export default function App() {
                     <Route path = "/ee4032project/profile" element = {<ProfileDisplay/>}></Route>
                     <Route path = "/ee4032project/storage" element = {<StorageDisplay/>}></Route>
                     <Route path = "/ee4032project/history" element = {<HistoryDisplay/>}></Route>
+                    <Route path = "/ee4032project/Marketplace" element = {<MarketDisplay/>}></Route>
+                    <Route path = "/ee4032project/Purchase" element = {<Purchase/>}></Route>
                 </Routes>
             </div>
-        // </BrowserRouter>
+        // </BrowserRouter>s
     );
 }
 

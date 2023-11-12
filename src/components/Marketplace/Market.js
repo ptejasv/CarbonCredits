@@ -1,21 +1,21 @@
 import { Navigate } from "react-router-dom";
 
-import "./history.css";
+import "./Market.css";
 import "../../global.css";
 import { GlobalToolBar } from "../../global";
 
-export default function History(props){
+export default function Market(props){
     const displayNum = 10;
 
     const Menu = () => {
         return (
-            <div className = "history-menu">
-                <div className = "history-listNumber">#</div>
-                <div className = "history-listAccount">Account</div>
-                <div className = "history-listOperation">Operation</div>
-                <div className = "history-listValue">Value</div>
-                <div className = "history-listCost">Gas used (units)</div>
-                <div className = "history-listMenuStatus">Status</div>
+            <div className = "market-menu">
+                <div className = "market-listNumber">#</div>
+                <div className = "market-listAccountID">ID</div>
+                <div className = "market-listCredits">Credits</div>
+                <div className = "market-listPrice">Price</div>
+                <div className = "market-description">Description</div>
+                <div className = "market-listOwner">Owner</div>
             </div>
         )
     }
@@ -25,18 +25,18 @@ export default function History(props){
 
         if (curRecord.status === 1){
             return (
-                <div className = "history-approved">A</div>
+                <div className = "market-approved">A</div>
             );
         }
         else{
             if (curRecord.status === 0){
                 return (
-                    <div className = "history-invalid">I</div>
+                    <div className = "market-invalid">I</div>
                 );
             }
             else{
                 return (
-                    <div className = "history-rejected">R</div>
+                    <div className = "market-rejected">R</div>
                 );
             }
         }
@@ -46,13 +46,13 @@ export default function History(props){
         const curRecord = propsDisplay.record;
         // const recordNum = props.recordLen - curRecord.id;
         return (
-            <div className = "history-elementInner">
-                <div className = "history-listNumber">{curRecord.id}</div>
-                <div className = "history-listAccount">{curRecord.address}</div>
-                <div className = "history-listOperation">{curRecord.operation}</div>
-                <div className = "history-listValue">{curRecord.value}</div>
-                <div className = "history-listCost">{curRecord.cost}</div>
-                <div className = "history-listStatus">
+            <div className = "market-elementInner">
+                <div className = "market-listNumber">{curRecord.id}</div>
+                <div className = "market-listAccountID">{curRecord.address}</div>
+                <div className = "market-listCredits">{curRecord.operation}</div>
+                <div className = "market-listPrice">{curRecord.value}</div>
+                <div className = "market-description">{curRecord.cost}</div>
+                <div className = "market-listOwner">
                     <RecordStatusDisplay record = {curRecord}/>
                 </div>
             </div>
@@ -63,7 +63,7 @@ export default function History(props){
         const index = propsUnit.index;
         const unitIdx = props.recordLen - displayNum + index;
         return (
-            <div className = "history-element">
+            <div className = "market-element">
                 {
                     // props.recordLen >= index ?
                     unitIdx >= 1 ?
@@ -92,12 +92,12 @@ export default function History(props){
         
     // }
 
-    const HistoryPage = () => {
+    const MarketPage = () => {
         return (
-            <div className = "history-background">
-                <div className = "history">
-                    <h1>History of Operations</h1>
-                    <div className = "history-menuFramework">
+            <div className = "market-background">
+                <div className = "market">
+                    <h1>Market Listing</h1>
+                    <div className = "market-menuFramework">
                         <hr color = "black" width = "100%"/>
                         <Menu />
                         <hr color = "black" width = "100%"/>
@@ -124,7 +124,7 @@ export default function History(props){
         <div>
             {
                 props.isConnected ?
-                <HistoryPage />:
+                <MarketPage />:
                 <Navigate to = '/ee4032project' />
             }
         </div>
