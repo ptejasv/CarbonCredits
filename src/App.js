@@ -350,7 +350,7 @@ const purchaseList = async () => {
 
     const SellDisplay = () => {
         return (
-            <Market 
+            <Sell 
                 isConnected = {isConnected}
                 //recordList = {marketRecord}
                 //recordLen = {marketlistLen}
