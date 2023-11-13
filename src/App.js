@@ -43,7 +43,11 @@ export default function App() {
     // const [description, setDescription] = useState('');        // Description of listing
     const [sellData, setSellData] = useState({ price: 0, credits: 0, description: '',});  //price, qty and desc
     const [ListingPending, setListingPending] = useState(false);        // check if a listing is pending. 
-    const [ListingPublished, setListingPublished] = useState(false); // check if a listing is published 
+    const [ListingPublished, setListingPublished] = useState(false); // check if a listing is published
+
+    const [price, setPrice] = useState('');
+    const [credits, setQty] = useState('');
+    const [description, setDescription] = useState('');
     
 
     // MyListings.js
@@ -51,7 +55,7 @@ export default function App() {
     const [MyListingsLen, setMyListingsLen] = useState(0);              // length of record.
     const maxMyListingsLen = 50;                                        // maximum length of My Listings list to be displayed 
     const [MyListingsPending, setMyListingsPending] = useState(false);        // check if a value is pending. 
-    const [MyListingsDone, setMyListingsDone] = useState(false);              // check if a value is stored.
+    const [MyListingsDone, setMyListingsDone] = useState([]);              // check if a value is stored.
 
     const navigate = useNavigate();
     const {ethereum} = window;
@@ -151,11 +155,11 @@ export default function App() {
         return res;
     }
 
-    // Remove a user's listings from BC
-    const removeMyListing = async (listingID) => {
-        const res = await contract.methods.deleteListings(listingID).send({from:address});
-        return res;
-    }
+    // // Remove a user's listings from BC
+    // const removeMyListing = async (listingID) => {
+    //     const res = await contract.methods.deleteListings(listingID).send({from:address});
+    //     return res;
+    // }
 
 
 ////// history recording. 
@@ -321,44 +325,66 @@ const showMarket = async () => {
 }
 
 ////////////////////////// Sell functions////////////////////////////////////////////////////////////////////////////////////////////////////////
-
+const handleSell = () => {
+    // Pass the values to the child component using onSell prop
+    publishMyListingtoBC().then((result) => {
+        if (result) {
+            // Clear the input fields after successful listing creation
+            setPrice('');
+            setCredit('');
+            setDescription('');
+        }
+    });
+};
 
 // Publish sell listing to blockchain 
-const publishtoBC = async (sellData) => {
-    const res = await contract.methods.makeListing(
-        sellData.description,
-        sellData.credits,
-        sellData.price
-        ).send({from: address});
-    return res;
+const publishMyListingtoBC = async () => {
+
+    // Perform smart contract interaction here
+    const listingID = await contract.methods.makeListing(description, credits, price).send({from: address});
+
+    // Get new listing from BC
+    const newListing = await contract.methods.viewListingsDetails(listingID).call();
+
+    // Assuming the result includes the new listing
+    const newListingWithID = {listingID, 'description': newListing[2], 'credits': newListing[1], 'price':newListing[0]};
+    
+    // Update the listings state with the new listing
+    MyListingsRecord((prevListings) => [...prevListings, newListingWithID]);
+
+    // Return true or any confirmation if needed
+    return true;
 }
+
+
+
 
 
 ////// My listings
 /// Remove a listing and refresh the page
-const MyListingUpdate = async () => {
-    const inputID = document.getElementById('inputID').value;
-    setMyListingsPending(false);
-    setMyListingsDone(false);
+// const MyListingUpdate = async () => {
+//     const inputID = document.getElementById('inputID').value;
+//     setMyListingsPending(false);
+//     setMyListingsDone(false);
 
-    if (inputID === 0) {
-        const detail = 'null';
-        RecordPush('store', inputID, detail);
-    }
-    else {
-        setMyListingsPending(true);
-        setMyListingsDone(inputID);
+//     if (inputID === 0) {
+//         const detail = 'null';
+//         RecordPush('store', inputID, detail);
+//     }
+//     else {
+//         setMyListingsPending(true);
+//         setMyListingsDone(inputID);
         
-        try{
-            const detail = await storeData(inputID);   // contract deployed. 
-            RecordPush('store', inputID, detail);      // recorded. 
-        }
-        catch(err){
-            const detail = 'null';                      // no detail info. 
-            RecordPush('store', inputID, detail);      // recorded. 
-        }
-    }
-}
+//         try{
+//             const detail = await storeData(inputID);   // contract deployed. 
+//             RecordPush('store', inputID, detail);      // recorded. 
+//         }
+//         catch(err){
+//             const detail = 'null';                      // no detail info. 
+//             RecordPush('store', inputID, detail);      // recorded. 
+//         }
+//     }
+// }
 
 const showMyListingsUpdate = async () => {
     const ans = await getMyListings();
@@ -367,22 +393,17 @@ const showMyListingsUpdate = async () => {
 }
 
 const ShowMyListings = () => {
-    if (MyListingsLen > maxMyListingsLen){
-        let outlierNum = MyListingsLen - maxMyListingsLen;
-        setMyListingsRecord(current => current.splice(1, outlierNum));
-        setMyListingsLen(maxMyListingsLen);
-    }
-}
-const handleSell = (creditValue, priceValue, descriptionValue) => {
 
-    
+    let outlierNum = MyListingsLen - maxMyListingsLen;
+    setMyListingsRecord(current => current.splice(1, outlierNum));
+    setMyListingsLen(maxMyListingsLen);
 }
 
-const AddMyNewListing = (descrp, qty, prc, ) => {
+const AddMyNewListing = (descrp, qty, prc, id ) => {
     setMyListingsDone(true);
 
     const newRecord = {
-        id: recordLen + 1, 
+        id: id, // the listing id, not index
         description: descrp,
         price: prc, 
         credit: qty,  
@@ -394,8 +415,9 @@ const AddMyNewListing = (descrp, qty, prc, ) => {
     }
     else{
         setMyListingsRecord(current => [...current, newRecord]);
+        setMyListingsLen(MyListingsLen + 1);
     }
-    setMyListingsLen(MyListingsLen + 1);
+    
 
     if (MyListingsLen > maxMyListingsLen){
         ShowMyListings();
@@ -485,6 +507,15 @@ const showMyListings = async () => {
                 isConnected = {isConnected}
                 listNowPending = {ListingPending}
                 listNowDone = {ListingPublished}
+
+                price={price}
+                qty={qty}
+                description={description}
+                onSell={handleSell}
+                setPrice={setPrice}
+                setCredits={setCredit}
+                setDescription={setDescription}
+                
                 
             />
                 
