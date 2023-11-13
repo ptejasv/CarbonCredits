@@ -143,7 +143,7 @@ export default function Sell(props){
     //     )
     // }
 
-    const SellPage = ({sellData, updateSellData, handleSellListingNow }) => {
+    const SellPage = (sellData, updateSellData, handleSellListingNow) => {
         return (
             <div className = "sell-background">
                 <div className = "sell-menu">
@@ -153,7 +153,7 @@ export default function Sell(props){
                         <input 
                             type = "number" 
                             value={sellData.credits}
-                            onChange={(e) => updateSellData('credits', e.target.value)}
+                            onChange={(e) => updateSellData('credits', e)}
                         
                         />
                                    

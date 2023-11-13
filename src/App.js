@@ -12,6 +12,7 @@ import History from "./components/history/history";
 import { CONTRACT_ABI, CONTRACT_ADDRESS } from "./contracts/config";
 import Market from "./components/Marketplace/Market";
 import Sell from "./components/sell/sell";
+import MyListings from "./components/MyListings/MyListings";
 
 export default function App() {
     const [haveMetamask, setHaveMetamask] = useState(true);     // check if the browser has MetaMask installed. 
@@ -299,19 +300,16 @@ const showMarket = async () => {
 
 ////// Sell functions
 
-const handleSellListingNow = (sellData) => {
-    // Do something with sellData from Sell.js in App.js
-    console.log('Sell Data in App:', sellData);
-};
 
 const updateSellData = (updatedFields) => {
     setSellData((prevSellData) => ({
         ...prevSellData,
         ...updatedFields,
     }));
+    return sellData
 };
 
-// Publish sell listing to blockchain 
+// Publish sell listing to BC
 const publishtoBC = async (sellData) => {
     const res = await contract.methods.makeListing(
         sellData.description,
@@ -385,6 +383,17 @@ const publishtoBC = async (sellData) => {
         )
     }
 
+    const MyListingsDisplay = () => {
+        return (
+            <MyListings 
+                isConnected = {isConnected}
+                // recordmarketList = {marketRecord} ///You need the equivalent of storeValHandle = {storedValUpdate}  in StorageDisplay for the button to work
+                //recordLen = {marketlistLen}
+                
+            />
+        )
+    }
+
     return (
         // <BrowserRouter>
             <div className="App">
@@ -395,6 +404,7 @@ const publishtoBC = async (sellData) => {
                     <Route path = "/ee4032project/history" element = {<HistoryDisplay/>}></Route>
                     <Route path = "/ee4032project/Marketplace" element = {<MarketDisplay/>}></Route>
                     <Route path = "/ee4032project/sell" element = {<SellDisplay/>}></Route>
+                    <Route path = "/ee4032project/sell" element = {<MyListingsDisplay/>}></Route>
                 </Routes>
             </div>
         // </BrowserRouter>s
