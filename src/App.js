@@ -41,12 +41,12 @@ export default function App() {
     // const [price, setPrice] = useState(0);                     // Selling Price
     // const [credits, setCredits] = useState(0);                 // Amount of credits to be sold
     // const [description, setDescription] = useState('');        // Description of listing
-    const [sellData, setSellData] = useState({ price: 0, credits: 0, description: '',});  //price, qty and desc
     const [ListingPending, setListingPending] = useState(false);        // check if a listing is pending. 
     const [ListingPublished, setListingPublished] = useState(false); // check if a listing is published
     const [price, setPrice] = useState('');
     const [credits, setCredit] = useState('');
     const [description, setDescription] = useState('');
+    
     
 
     // MyListings.js
@@ -55,6 +55,7 @@ export default function App() {
     const maxMyListingsLen = 50;                                        // maximum length of My Listings list to be displayed 
     const [MyListingsPending, setMyListingsPending] = useState(false);        // check if a value is pending. 
     const [MyListingsDone, setMyListingsDone] = useState([]);              // check if a value is stored.
+    const [ListingID, setListingsID] = useState(-1);                    // listing ID
 
     const navigate = useNavigate();
     const {ethereum} = window;
@@ -154,12 +155,6 @@ export default function App() {
         return res;
     }
 
-    // // Remove a user's listings from BC
-    // const removeMyListing = async (listingID) => {
-    //     const res = await contract.methods.deleteListings(listingID).send({from:address});
-    //     return res;
-    // }
-
 
 ////// history recording. 
     const RecordOverFlow = () => {
@@ -222,6 +217,37 @@ export default function App() {
         }
     }
 
+    // For My listing, stored inputs come from sell page
+    const storedInputs = async () => {
+        const inputElement = document.getElementById('inputVal').value;
+
+        if (!inputElement) {
+            console.error('Input element with ID "inputVal" not found in the DOM');
+            return;
+        }
+    
+        const inputVal = inputElement.value;
+        setMyListingsPending(false);
+        setMyListingsDone(false);
+
+        if (inputVal.length === 0) {
+            const detail = 'null';
+            RecordPush('store', inputVal, detail);
+        }
+        else {
+            setStoredVal(inputVal);
+            
+            try{
+                const detail = await storeData(inputVal);   // contract deployed. 
+                RecordPush('store', inputVal, detail);      // recorded. 
+            }
+            catch(err){
+                const detail = 'null';                      // no detail info. 
+                RecordPush('store', inputVal, detail);      // recorded. 
+            }
+        }
+
+    }
     
 
 ////// store and get value. 
@@ -346,9 +372,9 @@ const handleSell = () => {
 const publishMyListingtoBC = async () => {
 
     // Perform smart contract interaction here
-    const listingID = await contract.methods.makeListing(description, credits, price).send({from: address});
+    const listingID = getNewListingID();
 
-    // Get new listing from BC
+    // Get newly published listing from BC
     const newListing = await contract.methods.viewListingsDetails(listingID).call();
 
     // Assuming the result includes the new listing
@@ -361,7 +387,10 @@ const publishMyListingtoBC = async () => {
     return true;
 }
 
-
+const getNewListingID = async () => { 
+    const res = await contract.methods.makeListing(description, credits, price).send({from: address});
+    return res;
+}
 
 
 
@@ -391,12 +420,6 @@ const publishMyListingtoBC = async () => {
 //     }
 // }
 
-const showMyListingsUpdate = async () => {
-    const ans = await getMyListings();
-    setShowVal(ans);
-    RecordPush('get', ans);
-}
-
 const ShowMyListings = () => {
 
     let outlierNum = MyListingsLen - maxMyListingsLen;
@@ -408,7 +431,7 @@ const AddMyNewListing = (descrp, qty, prc, id ) => {
     setMyListingsDone(true);
 
     const newRecord = {
-        id: id, // the listing id, not index
+        id: getNewListingID(), // the listing id, not index
         description: descrp,
         price: prc, 
         credit: qty,  
@@ -451,7 +474,7 @@ const AddMyNewListing = (descrp, qty, prc, id ) => {
 //     catch(err){}
 // }
   
-const showMyListings = async () => {
+const showMyListingsUpdate = async () => {
     const ans = await getMyListings();
     setShowVal(ans);
     AddMyNewListing(ans);
@@ -474,6 +497,7 @@ const showMyListings = async () => {
         return (
             <Storage 
                 isConnected = {isConnected}
+
                 storeValHandle = {storedValUpdate} 
                 showValHandle = {showValUpdate} 
                 showVal = {showVal} 
@@ -519,6 +543,7 @@ const showMyListings = async () => {
                 setPrice={setPrice}
                 setCredits={setCredit}
                 setDescription={setDescription}
+                storeInputsHandle = {storedInputs}
                 
                 
             />

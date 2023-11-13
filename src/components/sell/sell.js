@@ -27,11 +27,10 @@ export default function Sell(props){
             <div className="creditInputContainer">
                 <p> 🌳 to sell: </p>
                 <input
-
+                    id="inputVal"
                     value = {credits}
                     type = "number" 
                     onChange={(e) => setCredits(e.target.value)}
-                    id = "inputCreditID"
 
                 /> 
             </div>
@@ -43,10 +42,10 @@ export default function Sell(props){
             <div className="priceInputContainer">
                 <p>Price 💎 (eth):</p>
                 <input 
+                    id="inputVal"
                     value={price}
                     style={{ marginLeft: '5px'}} 
                     type="text" 
-                    id="inputPriceID" 
                     onChange={(e) => setPrice(e.target.value)}
                 />
             </div>
@@ -58,12 +57,12 @@ export default function Sell(props){
             <div className="priceInputContainer">
             <p> Description:</p>
             <textarea 
+                id="inputVal"
                 value={description}
                 rows="5" 
                 cols="50" 
                 onChange={(e) => setDescription(e.target.value)}
                 style={{ padding: '8px' }}
-                id = "inputDescptID"
             />
             </div>
         );
@@ -102,21 +101,22 @@ export default function Sell(props){
     //     )
     // }
 
-    const SellPage = (props) => {
+    const SellPage = () => {
         return (
             <div className = "sell-background">
                 <div className = "sell-menu">
                     <SellTitle/>
                     <div className = "sell-menuFramework">  
 
-                        <CreditInput/>
-                        <PriceInput/>
-                        <DescriptionInput/>                 
+                        <CreditInput />
+                        <PriceInput />
+                        <DescriptionInput />                 
                         <br />
 
                         <button 
+                        
                             className = "btn" 
-                            onClick = {props.showListedHandle}
+                            onClick = {props.storeInputsHandle}
                             style={
                                 { backgroundColor: 'green', padding: '10px' }
                             }
