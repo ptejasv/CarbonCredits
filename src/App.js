@@ -44,9 +44,8 @@ export default function App() {
     const [sellData, setSellData] = useState({ price: 0, credits: 0, description: '',});  //price, qty and desc
     const [ListingPending, setListingPending] = useState(false);        // check if a listing is pending. 
     const [ListingPublished, setListingPublished] = useState(false); // check if a listing is published
-
     const [price, setPrice] = useState('');
-    const [credits, setQty] = useState('');
+    const [credits, setCredit] = useState('');
     const [description, setDescription] = useState('');
     
 
