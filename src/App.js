@@ -13,6 +13,7 @@ import { CONTRACT_ABI, CONTRACT_ADDRESS } from "./contracts/config";
 import Market from "./components/Marketplace/Market";
 import Sell from "./components/sell/sell";
 import MyListings from "./components/MyListings/MyListings";
+import { id } from "ethers/lib/utils";
 
 export default function App() {
     const [haveMetamask, setHaveMetamask] = useState(true);     // check if the browser has MetaMask installed. 
@@ -41,6 +42,13 @@ export default function App() {
     const [credits, setCredits] = useState(0);                 // Amount of credits to be sold
     const [description, setDescription] = useState('');        // Description of listing
     const [sellData, setSellData] = useState({ price: 0, credits: 0, description: '',}); 
+
+    // MyListings.js
+    const [MyListingsRecord, setMyListingsRecord] = useState(null);       // record of market.
+    const [MyListingsLen, setMyListingsLen] = useState(0);              // length of record.
+    const maxMyListingsLen = 50;                                        // maximum length of My Listings list to be displayed 
+    const [MyListingsPending, setMyListingsPending] = useState(false);        // check if a value is pending. 
+    const [MyListingsDone, setMyListingsDone] = useState(false);              // check if a value is stored.
 
     const navigate = useNavigate();
     const {ethereum} = window;
@@ -134,6 +142,17 @@ export default function App() {
         return res;
     }
 
+    // Get all of a user's listings from BC
+    const getMyListings = async () => {
+        const res = await contract.methods.viewMyListings().call();
+        return res;
+    }
+
+    // Remove a user's listings from BC
+    const removeMyListing = async (listingID) => {
+        const res = await contract.methods.deleteListings(listingID).send({from:address});
+        return res;
+    }
 
 
 ////// history recording. 
@@ -298,18 +317,10 @@ const showMarket = async () => {
     ListPush(ans);
 }
 
-////// Sell functions
+////////////////////////// Sell functions////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
-const updateSellData = (updatedFields) => {
-    setSellData((prevSellData) => ({
-        ...prevSellData,
-        ...updatedFields,
-    }));
-    return sellData
-};
-
-// Publish sell listing to BC
+// Publish sell listing to blockchain 
 const publishtoBC = async (sellData) => {
     const res = await contract.methods.makeListing(
         sellData.description,
@@ -320,9 +331,100 @@ const publishtoBC = async (sellData) => {
 }
 
 
-// Add new listing to total number of 
+////// My listings
+/// Remove a listing and refresh the page
+const MyListingUpdate = async () => {
+    const inputID = document.getElementById('inputID').value;
+    setMyListingsPending(false);
+    setMyListingsDone(false);
 
+    if (inputID === 0) {
+        const detail = 'null';
+        RecordPush('store', inputID, detail);
+    }
+    else {
+        setMyListingsPending(true);
+        setMyListingsDone(inputID);
+        
+        try{
+            const detail = await storeData(inputID);   // contract deployed. 
+            RecordPush('store', inputID, detail);      // recorded. 
+        }
+        catch(err){
+            const detail = 'null';                      // no detail info. 
+            RecordPush('store', inputID, detail);      // recorded. 
+        }
+    }
+}
 
+const showMyListingsUpdate = async () => {
+    const ans = await getData();
+    setStoredPending(false);
+    setStoredDone(false);
+
+    setShowVal(ans);
+    RecordPush('get', ans);
+}
+
+const ShowMyListings = () => {
+    if (MyListingsLen > maxMyListingsLen){
+        let outlierNum = MyListingsLen - maxMyListingsLen;
+        setMyListingsRecord(current => current.splice(1, outlierNum));
+        setMyListingsLen(maxMyListingsLen);
+    }
+}
+
+const AddMyNewListing = (cred, prc, descrp) => {
+    setMyListingsDone(true);
+    console.log('Done');
+
+    const newRecord = {
+        id: recordLen + 1, 
+        credit: cred,  
+        price: prc, 
+        description: descrp, 
+    };
+
+    if (MyListingsRecord === 0){
+        setMyListingsRecord([newRecord, newRecord]);
+    }
+    else{
+        setMyListingsRecord(current => [...current, newRecord]);
+    }
+    setMyListingsLen(MyListingsLen + 1);
+
+    if (MyListingsLen > maxMyListingsLen){
+        ShowMyListings();
+    }
+}
+
+const cancelMyListing = async () => {
+    const ListingID = document.getElementById('inputIDToRemove');
+    setMyListingsPending(false);
+    setMyListingsDone(false);
+    try{
+        if (ListingID < 0 ) {
+            <h3>You have selected invalid ID, or it has already been removed</h3>
+        }
+        else {
+            setMyListingsPending(true);
+            try{
+                const detail = await removeMyListing(ListingID);   // contract deployed.
+                setMyListingsDone(true); 
+            }
+            catch(err){
+                const detail = 'null';                      // no detail info.  
+            }
+        }
+    }
+    catch(err){}
+}
+  
+const showMyListings = async () => {
+    const ans = await getMyListings();
+    setShowVal(ans);
+    AddMyNewListing(ans);
+}
 
 ////// display functions. 
     const ProfileDisplay = () => {
@@ -376,8 +478,8 @@ const publishtoBC = async (sellData) => {
         return (
             <Sell 
                 isConnected = {isConnected}
-                recordmarketList = {marketRecord} ///You need the equivalent of storeValHandle = {storedValUpdate}  in StorageDisplay for the button to work
-                //recordLen = {marketlistLen}
+                
+                
                 
             />
         )
@@ -385,11 +487,17 @@ const publishtoBC = async (sellData) => {
 
     const MyListingsDisplay = () => {
         return (
-            <MyListings 
+
+            <MyListings  
+
                 isConnected = {isConnected}
-                // recordmarketList = {marketRecord} ///You need the equivalent of storeValHandle = {storedValUpdate}  in StorageDisplay for the button to work
+                recordMyListings = {MyListingsRecord}
+                recordMyListingsLen = {MyListingsLen}
+                showMyListingsHandle = {showMyListings} 
+                removeListingHandle = {MyListingUpdate}
+                ///You need the equivalent of storeValHandle = {storedValUpdate}  in StorageDisplay for the button to work
                 //recordLen = {marketlistLen}
-                
+
             />
         )
     }
@@ -403,8 +511,8 @@ const publishtoBC = async (sellData) => {
                     <Route path = "/ee4032project/storage" element = {<StorageDisplay/>}></Route>
                     <Route path = "/ee4032project/history" element = {<HistoryDisplay/>}></Route>
                     <Route path = "/ee4032project/Marketplace" element = {<MarketDisplay/>}></Route>
-                    <Route path = "/ee4032project/sell" element = {<SellDisplay/>}></Route>
-                    <Route path = "/ee4032project/sell" element = {<MyListingsDisplay/>}></Route>
+                    <Route path = "/ee4032project/Sell" element = {<SellDisplay/>}></Route>
+                    <Route path = "/ee4032project/MyListings" element = {<MyListingsDisplay/>}></Route>
                 </Routes>
             </div>
         // </BrowserRouter>s

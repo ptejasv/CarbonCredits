@@ -23,6 +23,8 @@ export const GlobalToolBar = () => {
             <Link to = "/ee4032project/Marketplace">Market</Link>
             &nbsp;|&nbsp;
             <Link to = "/ee4032project/Sell">Sell</Link>
+            &nbsp;|&nbsp;
+            <Link to = "/ee4032project/MyListings">My Listings</Link>
         </div>
     )
 }

@@ -1,1 +1,123 @@
 @import "../../global.css";
+
+
+.MyListings-background{
+
+    text-align: center;
+    background-color: var(--BackgroundUncovered);
+    min-height: 100vh;
+    width: 100%;
+    flex-direction: column;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+}
+
+.mylisting{
+    text-align: center;
+    background-color: var(--BackgroundUncovered);
+    width: 80%;
+    flex-direction: column;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    padding-top: 50px;
+    padding-bottom: 50px;
+}
+
+.mylisting-menuFramework{
+    width: 100%;
+    flex-direction: column;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.mylisting-menu{
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.mylist-element{
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.mylist-elementInner{
+    width: 100%;
+    display: flex;
+    padding-top: 5px;
+    align-items: center;
+    justify-content: center;
+}
+
+
+.mylistingID{
+    font-size: 20px;
+    width: 5%;
+    text-align: center;
+    color: var(--MessageColorUncovered);
+    background-color: var(--BackgroundMasked);
+}
+
+
+.mylistingCredits{
+    font-size: 20px;
+    width: 10%;
+    text-align: center;
+    color: var(--MessageColorUncovered);
+    background-color: var(--BackgroundMasked);
+}
+
+.mylistingPrice{
+    font-size: 20px;
+    width: 14%;
+    text-align: center;
+    color: var(--MessageColorUncovered);
+    background-color: var(--BackgroundMasked);
+}
+
+.mylistingDescription{
+    font-size: 20px;
+    width: 44%;
+    text-align: center;
+    color: var(--MessageColorUncovered);
+    background-color: var(--BackgroundMasked);
+}
+
+/* .market-listStatus{
+    width: 7%;
+    display: flex;
+    justify-content: right;
+    color: var(--MessageColorUncovered);
+}
+
+.market-approved{
+    font-size: 20px;
+    width: 90%;
+    text-align: center;
+    background-color: var(--ApprovedColor);
+    color: var(--ApprovedColor);
+}
+
+.market-invalid{
+    font-size: 20px;
+    width: 90%;
+    text-align: center;
+    background-color: var(--InvalidColor);
+    color: var(--InvalidColor);
+}
+
+.market-rejected{
+    font-size: 20px;
+    width: 90%;
+    text-align: center;
+    background-color: var(--RejectedColor);
+    color: var(--RejectedColor);
+} */
