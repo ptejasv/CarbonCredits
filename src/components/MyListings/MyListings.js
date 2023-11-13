@@ -35,15 +35,15 @@ export default function MyListings(props){
         )
     }
 
-    const ListUnitDisplay = (propsUnit) => {
+    const MyListingsUnitDisplay = (propsUnit) => {
         const index = propsUnit.index;
-        const unitIdx = props.recordLen - displayNum + index;
+        const unitIdx = props.recordMyListingsLen - displayNum + index;
         return (
             <div className = "market-element">
                 {
                     // props.recordLen >= index ?
                     unitIdx >= 1 ?
-                    <RecordDisplay record = {props.recordList[unitIdx]}/>:
+                    <RecordDisplay record = {props.recordMyListings[unitIdx]}/>:
                     null
                 }
             </div>
@@ -67,19 +67,19 @@ export default function MyListings(props){
                         <hr color = "black" width = "100%"/>
                         <MyListingsMenu />
                         <hr color = "black" width = "100%"/>
-                        <ListUnitDisplay index = {1}/>
-                        <ListUnitDisplay index = {2}/>
-                        <ListUnitDisplay index = {3}/>
-                        <ListUnitDisplay index = {4}/>
-                        <ListUnitDisplay index = {5}/>
-                        <ListUnitDisplay index = {6}/>
-                        <ListUnitDisplay index = {7}/>
-                        <ListUnitDisplay index = {8}/>
-                        <ListUnitDisplay index = {9}/>
-                        <ListUnitDisplay index = {10}/>
+                        <MyListingsUnitDisplay index = {1}/>
+                        <MyListingsUnitDisplay index = {2}/>
+                        <MyListingsUnitDisplay index = {3}/>
+                        <MyListingsUnitDisplay index = {4}/>
+                        <MyListingsUnitDisplay index = {5}/>
+                        <MyListingsUnitDisplay index = {6}/>
+                        <MyListingsUnitDisplay index = {7}/>
+                        <MyListingsUnitDisplay index = {8}/>
+                        <MyListingsUnitDisplay index = {9}/>
+                        <MyListingsUnitDisplay index = {10}/>
                     </div>
                 <br />
-                <h3 style={ {color: "red"}}>Please ensure that the ID is correct before removing.
+                {/* <h3 style={ {color: "red"}}>Please ensure that the ID is correct before removing.
                 </h3>
                 <p> Enter the ID of the listing you would like to remove. </p>
                 <input width = "5px" type = "number" id = "inputIDVal"></input>
@@ -90,7 +90,7 @@ export default function MyListings(props){
 
                 <button className = "btn" onClick = {props.showMyListingsHandle}> 
                     Refresh
-                </button>
+                </button> */}
 
                 <GlobalToolBar/>
             </div>

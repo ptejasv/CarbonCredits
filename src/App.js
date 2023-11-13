@@ -38,10 +38,13 @@ export default function App() {
     const [listDone, setListDone] = useState(false);              // check if a value is stored.
 
     // Sell.js
-    const [price, setPrice] = useState(0);                     // Selling Price
-    const [credits, setCredits] = useState(0);                 // Amount of credits to be sold
-    const [description, setDescription] = useState('');        // Description of listing
-    const [sellData, setSellData] = useState({ price: 0, credits: 0, description: '',}); 
+    // const [price, setPrice] = useState(0);                     // Selling Price
+    // const [credits, setCredits] = useState(0);                 // Amount of credits to be sold
+    // const [description, setDescription] = useState('');        // Description of listing
+    const [sellData, setSellData] = useState({ price: 0, credits: 0, description: '',});  //price, qty and desc
+    const [ListingPending, setListingPending] = useState(false);        // check if a listing is pending. 
+    const [ListingPublished, setListingPublished] = useState(false); // check if a listing is published 
+    
 
     // MyListings.js
     const [MyListingsRecord, setMyListingsRecord] = useState(null);       // record of market.
@@ -358,10 +361,7 @@ const MyListingUpdate = async () => {
 }
 
 const showMyListingsUpdate = async () => {
-    const ans = await getData();
-    setStoredPending(false);
-    setStoredDone(false);
-
+    const ans = await getMyListings();
     setShowVal(ans);
     RecordPush('get', ans);
 }
@@ -373,16 +373,20 @@ const ShowMyListings = () => {
         setMyListingsLen(maxMyListingsLen);
     }
 }
+const handleSell = (creditValue, priceValue, descriptionValue) => {
 
-const AddMyNewListing = (cred, prc, descrp) => {
+    
+}
+
+const AddMyNewListing = (descrp, qty, prc, ) => {
     setMyListingsDone(true);
-    console.log('Done');
 
     const newRecord = {
         id: recordLen + 1, 
-        credit: cred,  
+        description: descrp,
         price: prc, 
-        description: descrp, 
+        credit: qty,  
+        
     };
 
     if (MyListingsRecord === 0){
@@ -398,27 +402,27 @@ const AddMyNewListing = (cred, prc, descrp) => {
     }
 }
 
-const cancelMyListing = async () => {
-    const ListingID = document.getElementById('inputIDToRemove');
-    setMyListingsPending(false);
-    setMyListingsDone(false);
-    try{
-        if (ListingID < 0 ) {
-            <h3>You have selected invalid ID, or it has already been removed</h3>
-        }
-        else {
-            setMyListingsPending(true);
-            try{
-                const detail = await removeMyListing(ListingID);   // contract deployed.
-                setMyListingsDone(true); 
-            }
-            catch(err){
-                const detail = 'null';                      // no detail info.  
-            }
-        }
-    }
-    catch(err){}
-}
+// const cancelMyListing = async () => {
+//     const ListingID = document.getElementById('inputIDToRemove');
+//     setMyListingsPending(false);
+//     setMyListingsDone(false);
+//     try{
+//         if (ListingID < 0 ) {
+//             <h3>You have selected invalid ID, or it has already been removed</h3>
+//         }
+//         else {
+//             setMyListingsPending(true);
+//             try{
+//                 const detail = await removeMyListing(ListingID);   // contract deployed.
+//                 setMyListingsDone(true); 
+//             }
+//             catch(err){
+//                 const detail = 'null';                      // no detail info.  
+//             }
+//         }
+//     }
+//     catch(err){}
+// }
   
 const showMyListings = async () => {
     const ans = await getMyListings();
@@ -477,11 +481,13 @@ const showMyListings = async () => {
     const SellDisplay = () => {
         return (
             <Sell 
+            
                 isConnected = {isConnected}
-                
-                
+                listNowPending = {ListingPending}
+                listNowDone = {ListingPublished}
                 
             />
+                
         )
     }
 
@@ -493,8 +499,10 @@ const showMyListings = async () => {
                 isConnected = {isConnected}
                 recordMyListings = {MyListingsRecord}
                 recordMyListingsLen = {MyListingsLen}
-                showMyListingsHandle = {showMyListings} 
+                showMyListingsHandle = {showMyListingsUpdate} 
                 removeListingHandle = {MyListingUpdate}
+
+                
                 ///You need the equivalent of storeValHandle = {storedValUpdate}  in StorageDisplay for the button to work
                 //recordLen = {marketlistLen}
 
