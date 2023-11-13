@@ -332,7 +332,13 @@ const handleSell = () => {
             setPrice('');
             setCredit('');
             setDescription('');
+            setListingPending(true);
+            setListingPublished(true);
         }
+    })
+    .catch((error) => {
+        // Handle errors if any
+        console.error('Error in handleSell:', error);
     });
 };
 
@@ -506,9 +512,8 @@ const showMyListings = async () => {
                 isConnected = {isConnected}
                 listNowPending = {ListingPending}
                 listNowDone = {ListingPublished}
-
                 price={price}
-                qty={qty}
+                qty={credits}
                 description={description}
                 onSell={handleSell}
                 setPrice={setPrice}
@@ -530,9 +535,7 @@ const showMyListings = async () => {
                 recordMyListings = {MyListingsRecord}
                 recordMyListingsLen = {MyListingsLen}
                 showMyListingsHandle = {showMyListingsUpdate} 
-                removeListingHandle = {MyListingUpdate}
 
-                
                 ///You need the equivalent of storeValHandle = {storedValUpdate}  in StorageDisplay for the button to work
                 //recordLen = {marketlistLen}
 

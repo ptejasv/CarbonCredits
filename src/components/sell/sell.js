@@ -12,8 +12,9 @@ export default function Sell(props){
     const handleSell = () => {
         // Pass the values to the parent component using onSell prop
         onSell();
+        
     }
-
+    
     const SellTitle = () => {
         return (
             <div className="sellTitle"> <h1>Sell your 🌳!😊 </h1>
@@ -156,4 +157,5 @@ export default function Sell(props){
             }
         </div>
     );
+
 }
