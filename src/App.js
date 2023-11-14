@@ -43,9 +43,7 @@ export default function App() {
     // const [description, setDescription] = useState('');        // Description of listing
     const [ListingPending, setListingPending] = useState(false);        // check if a listing is pending. 
     const [ListingPublished, setListingPublished] = useState(false); // check if a listing is published
-    const [price, setPrice] = useState('');
-    const [credits, setCredit] = useState('');
-    const [description, setDescription] = useState('');
+    const [SellInfo, setSellInfo] = useState({price:"", credits:"", description: ""});
     
     
 
@@ -222,7 +220,7 @@ export default function App() {
         const inputElement = document.getElementById('inputVal2').value;
 
         if (!inputElement) {
-            console.error('Input element with ID "inputVal" not found in the DOM');
+            console.error('Input element with ID "inputVal2" not found in the DOM');
             return;
         }
     
@@ -350,23 +348,27 @@ const showMarket = async () => {
 }
 
 ////////////////////////// Sell functions////////////////////////////////////////////////////////////////////////////////////////////////////////
-const handleSell = () => {
-    // Pass the values to the child component using onSell prop
-    publishMyListingtoBC().then((result) => {
-        if (result) {
-            // Clear the input fields after successful listing creation
-            setPrice('');
-            setCredit('');
-            setDescription('');
-            setListingPending(true);
-            setListingPublished(true);
-        }
-    })
-    .catch((error) => {
-        // Handle errors if any
-        console.error('Error in handleSell:', error);
-    });
-};
+const onSell = () => {
+    // Pass the values to the parent component using onSell prop
+    
+}
+// const handleSell = () => {
+//     // Pass the values to the child component using onSell prop
+//     publishMyListingtoBC().then((result) => {
+//         if (result) {
+//             // Clear the input fields after successful listing creation
+//             setPrice('');
+//             setCredit('');
+//             setDescription('');
+//             setListingPending(true);
+//             setListingPublished(true);
+//         }
+//     })
+//     .catch((error) => {
+//         // Handle errors if any
+//         console.error('Error in handleSell:', error);
+//     });
+// };
 
 // Publish sell listing to blockchain 
 const publishMyListingtoBC = async () => {
@@ -536,14 +538,8 @@ const showMyListingsUpdate = async () => {
                 isConnected = {isConnected}
                 listNowPending = {ListingPending}
                 listNowDone = {ListingPublished}
-                price={price}
-                qty={credits}
-                description={description}
                 onSell={handleSell}
-                setPrice={setPrice}
-                setCredits={setCredit}
-                setDescription={setDescription}
-                storeInputsHandle = {storedInputs}
+                // storeInputsHandle = {storedInputs}
                 
                 
             />

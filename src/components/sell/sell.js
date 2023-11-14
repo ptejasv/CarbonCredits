@@ -5,14 +5,17 @@ import "../../global.css";
 import { GlobalToolBar } from "../../global";   
 import React, { useState } from 'react';
 
+const [SellInfo, setSellInfo] = useState({price:"", credits:"", description: ""});
+
 export default function Sell(props){
 
-    const { price, credits, description, onSell, setPrice, setCredits, setDescription } = props;
-
-    const handleSell = () => {
+    const onSell = (e) => {
         // Pass the values to the parent component using onSell prop
-        onSell();
-        
+        const credits = e.target.name1;
+        const description = e.target.value;
+        setSellInfo( (prev) => {
+            return {...prev, [name1]: value}
+        })        
     }
     
     const SellTitle = () => {
@@ -27,10 +30,9 @@ export default function Sell(props){
             <div className="creditInputContainer">
                 <p> 🌳 to sell: </p>
                 <input
-                    id="inputVal1"
                     value = {credits}
-                    type = "text" 
-                    onChange={(e) => setCredits(e.target.value)}
+                    type = "credits" 
+                    onChange={onSell}
 
                 /> 
             </div>
@@ -42,11 +44,10 @@ export default function Sell(props){
             <div className="priceInputContainer">
                 <p>Price 💎 (eth):</p>
                 <input 
-                    id="inputVal2"
                     value={price}
                     style={{ marginLeft: '5px'}} 
-                    type="text" 
-                    onChange={(e) => setPrice(e.target.value)}
+                    type="price" 
+                    onChange={onSell}
                 />
             </div>
         );
@@ -57,11 +58,11 @@ export default function Sell(props){
             <div className="priceInputContainer">
             <p> Description:</p>
             <textarea 
-                id="inputVal3"
                 value={description}
+                type = "description"
                 rows="5" 
                 cols="50" 
-                onChange={(e) => setDescription(e.target.value)}
+                onChange={onSell}
                 style={{ padding: '8px' }}
             />
             </div>
@@ -106,41 +107,37 @@ export default function Sell(props){
             <div className = "sell-background">
                 <div className = "sell-menu">
                     <SellTitle/>
-                    <div className = "sell-menuFramework">  
-
-                        <CreditInput />
-                        <PriceInput />
-                        <DescriptionInput />                 
-                        <br />
-
-                        <button 
-                        
-                            className = "btn" 
-                            onClick = {props.storeInputsHandle}
-                            style={
-                                { backgroundColor: 'green', padding: '10px' }
-                            }
-                        >
-                            List now    
-                        </button>
-                        {
-                        props.listNowPending ?
-                        <span>
-                            {
-                                props.listNowDone ?
-                                <span>Pending... </span>:
-                                <span>Done! </span>
-                            }
-                        </span> : 
-                        <span>
-                            {
-                                props.listNowDone ?
-                                <span>Rejected! </span>:
-                                <span>Please try again. </span>
-                            }
-                        </span>
-                        }    
-                    </div>
+                        <div className = "sell-menuFramework">  
+                            <form> 
+                                <CreditInput />
+                                <PriceInput />
+                                <DescriptionInput />          
+                                <br />
+                                <button 
+                                    className = "btn" 
+                                    type = "ListNow"
+                                    >
+                                    List now    
+                                </button>
+                                    {/* {
+                                    props.listNowPending ?
+                                    <span>
+                                        {
+                                            props.listNowDone ?
+                                            <span>Pending... </span>:
+                                            <span>Done! </span>
+                                        }
+                                    </span> : 
+                                    <span>
+                                        {
+                                            props.listNowDone ?
+                                            <span>Rejected! </span>:
+                                            <span>Please try again. </span>
+                                        }
+                                    </span>
+                                    } */}
+                            </form>    
+                        </div>
                 </div>
 
                 <GlobalToolBar/>
