@@ -5,18 +5,24 @@ import "../../global.css";
 import { GlobalToolBar } from "../../global";   
 import React, { useState } from 'react';
 
-const [SellInfo, setSellInfo] = useState({price:"", credits:"", description: ""});
 
 export default function Sell(props){
 
-    const onSell = (e) => {
-        // Pass the values to the parent component using onSell prop
-        const credits = e.target.name1;
-        const description = e.target.value;
-        setSellInfo( (prev) => {
-            return {...prev, [name1]: value}
-        })        
-    }
+    // const [SellInfo, setSellInfo] = useState({
+    //     price:"", 
+    //     credits: "", 
+    //     description: "",
+    // });
+
+    // const onSell = (e) => {
+    //     // Pass the values to the parent component using onSell prop
+    //     const {name,value} = e.target;
+    //     setSellInfo((prev) => {
+    //         return {...prev, [name]: value}
+    //     });        
+    // };
+
+   
     
     const SellTitle = () => {
         return (
@@ -25,29 +31,29 @@ export default function Sell(props){
         )
     }
 
-    const CreditInput = () => {
-        return (
-            <div className="creditInputContainer">
-                <p> 🌳 to sell: </p>
-                <input
-                    value = {credits}
-                    type = "credits" 
-                    onChange={onSell}
-
-                /> 
-            </div>
-        );
-    }
+    // const CreditInput = () => {
+    //     return (
+    //         <div className="creditInputContainer">
+    //             <p> 🌳 to sell: </p>
+    //             <input
+    //                 // id = 'credits'
+    //                 // value = {SellInfo[1]}
+    //                 type = "credits" 
+    //                 name = "credits"
+    //                 onChange={onSell}
+    //             /> 
+    //         </div>
+    //     );
+    // }
 
     const PriceInput = () => {
         return (
             <div className="priceInputContainer">
                 <p>Price 💎 (eth):</p>
                 <input 
-                    value={price}
-                    style={{ marginLeft: '5px'}} 
+                    id = 'price'
+                    // value={SellInfo[0]}
                     type="price" 
-                    onChange={onSell}
                 />
             </div>
         );
@@ -58,12 +64,11 @@ export default function Sell(props){
             <div className="priceInputContainer">
             <p> Description:</p>
             <textarea 
-                value={description}
+                id = 'description'
+                // value={SellInfo[2]}
                 type = "description"
                 rows="5" 
                 cols="50" 
-                onChange={onSell}
-                style={{ padding: '8px' }}
             />
             </div>
         );
@@ -108,35 +113,13 @@ export default function Sell(props){
                 <div className = "sell-menu">
                     <SellTitle/>
                         <div className = "sell-menuFramework">  
-                            <form> 
-                                <CreditInput />
-                                <PriceInput />
-                                <DescriptionInput />          
-                                <br />
-                                <button 
-                                    className = "btn" 
-                                    type = "ListNow"
-                                    >
-                                    List now    
-                                </button>
-                                    {/* {
-                                    props.listNowPending ?
-                                    <span>
-                                        {
-                                            props.listNowDone ?
-                                            <span>Pending... </span>:
-                                            <span>Done! </span>
-                                        }
-                                    </span> : 
-                                    <span>
-                                        {
-                                            props.listNowDone ?
-                                            <span>Rejected! </span>:
-                                            <span>Please try again. </span>
-                                        }
-                                    </span>
-                                    } */}
-                            </form>    
+                            {/* <form>  */}
+                                <p>🌳 to sell:</p>      <input type= "credits"  id = 'cred' name= "credits" onChange= {props.handleSell} /> 
+                                <p> Price 💎 (eth):</p> <input type="price" id = 'prc' name= "price" onChange= {props.handleSell} />
+                                <p> Description:</p>     <textarea type= "description" id = 'desc' name= "description" onChange= {props.handleSell}> </textarea>
+                                <br></br>
+                                <button type= "ListNow" onClick={props.makeListingHandle}> List now </button>         
+                            {/* </form>     */}
                         </div>
                 </div>
 

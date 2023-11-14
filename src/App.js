@@ -41,7 +41,7 @@ export default function App() {
     // const [description, setDescription] = useState('');        // Description of listing
     const [ListingPending, setListingPending] = useState(false);        // check if a listing is pending. 
     const [ListingPublished, setListingPublished] = useState(false); // check if a listing is published
-    const [SellInfo, setSellInfo] = useState({price:"", credits:"", description: ""});
+    const [SellInfo, setSellInfo] = useState({price:"", credits:"", description: "",});
     
     
 
@@ -58,7 +58,7 @@ export default function App() {
     const provider = new ethers.providers.Web3Provider(window.ethereum);
     const web3 = new Web3(Web3.givenProvider || "http://localhost:8545");
     const contract = new web3.eth.Contract(CONTRACT_ABI, CONTRACT_ADDRESS);
-
+    
     // useEffect(() => {
     //     const { ethereum } = window;
     //     const checkMetamaskAvailability = async () => {
@@ -345,40 +345,33 @@ const showMarket = async () => {
 }
 
 ////////////////////////// Sell functions////////////////////////////////////////////////////////////////////////////////////////////////////////
-const onSell = () => {
+const onSell = (e) => {
     // Pass the values to the parent component using onSell prop
+    const {name,value} = e.target;
+    setSellInfo((prev) => {
+        return {...prev, [name]: value}
+    });       
     
+};
+console.log(SellInfo); 
+
+const getNewListingID = async (description, credits, price) => { 
+    const res = await contract.methods.makeListing(description, credits, price).send({from: address});
+    return res;
 }
-// const handleSell = () => {
-//     // Pass the values to the child component using onSell prop
-//     publishMyListingtoBC().then((result) => {
-//         if (result) {
-//             // Clear the input fields after successful listing creation
-//             setPrice('');
-//             setCredit('');
-//             setDescription('');
-//             setListingPending(true);
-//             setListingPublished(true);
-//         }
-//     })
-//     .catch((error) => {
-//         // Handle errors if any
-//         console.error('Error in handleSell:', error);
-//     });
-// };
 
 // Publish sell listing to blockchain 
 const publishMyListingtoBC = async () => {
 
-    // Perform smart contract interaction here
-    const listingID = getNewListingID();
+    // publish to bc, Get id back
+    const listingID = getNewListingID(SellInfo[2], SellInfo[1], SellInfo[0]);
 
     // Get newly published listing from BC
-    const newListing = await contract.methods.viewListingsDetails(listingID).call();
+    const newListing = await contract.methods.viewListingDetails(listingID).call();
 
     // Assuming the result includes the new listing 
     const newListingWithID = {listingID, 'description': newListing[2], 'credits': newListing[1], 'price':newListing[0]};
-    
+
     // Update the listings state with the new listing
     MyListingsRecord((prevListings) => [...prevListings, newListingWithID]);
 
@@ -386,10 +379,7 @@ const publishMyListingtoBC = async () => {
     return true;
 }
 
-const getNewListingID = async () => { 
-    const res = await contract.methods.makeListing(description, credits, price).send({from: address});
-    return res;
-}
+
 
 
 
@@ -511,10 +501,10 @@ const showMyListingsUpdate = async () => {
                 isConnected = {isConnected}
                 listNowPending = {ListingPending}
                 listNowDone = {ListingPublished}
-                onSell={handleSell}
+                handleSell={onSell}
+                makeListingHandle={publishMyListingtoBC}
                 // storeInputsHandle = {storedInputs}
-                
-                
+            
             />
                 
         )
