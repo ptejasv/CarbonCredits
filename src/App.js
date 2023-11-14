@@ -7,8 +7,6 @@ import Web3 from "web3";
 import './App.css';
 import Login from "./components/login/login";
 import Profile from "./components/profile/profile";
-import Storage from "./components/storage/storage";
-import History from "./components/history/history";
 import { CONTRACT_ABI, CONTRACT_ADDRESS } from "./contracts/config";
 import Market from "./components/Marketplace/Market";
 import Sell from "./components/sell/sell";
@@ -145,8 +143,8 @@ export default function App() {
     }
 
     const showMarketList = async () => {
-        const res = await contract.methods.viewListings().call();
-        return res;
+        const res = await contract.methods.viewListings(recordLen).call();
+        return res
     }
 
     // Get all of a user's listings from BC
@@ -298,12 +296,12 @@ const MarketListing = () => {
     }
 }
 
-const ListPush = (cred, prc, descrp) => {
+const ListPush = (id, cred, prc, descrp) => {
     setListDone(true);
     console.log('Done');
 
     const newRecord = {
-        id: recordLen + 1, 
+        id: id, 
         credit: cred,  
         price: prc, 
         description: descrp, 
@@ -345,7 +343,6 @@ const purchaseList = async () => {
   
 const showMarket = async () => {
     const ans = await showMarketList();
-    setShowVal(ans);
     ListPush(ans);
 }
 
@@ -493,30 +490,6 @@ const showMyListingsUpdate = async () => {
         )
     }
 
-    const StorageDisplay = () => {
-        return (
-            <Storage 
-                isConnected = {isConnected}
-
-                storeValHandle = {storedValUpdate} 
-                showValHandle = {showValUpdate} 
-                showVal = {showVal} 
-                storedPending = {storedPending}
-                storedDone = {storedDone}
-            />
-        )
-    }
-
-    const HistoryDisplay = () => {
-        return (
-            <History 
-                isConnected = {isConnected}
-                recordList = {historyRecord}
-                recordLen = {recordLen}
-            />
-        )
-    }
-
     const MarketDisplay = () => {
         return (
             <Market 
@@ -574,8 +547,6 @@ const showMyListingsUpdate = async () => {
                 <Routes>
                     <Route path = "/ee4032project" element = {<Login isHaveMetamask = {haveMetamask} connectTo = {connectWallet} />}></Route>
                     <Route path = "/ee4032project/profile" element = {<ProfileDisplay/>}></Route>
-                    <Route path = "/ee4032project/storage" element = {<StorageDisplay/>}></Route>
-                    <Route path = "/ee4032project/history" element = {<HistoryDisplay/>}></Route>
                     <Route path = "/ee4032project/Marketplace" element = {<MarketDisplay/>}></Route>
                     <Route path = "/ee4032project/Sell" element = {<SellDisplay/>}></Route>
                     <Route path = "/ee4032project/MyListings" element = {<MyListingsDisplay/>}></Route>

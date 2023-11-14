@@ -72,6 +72,7 @@ export default function Market(props){
             <div className = "market-background">
                 <div className = "market">
                     <h1>Market Listing</h1>
+                    {props.showVal}
                     <div className = "market-menuFramework">
                         <hr color = "black" width = "100%"/>
                         <Menu />
