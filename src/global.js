@@ -9,6 +9,8 @@ export const HighlightColor = 'yellow';
 export const LinkColor = '#61dafb';
 export const TopbarColor = '#61dafb';
 
+
+
 export const GlobalToolBar = () => {
     return (
         <div className = "global-toolbar">
