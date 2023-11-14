@@ -6,18 +6,8 @@ import "./market.css";
 import "../../global.css";
 import { GlobalToolBar } from "../../global";
 
-export default function Market(props){
-    const [len, setLen] = useState(0);
-
-    useEffect(() => {
-        loadData();
-     }, []);
-
-    function loadData() {
-        props.showHistory()
-        setLen(props.recordList.length)
-    }
-
+export default function History(props){
+    
     const Menu = () => {
         return (
             <div className = "history-menu">
@@ -49,11 +39,11 @@ export default function Market(props){
     }
 
     const ListUnitDisplay = (propsUnit) => {
-        const unitIdx = propsUnit.index - 1;
+        const unitIdx = propsUnit.index;
         return (
             <div className = "history-element">
                 {
-                    (unitIdx >= 0) && (unitIdx < len) ?
+                    (unitIdx >= 0) && (unitIdx < props.marketRecordLen) ?
                     <RecordDisplay record = {props.recordList[unitIdx]}/>:
                     null
                 }
@@ -64,13 +54,16 @@ export default function Market(props){
 
     const MarketPage = () => {
         const rows = []
-        for (let i = 0; i <= len; i++) {
+        for (let i = 0; i < props.marketRecordLen; i++) {
             rows.push(<ListUnitDisplay index = {i}/>)
         }
         return (
             <div className = "history-background">
                 <div className = "history">
                     <h1>Carbon Credits Market</h1> 
+                    <button className = "refresh-market" onClick = {() => props.showHistory()}>
+                        Refresh
+                    </button>
                     <div className = "history-menuFramework">
                         <hr color = "black" width = "100%"/>
                         <Menu />

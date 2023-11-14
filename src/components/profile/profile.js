@@ -8,18 +8,7 @@ import { GlobalToolBar } from "../../global";
 import METAMASK from '../../images/METAMASK.png';
 
 export default function Profile(props){
-    const [len, setLen] = useState(0);
-
-    useEffect(() => {
-        loadData();
-     }, []);
-
-    function loadData() {
-        props.showCredits()
-        props.showListings()
-        setLen(props.allUserListings.length)
-    } 
-
+    
     const Menu = () => {
         return (
             <div className = "history-menu">
@@ -50,7 +39,7 @@ export default function Profile(props){
         return (
             <div className = "history-element">
                 {
-                    (unitIdx >= 0) && (unitIdx < len) ?
+                    (unitIdx >= 0) && (unitIdx < props.userListingsLen) ?
                     <RecordDisplay record = {props.allUserListings[unitIdx]}/>:
                     null
                 }
@@ -60,7 +49,7 @@ export default function Profile(props){
 
     const ProfilePage = () => {
         const rows = []
-        for (let i = 0; i <= len; i++) {
+        for (let i = 0; i <= props.userListingsLen; i++) {
             rows.push(<ListUnitDisplay index = {i}/>)
         }
         return (
@@ -86,6 +75,9 @@ export default function Profile(props){
             </div>
             <div className = "history">
                     <h1>Your Listings</h1> 
+                    <button className = "refresh-profile" onClick = {() => props.showListings()}>
+                        Refresh
+                    </button>
                     <div className = "history-menuFramework">
                         <hr color = "black" width = "100%"/>
                         <Menu />
