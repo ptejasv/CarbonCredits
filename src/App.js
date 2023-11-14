@@ -86,12 +86,15 @@ export default function App() {
         setCreditBalance(credits)
     }
 
-    const buyListing = async (listingID, listingPrice) => {
+    const buyListing = async (listingID, listingOwner, listingPrice) => {
         try {
-            await contract.methods.purchaseListing(listingID).send({from: address})
+            await contract.methods.purchaseListing(listingID).send({from: address, value: listingPrice * 10000000000000000})
         }
         catch(err) {
             setErrorMsg("Failed to buy listing. Please check that you have sufficient SepoliaETH.")
+            setTimeout(function(){
+                setErrorMsg("");
+           },5000);
         }
     }
 

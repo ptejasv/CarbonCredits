@@ -28,7 +28,7 @@ export default function Market(props){
                 <div className = "market-listOperation">{curRecord[2]}</div>
                 <div className = "market-listValue">{curRecord[3]}</div>
                 <div className = "market-listCost">{curRecord[0].slice(0, 6)}...</div>
-                <div className = "market-listValue"><button className = "btn" onClick = {() => props.buyHandle(curRecord[4], curRecord[3])}>
+                <div className = "market-listValue"><button className = "btn" onClick = {() => props.buyHandle(curRecord[4], curRecord[0], curRecord[3])}>
                     Buy
                 </button></div>
             </div>
