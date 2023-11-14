@@ -33,6 +33,7 @@ export default function History(props){
 
     const RecordDisplay = (propsDisplay) => {
         const curRecord = propsDisplay.record;
+        // const recordNum = props.recordLen - curRecord.id;
         return (
             <div className = "history-elementInner">
                 <div className = "history-listNumber">{curRecord[4]}</div>
@@ -56,6 +57,7 @@ export default function History(props){
                     <RecordDisplay record = {props.recordList[unitIdx]}/>:
                     null
                 }
+            
             </div>
         )
     }
@@ -76,7 +78,6 @@ export default function History(props){
                         {rows}
                     </div>
                 </div>
-    
                 <GlobalToolBar/>
             </div>
         )
