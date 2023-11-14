@@ -281,8 +281,8 @@ export default function App() {
                 <Routes>
                     <Route path = "/CarbonCreditsTrading" element = {<Login isHaveMetamask = {haveMetamask} connectTo = {connectWallet} />}></Route>
                     <Route path = "/CarbonCreditsTrading/profile" element = {<ProfileDisplay/>}></Route>
-                    <Route path = "/CarbonCreditsTrading/storage" element = {<StorageDisplay/>}></Route>
-                    <Route path = "/CarbonCreditsTrading/history" element = {<HistoryDisplay/>}></Route>
+                    <Route path = "/CarbonCreditsTrading/makeListing" element = {<StorageDisplay/>}></Route>
+                    <Route path = "/CarbonCreditsTrading/marketplace" element = {<HistoryDisplay/>}></Route>
                 </Routes>
             </div>
         // </BrowserRouter>

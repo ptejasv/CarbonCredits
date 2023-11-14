@@ -42,10 +42,10 @@ export default function Login(props){
             <img src = {logo} className = "login-logo" alt = "logo" />
             <h2>
                 23-24 Sem 1 EE4032 <br/>
-                Project Interface Demo
+                Carbon Credits Trading
                 <br/>
                 <span className = "login-author">
-                    Developed by: Yan Ge
+                    Developed by: Group 1
                 </span>
             </h2>
             {

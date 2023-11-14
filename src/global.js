@@ -14,9 +14,9 @@ export const GlobalToolBar = () => {
         <div className = "global-toolbar">
             <Link to = "/CarbonCreditsTrading/profile">Profile</Link>
             &nbsp;|&nbsp;
-            <Link to = "/CarbonCreditsTrading/storage">Storage</Link>
+            <Link to = "/CarbonCreditsTrading/makeListing">Make Listing</Link>
             &nbsp;|&nbsp;
-            <Link to = "/CarbonCreditsTrading/history">History</Link>
+            <Link to = "/CarbonCreditsTrading/marketplace">Marketplace</Link>
         </div>
     )
 }
