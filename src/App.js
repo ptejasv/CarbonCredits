@@ -219,7 +219,7 @@ export default function App() {
 
     // For My listing, stored inputs come from sell page
     const storedInputs = async () => {
-        const inputElement = document.getElementById('inputVal').value;
+        const inputElement = document.getElementById('inputVal2').value;
 
         if (!inputElement) {
             console.error('Input element with ID "inputVal" not found in the DOM');
@@ -238,7 +238,7 @@ export default function App() {
             setStoredVal(inputVal);
             
             try{
-                const detail = await storeData(inputVal);   // contract deployed. 
+                const detail = await makeListng(inputVal);   // contract deployed. 
                 RecordPush('store', inputVal, detail);      // recorded. 
             }
             catch(err){
@@ -377,7 +377,7 @@ const publishMyListingtoBC = async () => {
     // Get newly published listing from BC
     const newListing = await contract.methods.viewListingsDetails(listingID).call();
 
-    // Assuming the result includes the new listing
+    // Assuming the result includes the new listing 
     const newListingWithID = {listingID, 'description': newListing[2], 'credits': newListing[1], 'price':newListing[0]};
     
     // Update the listings state with the new listing

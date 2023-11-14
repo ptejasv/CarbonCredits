@@ -27,7 +27,7 @@ export default function Sell(props){
             <div className="creditInputContainer">
                 <p> 🌳 to sell: </p>
                 <input
-                    id="inputVal"
+                    id="inputVal1"
                     value = {credits}
                     type = "number" 
                     onChange={(e) => setCredits(e.target.value)}
@@ -42,7 +42,7 @@ export default function Sell(props){
             <div className="priceInputContainer">
                 <p>Price 💎 (eth):</p>
                 <input 
-                    id="inputVal"
+                    id="inputVal2"
                     value={price}
                     style={{ marginLeft: '5px'}} 
                     type="text" 
@@ -57,7 +57,7 @@ export default function Sell(props){
             <div className="priceInputContainer">
             <p> Description:</p>
             <textarea 
-                id="inputVal"
+                id="inputVal3"
                 value={description}
                 rows="5" 
                 cols="50" 
