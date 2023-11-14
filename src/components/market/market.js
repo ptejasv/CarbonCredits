@@ -2,11 +2,11 @@ import { Navigate } from "react-router-dom";
 import { useEffect } from 'react';
 import {useState} from 'react';
 
-import "./history.css";
+import "./market.css";
 import "../../global.css";
 import { GlobalToolBar } from "../../global";
 
-export default function History(props){
+export default function Market(props){
     const [len, setLen] = useState(0);
 
     useEffect(() => {
@@ -62,7 +62,7 @@ export default function History(props){
         )
     }
 
-    const HistoryPage = () => {
+    const MarketPage = () => {
         const rows = []
         for (let i = 0; i <= len; i++) {
             rows.push(<ListUnitDisplay index = {i}/>)
@@ -87,7 +87,7 @@ export default function History(props){
         <div>
             {
                 props.isConnected ?
-                <HistoryPage />:
+                <MarketPage />:
                 <Navigate to = '/InterfaceDemo' />
             }
         </div>

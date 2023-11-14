@@ -16,9 +16,9 @@ export const GlobalToolBar = () => {
             &nbsp;|&nbsp; */}
             <Link to = "/InterfaceDemo/profile">Profile</Link>
             &nbsp;|&nbsp;
-            <Link to = "/InterfaceDemo/storage">Storage</Link>
+            <Link to = "/InterfaceDemo/sell">Sell</Link>
             &nbsp;|&nbsp;
-            <Link to = "/InterfaceDemo/history">History</Link>
+            <Link to = "/InterfaceDemo/market">Market</Link>
         </div>
     )
 }

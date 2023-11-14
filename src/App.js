@@ -7,8 +7,8 @@ import Web3 from "web3";
 import './App.css';
 import Login from "./components/login/login";
 // import Profile from "./components/profile/profile";
-import Storage from "./components/storage/storage";
-import History from "./components/history/history";
+import Sell from "./components/sell/sell";
+import Market from "./components/market/market";
 import { CONTRACT_ABI, CONTRACT_ADDRESS } from "./contracts/config";
 
 export default function App() {
@@ -79,7 +79,7 @@ export default function App() {
             setIsConnected(true);
 
             // await contract.methods.registerUser().send({from: address});
-            navigate('/InterfaceDemo/storage');
+            navigate('/InterfaceDemo/sell');
         }
         catch (error){
             setIsConnected(false);
@@ -239,9 +239,9 @@ export default function App() {
 //         )
 //     }
 
-    const StorageDisplay = () => {
+    const SellDisplay = () => {
         return (
-            <Storage 
+            <Sell
                 isConnected = {isConnected}
                 makeListingHandle = {newListing} 
                 // showValHandle = {showValUpdate} 
@@ -252,9 +252,9 @@ export default function App() {
         )
     }
 
-    const HistoryDisplay = () => {
+    const MarketDisplay = () => {
         return (
-            <History 
+            <Market
                 isConnected = {isConnected}
                 recordList = {market}
                 showHistory = {updateMarket}
@@ -270,8 +270,8 @@ export default function App() {
                 <Routes>
                     <Route path = "/InterfaceDemo" element = {<Login isHaveMetamask = {haveMetamask} connectTo = {connectWallet} />}></Route>
                     {/* <Route path = "/InterfaceDemo/profile" element = {<ProfileDisplay/>}></Route> */}
-                    <Route path = "/InterfaceDemo/storage" element = {<StorageDisplay/>}></Route>
-                    <Route path = "/InterfaceDemo/history" element = {<HistoryDisplay/>}></Route>
+                    <Route path = "/InterfaceDemo/sell" element = {<SellDisplay/>}></Route>
+                    <Route path = "/InterfaceDemo/market" element = {<MarketDisplay/>}></Route>
                 </Routes>
             </div>
         // </BrowserRouter>

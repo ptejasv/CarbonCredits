@@ -1,10 +1,10 @@
 import { Navigate } from "react-router-dom";
 
-import "./storage.css";
+import "./sell.css";
 import "../../global.css";
 import { GlobalToolBar } from "../../global";
 
-export default function Storage(props){
+export default function Sell(props){
 
     // const FunctionIntro = () => {
     //     return (
@@ -21,7 +21,7 @@ export default function Storage(props){
     //             </p>
     //         </div>
     //     )
-    // }
+    // }/
 
     const StoreValPanel = () => {
         return (
@@ -91,7 +91,7 @@ export default function Storage(props){
         )
     }
 
-    const StoragePage = () => {
+    const SellPage = () => {
         return (
             <div className = "storage-background">
                 <h1>Make Carbon Credits Listing</h1>
@@ -109,7 +109,7 @@ export default function Storage(props){
         <div>
             {
                 props.isConnected ?
-                <StoragePage />:
+                <SellPage />:
                 <Navigate to = '/InterfaceDemo' />
             }
         </div>
