@@ -20,10 +20,8 @@ export default function App() {
     const [market, setListing] = useState(0);
     const [creditBalance, setCreditBalance] = useState(0);
     const [userListings, setUserListings] = useState(0);
-
-    // const [historyRecord, setHistoryRecord] = useState(null);   // record of history operations. 
-    // const [recordLen, setRecordLen] = useState(0);              // length of record. 
-    // const maxRecordLen = 50;                                    // maximum length of record list. 
+    const [listingsLen, setListingsLen] = useState(0);
+    const [errorMsg, setErrorMsg] = useState("")
 
     const navigate = useNavigate();
     const {ethereum} = window;
@@ -63,7 +61,7 @@ export default function App() {
             setBalance(bal);
             setIsConnected(true);
 
-            // await contract.methods.registerUser().send({from: address});
+            await contract.methods.registerUser().send({from: address});
             navigate('/CarbonCreditsTrading/profile');
         }
         catch (error){
@@ -75,15 +73,10 @@ export default function App() {
         const desc = document.getElementById('desc').value;
         const quantity = document.getElementById('quantity').value;
         const price = document.getElementById('price').value;
-        if (quantity > 500) {
-            return (
-                <p>Cannot list more than 100 credits!</p>
-            )
-        }
         try {
             await contract.methods.makeListing(desc, quantity, price).send({from: address})
         } catch(err) {
-            // nothing for now
+            setErrorMsg("Failed to make listing. Please check your input fields.")
         }
     }
 
@@ -106,7 +99,7 @@ export default function App() {
             await contract.methods.purchaseListing(listingID).send({from: address})
         }
         catch(err) {
-            // nothing for now
+            setErrorMsg("Failed to buy listing. Please check that you have sufficient SepoliaETH.")
         }
     }
 
@@ -141,10 +134,7 @@ export default function App() {
             <Sell
                 isConnected = {isConnected}
                 makeListingHandle = {newListing} 
-                // showValHandle = {showValUpdate} 
-                // showVal = {showVal} 
-                // storedPending = {storedPending}
-                // storedDone = {storedDone}
+                error = {errorMsg}
             />
         )
     }
@@ -157,6 +147,7 @@ export default function App() {
                 marketRecordLen = {marketLength}
                 showHistory = {updateMarket}
                 buyHandle = {buyListing}
+                error = {errorMsg}
             />
         )
     }

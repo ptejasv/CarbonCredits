@@ -7,7 +7,7 @@ import "../../global.css";
 import { GlobalToolBar } from "../../global";
 
 export default function History(props){
-    
+
     const Menu = () => {
         return (
             <div className = "history-menu">
@@ -64,6 +64,7 @@ export default function History(props){
                     <button className = "refresh-market" onClick = {() => props.showHistory()}>
                         Refresh
                     </button>
+                    {props.error && <div className="error"> {props.error} </div>}
                     <div className = "history-menuFramework">
                         <hr color = "black" width = "100%"/>
                         <Menu />

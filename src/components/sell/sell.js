@@ -38,6 +38,7 @@ export default function Sell(props){
                     <button className = "btn" onClick = {() => props.makeListingHandle()}>
                         Make Listing
                     </button>
+                    {props.error && <div className="error"> {props.error} </div>}
                 </div>
             </div>
         )
