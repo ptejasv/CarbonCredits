@@ -81,7 +81,7 @@ export default function App() {
             setIsConnected(true);
 
             // await contract.methods.registerUser().send({from: address});
-            navigate('/InterfaceDemo/profile');
+            navigate('/CarbonCreditsTrading/profile');
         }
         catch (error){
             setIsConnected(false);
@@ -279,10 +279,10 @@ export default function App() {
         // <BrowserRouter>
             <div className="App">
                 <Routes>
-                    <Route path = "/InterfaceDemo" element = {<Login isHaveMetamask = {haveMetamask} connectTo = {connectWallet} />}></Route>
-                    <Route path = "/InterfaceDemo/profile" element = {<ProfileDisplay/>}></Route>
-                    <Route path = "/InterfaceDemo/storage" element = {<StorageDisplay/>}></Route>
-                    <Route path = "/InterfaceDemo/history" element = {<HistoryDisplay/>}></Route>
+                    <Route path = "/CarbonCreditsTrading" element = {<Login isHaveMetamask = {haveMetamask} connectTo = {connectWallet} />}></Route>
+                    <Route path = "/CarbonCreditsTrading/profile" element = {<ProfileDisplay/>}></Route>
+                    <Route path = "/CarbonCreditsTrading/storage" element = {<StorageDisplay/>}></Route>
+                    <Route path = "/CarbonCreditsTrading/history" element = {<HistoryDisplay/>}></Route>
                 </Routes>
             </div>
         // </BrowserRouter>

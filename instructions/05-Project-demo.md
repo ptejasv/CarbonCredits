@@ -13,13 +13,13 @@ This part gives the steps to clone the [demo code](https://github.com/dududududu
     ```
     git clone https://github.com/dududududulu/InterfaceDemo.git
     ```
-  - You will see a new folder named ```InterfaceDemo``` in your project folder. Replace the ```src``` folder in your project folder with the ```src``` folder in ```InterfaceDemo```. 
+  - You will see a new folder named ```CarbonCreditsTrading``` in your project folder. Replace the ```src``` folder in your project folder with the ```src``` folder in ```CarbonCreditsTrading```. 
   - Open a terminal or command prompt window, type the following commands to install necessary packages
     ```
     cd project-name
     npm install react-router-dom
     ```
-  - Type ```npm start``` to run the application demo, and go to http://localhost:3000/InterfaceDemo/ to view the page. 
+  - Type ```npm start``` to run the application demo, and go to http://localhost:3000/CarbonCreditsTrading/ to view the page. 
     ![demo-login](https://i.postimg.cc/hjrpTG1t/demo-login.png)
   - Now you can design your own application based on the framework of this demo! 
 
