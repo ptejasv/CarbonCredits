@@ -24,6 +24,7 @@ export default function App() {
     // const [showVal, setShowVal] = useState(0);                  // value that is showed on screen. 
     const [market, setListing] = useState(0);
     const [creditBalance, setCreditBalance] = useState(0);
+    const [userListings, setUserListings] = useState(0);
 
     // const [historyRecord, setHistoryRecord] = useState(null);   // record of history operations. 
     // const [recordLen, setRecordLen] = useState(0);              // length of record. 
@@ -233,6 +234,11 @@ export default function App() {
         setListing(marketplace);
     }
 
+    const fetchListings = async() => {
+        const listings = await contract.methods.viewUserListings().call({from: address})
+        setUserListings(listings);
+    }
+
 // ////// display functions. 
     const ProfileDisplay = () => {
         return (
@@ -242,6 +248,8 @@ export default function App() {
                 balance = {balance}
                 credits = {creditBalance}
                 showCredits = {fetchCredits}
+                allUserListings = {userListings}
+                showListings = {fetchListings}
             />
         )
     }
