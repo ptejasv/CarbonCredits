@@ -27,12 +27,7 @@ export default function Profile(props){
                         <br/>
                         Balance:&nbsp;
                         <span className = "global-message">{props.balance}</span>
-                        &nbsp;ETH 
-                        <br/>
-
-                        🌳:&nbsp;
-                        <span className = "global-message">{props.carbonCredits}</span>
-                        
+                        &nbsp;ETH
                     </p>
                 </div>
             </div>
@@ -48,7 +43,7 @@ export default function Profile(props){
             {
                 props.isConnected ?
                 <ProfilePage />:
-                <Navigate to = '/ee4032project' />
+                <Navigate to = '/InterfaceDemo' />
             }
         </div>
     )

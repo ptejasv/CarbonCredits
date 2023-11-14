@@ -45,7 +45,7 @@ export default function Login(props){
                 Project Interface Demo
                 <br/>
                 <span className = "login-author">
-                    Developed by: Carbon Credit Trading
+                    Developed by: Yan Ge
                 </span>
             </h2>
             {

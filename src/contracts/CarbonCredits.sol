@@ -31,13 +31,10 @@ contract CarbonCredits {
         defaultCredits = _defaultCredits;
     }
 
-    modifier newUser() {
-        require(allUsers[msg.sender].init == false, "User already registered");
-        _;
-    }
-
-    function registerUser() newUser public {
-        allUsers[msg.sender] = User(defaultCredits, 0, true);
+    function registerUser() public {
+        if (allUsers[msg.sender].init == false) {
+            allUsers[msg.sender] = User(defaultCredits, 0, true);
+        }
     }
 
     function getUserCredits() public view returns (uint) {

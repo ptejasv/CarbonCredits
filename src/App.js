@@ -6,12 +6,10 @@ import Web3 from "web3";
 
 import './App.css';
 import Login from "./components/login/login";
-import Profile from "./components/profile/profile";
+// import Profile from "./components/profile/profile";
+import Storage from "./components/storage/storage";
+import History from "./components/history/history";
 import { CONTRACT_ABI, CONTRACT_ADDRESS } from "./contracts/config";
-import Market from "./components/Marketplace/Market";
-import Sell from "./components/sell/sell";
-import MyListings from "./components/MyListings/MyListings";
-import { id } from "ethers/lib/utils";
 
 export default function App() {
     const [haveMetamask, setHaveMetamask] = useState(true);     // check if the browser has MetaMask installed. 
@@ -19,40 +17,16 @@ export default function App() {
     const [network, setNetwork] = useState(null);               // network the account is using. 
     const [balance, setBalance] = useState(0);                  // balance of connected MetaMask account. 
     const [isConnected, setIsConnected] = useState(false);      // check if is connected to MetaMask account. 
-    const [storedPending, setStoredPending] = useState(false);        // check if a value is pending. 
-    const [storedDone, setStoredDone] = useState(false);        // check if a value is stored. 
-    // eslint-disable-next-line
-    const [storedVal, setStoredVal] = useState(0);              // value that is stored right now. 
-    const [showVal, setShowVal] = useState(0);                  // value that is showed on screen. 
 
-    const [historyRecord, setHistoryRecord] = useState(null);   // record of history operations. 
-    const [recordLen, setRecordLen] = useState(0);              // length of record. 
-    const maxRecordLen = 50;                                    // maximum length of record list. 
+    // const [storedPending, setStoredPending] = useState(false);        // check if a value is pending. 
+    // const [storedDone, setStoredDone] = useState(false);        // check if a value is stored. 
+    // const [storedVal, setStoredVal] = useState(0);              // value that is stored right now. 
+    // const [showVal, setShowVal] = useState(0);                  // value that is showed on screen. 
+    const [market, setListing] = useState(0);
 
-    const [marketListings, setMarketListing] = useState(0);
-    const [marketRecord, setMarketRecord] = useState(null);       // record of market.
-    const [marketlistLen, setListLen] = useState(0);              // length of record.
-    const maxListLen = 50;                                        // maximum length of record list. 
-    const [listPending, setListPending] = useState(false);        // check if a value is pending. 
-    const [listDone, setListDone] = useState(false);              // check if a value is stored.
-
-    // Sell.js
-    // const [price, setPrice] = useState(0);                     // Selling Price
-    // const [credits, setCredits] = useState(0);                 // Amount of credits to be sold
-    // const [description, setDescription] = useState('');        // Description of listing
-    const [ListingPending, setListingPending] = useState(false);        // check if a listing is pending. 
-    const [ListingPublished, setListingPublished] = useState(false); // check if a listing is published
-    const [SellInfo, setSellInfo] = useState({price:"", credits:"", description: ""});
-    
-    
-
-    // MyListings.js
-    const [MyListingsRecord, setMyListingsRecord] = useState(null);       // record of market.
-    const [MyListingsLen, setMyListingsLen] = useState(0);              // length of record.
-    const maxMyListingsLen = 50;                                        // maximum length of My Listings list to be displayed 
-    const [MyListingsPending, setMyListingsPending] = useState(false);        // check if a value is pending. 
-    const [MyListingsDone, setMyListingsDone] = useState([]);              // check if a value is stored.
-    const [ListingID, setListingsID] = useState(-1);                    // listing ID
+    // const [historyRecord, setHistoryRecord] = useState(null);   // record of history operations. 
+    // const [recordLen, setRecordLen] = useState(0);              // length of record. 
+    // const maxRecordLen = 50;                                    // maximum length of record list. 
 
     const navigate = useNavigate();
     const {ethereum} = window;
@@ -72,7 +46,6 @@ export default function App() {
     // }, []);
 
 ////// connect to MetaMask. 
-
     const connectWallet = async () => {         // function that connect to METAMASK account, activated when clicking on 'connect'. 
         try {
             if (!ethereum){
@@ -104,452 +77,204 @@ export default function App() {
             setAddress(accounts[0]);
             setBalance(bal);
             setIsConnected(true);
-            
 
-            navigate('/ee4032project/profile');
+            await contract.methods.registerUser().send({from: address});
+            navigate('/InterfaceDemo/storage');
         }
         catch (error){
             setIsConnected(false);
         }
     }
 
+    // const market = [[2, "test1", 10, 1, 0]]
+    // const getListing = async () => {
+    //     const listing = await contract.methods.viewListingDetails(0).call();
+    //     return listing
+    // }
 
 ////// Contract Deployment. 
     // IMPORTANT: async / await is essential to get values instead of Promise. 
-    const storeData = async (inputVal) => {
-        const res = await contract.methods.set(inputVal).send({from: address});
-        return res;
-    }
-
-    const getData = async () => {
-        const res = await contract.methods.get().call();
-        return res;
-    }
-
-    /// New contract functions put here 1st
-    const userData = async () => {
-        const res = await contract.methods.registerUser(address).send();
-        return res;
-    }
-    const buyListing = async (inputList) => {
-        const res = await contract.methods.purchaseListing(inputList).send({from: address});
-        return res;
-    }
-
-    const getCCBalance = async () => {
-        const res = await contract.methods.getUserCredits().call();
-        return res;
-    }
-
-    const showMarketList = async () => {
-        const res = await contract.methods.viewListings().call();
-        setMarketListing(res)
-    }
-
-    // Get all of a user's listings from BC
-    const getMyListings = async () => {
-        const res = await contract.methods.viewMyListings().call();
-        return res;
-    }
-
-
-////// history recording. 
-    const RecordOverFlow = () => {
-        if (recordLen > maxRecordLen){
-            let outlierNum = recordLen - maxRecordLen;
-            setHistoryRecord(current => current.splice(1, outlierNum));
-            setRecordLen(maxRecordLen);
-        }
-    }
-
-    const RecordPush = (opr, val, detail) => {
-        let stat = 1;
-        let cost = 0;
-        if (val.length === 0){
-            val = 'NA';
-            cost = 'NA';
-            stat = 0;
-        }
-        else{
-            if (opr === 'get'){
-                cost = 0;
-                stat = 1;
-            }
-            else{
-                if (detail === 'null'){
-                    setStoredPending(false);
-                    setStoredDone(true);
-                    console.log('Rejected');
-                    cost = 'NA';
-                    stat = 2;
-                }
-                else{
-                    setStoredDone(true);
-                    console.log('Done');
-                    console.log(detail);    // show the details of transaction. 
-                    cost = detail.gasUsed;
-                    stat = 1;
-                }
-            }
-        }
-
-        const newRecord = {
-            id: recordLen + 1, 
-            address: address, 
-            operation: opr, 
-            value: val, 
-            cost: cost, 
-            status: stat
-        };
-        if (recordLen === 0){
-            setHistoryRecord([newRecord, newRecord]);
-        }
-        else{
-            setHistoryRecord(current => [...current, newRecord]);
-        }
-        setRecordLen(recordLen + 1);
-
-        if (recordLen > maxRecordLen){
-            RecordOverFlow();
-        }
-    }
-
-    // For My listing, stored inputs come from sell page
-    const storedInputs = async () => {
-        const inputElement = document.getElementById('inputVal2').value;
-
-        if (!inputElement) {
-            console.error('Input element with ID "inputVal2" not found in the DOM');
-            return;
-        }
-    
-        const inputVal = inputElement.value;
-        setMyListingsPending(false);
-        setMyListingsDone(false);
-
-        if (inputVal.length === 0) {
-            const detail = 'null';
-            RecordPush('store', inputVal, detail);
-        }
-        else {
-            setStoredVal(inputVal);
-            
-            try{
-                const detail = await MarketListing(inputVal);   // contract deployed. 
-                RecordPush('store', inputVal, detail);      // recorded. 
-            }
-            catch(err){
-                const detail = 'null';                      // no detail info. 
-                RecordPush('store', inputVal, detail);      // recorded. 
-            }
-        }
-
-    }
-    
-
-////// store and get value. 
-    const storedValUpdate = async () => {
-        const inputVal = document.getElementById('inputVal').value;
-        setStoredPending(false);
-        setStoredDone(false);
-
-        if (inputVal.length === 0) {
-            const detail = 'null';
-            RecordPush('store', inputVal, detail);
-        }
-        else {
-            setStoredPending(true);
-            setStoredVal(inputVal);
-            
-            try{
-                const detail = await storeData(inputVal);   // contract deployed. 
-                RecordPush('store', inputVal, detail);      // recorded. 
-            }
-            catch(err){
-                const detail = 'null';                      // no detail info. 
-                RecordPush('store', inputVal, detail);      // recorded. 
-            }
-        }
-    }
-
-    const showValUpdate = async () => {
-        const ans = await getData();
-        setStoredPending(false);
-        setStoredDone(false);
-
-        setShowVal(ans);
-        RecordPush('get', ans);
-    }
-
-    
-
-
-//////////////////// new functions.//////////////////////////
-
-////// Market Listing. 
-const MarketListing = () => {
-    if (recordLen > maxRecordLen){
-        let outlierNum = recordLen - maxRecordLen;
-        setMarketRecord(current => current.splice(1, outlierNum));
-        setListLen(maxListLen);
-    }
-}
-
-const ListPush = (id, cred, prc, descrp) => {
-    setListDone(true);
-    console.log('Done');
-
-    const newRecord = {
-        id: id, 
-        credit: cred,  
-        price: prc, 
-        description: descrp, 
-        address: address, 
-    };
-    if (recordLen === 0){
-        setMarketRecord([newRecord, newRecord]);
-    }
-    else{
-        setMarketRecord(current => [...current, newRecord]);
-    }
-    setListLen(recordLen + 1);
-
-    if (recordLen > maxRecordLen){
-        MarketListing();
-    }
-}
-
-const purchaseList = async () => {
-    const inputList = document.getElementById('inputList');
-    setListPending(false);
-    setListDone(false);
-    try{
-        if (inputList.length == 0) {
-            <h3>You did not select anything</h3>
-        }
-        else {
-            setListPending(true);
-            try{
-                const detail = await buyListing(inputList);   // contract deployed. 
-            }
-            catch(err){
-                const detail = 'null';                      // no detail info.  
-            }
-        }
-    }
-    catch(err){}
-}
-  
-const showMarket = async () => {
-    const ans = await showMarketList();
-    ListPush(ans);
-}
-
-////////////////////////// Sell functions////////////////////////////////////////////////////////////////////////////////////////////////////////
-const onSell = () => {
-    // Pass the values to the parent component using onSell prop
-    
-}
-// const handleSell = () => {
-//     // Pass the values to the child component using onSell prop
-//     publishMyListingtoBC().then((result) => {
-//         if (result) {
-//             // Clear the input fields after successful listing creation
-//             setPrice('');
-//             setCredit('');
-//             setDescription('');
-//             setListingPending(true);
-//             setListingPublished(true);
-//         }
-//     })
-//     .catch((error) => {
-//         // Handle errors if any
-//         console.error('Error in handleSell:', error);
-//     });
-// };
-
-// Publish sell listing to blockchain 
-const publishMyListingtoBC = async () => {
-
-    // Perform smart contract interaction here
-    const listingID = getNewListingID();
-
-    // Get newly published listing from BC
-    const newListing = await contract.methods.viewListingsDetails(listingID).call();
-
-    // Assuming the result includes the new listing 
-    const newListingWithID = {listingID, 'description': newListing[2], 'credits': newListing[1], 'price':newListing[0]};
-    
-    // Update the listings state with the new listing
-    MyListingsRecord((prevListings) => [...prevListings, newListingWithID]);
-
-    // Return true or any confirmation if needed
-    return true;
-}
-
-const getNewListingID = async () => { 
-    const res = await contract.methods.makeListing().send({from: address});
-    return res;
-}
-
-
-
-////// My listings
-/// Remove a listing and refresh the page
-// const MyListingUpdate = async () => {
-//     const inputID = document.getElementById('inputID').value;
-//     setMyListingsPending(false);
-//     setMyListingsDone(false);
-
-//     if (inputID === 0) {
-//         const detail = 'null';
-//         RecordPush('store', inputID, detail);
+//     const storeData = async (inputVal) => {
+//         const res = await contract.methods.set(inputVal).send({from: address});
+//         return res;
 //     }
-//     else {
-//         setMyListingsPending(true);
-//         setMyListingsDone(inputID);
-        
-//         try{
-//             const detail = await storeData(inputID);   // contract deployed. 
-//             RecordPush('store', inputID, detail);      // recorded. 
-//         }
-//         catch(err){
-//             const detail = 'null';                      // no detail info. 
-//             RecordPush('store', inputID, detail);      // recorded. 
+
+//     const getData = async () => {
+//         const res = await contract.methods.get().call();
+//         return res[0];
+//     }
+
+
+// ////// history recording. 
+//     const RecordOverFlow = () => {
+//         if (recordLen > maxRecordLen){
+//             let outlierNum = recordLen - maxRecordLen;
+//             setHistoryRecord(current => current.splice(1, outlierNum));
+//             setRecordLen(maxRecordLen);
 //         }
 //     }
-// }
 
-const ShowMyListings = () => {
+//     const RecordPush = (opr, val, detail) => {
+//         let stat = 1;
+//         let cost = 0;
+//         if (val.length === 0){
+//             val = 'NA';
+//             cost = 'NA';
+//             stat = 0;
+//         }
+//         else{
+//             if (opr === 'get'){
+//                 cost = 0;
+//                 stat = 1;
+//             }
+//             else{
+//                 if (detail === 'null'){
+//                     setStoredPending(false);
+//                     setStoredDone(true);
+//                     console.log('Rejected');
+//                     cost = 'NA';
+//                     stat = 2;
+//                 }
+//                 else{
+//                     setStoredDone(true);
+//                     console.log('Done');
+//                     console.log(detail);    // show the details of transaction. 
+//                     cost = detail.gasUsed;
+//                     stat = 1;
+//                 }
+//             }
+//         }
 
-    let outlierNum = MyListingsLen - maxMyListingsLen;
-    setMyListingsRecord(current => current.splice(1, outlierNum));
-    setMyListingsLen(maxMyListingsLen);
-}
+//         const newRecord = {
+//             id: recordLen + 1, 
+//             address: address, 
+//             operation: opr, 
+//             value: val, 
+//             cost: cost, 
+//             status: stat
+//         };
+//         if (recordLen === 0){
+//             setHistoryRecord([newRecord, newRecord]);
+//         }
+//         else{
+//             setHistoryRecord(current => [...current, newRecord]);
+//         }
+//         setRecordLen(recordLen + 1);
 
-const AddMyNewListing = (descrp, qty, prc, id ) => {
-    setMyListingsDone(true);
+//         if (recordLen > maxRecordLen){
+//             RecordOverFlow();
+//         }
+//     }
 
-    const newRecord = {
-        id: getNewListingID(), // the listing id, not index
-        description: descrp,
-        price: prc, 
-        credit: qty,  
-        
-    };
 
-    if (MyListingsRecord === 0){
-        setMyListingsRecord([newRecord, newRecord]);
-    }
-    else{
-        setMyListingsRecord(current => [...current, newRecord]);
-        setMyListingsLen(MyListingsLen + 1);
-    }
-    
+// ////// store and get value. 
+//     const storedValUpdate = async () => {
+//         const inputVal = document.getElementById('inputVal').value;
+//         setStoredPending(false);
+//         setStoredDone(false);
 
-    if (MyListingsLen > maxMyListingsLen){
-        ShowMyListings();
-    }
-}
-
-// const cancelMyListing = async () => {
-//     const ListingID = document.getElementById('inputIDToRemove');
-//     setMyListingsPending(false);
-//     setMyListingsDone(false);
-//     try{
-//         if (ListingID < 0 ) {
-//             <h3>You have selected invalid ID, or it has already been removed</h3>
+//         if (inputVal.length === 0) {
+//             const detail = 'null';
+//             RecordPush('store', inputVal, detail);
 //         }
 //         else {
-//             setMyListingsPending(true);
+//             setStoredPending(true);
+//             setStoredVal(inputVal);
+            
 //             try{
-//                 const detail = await removeMyListing(ListingID);   // contract deployed.
-//                 setMyListingsDone(true); 
+//                 const detail = await storeData(inputVal);   // contract deployed. 
+//                 RecordPush('store', inputVal, detail);      // recorded. 
 //             }
 //             catch(err){
-//                 const detail = 'null';                      // no detail info.  
+//                 const detail = 'null';                      // no detail info. 
+//                 RecordPush('store', inputVal, detail);      // recorded. 
 //             }
 //         }
 //     }
-//     catch(err){}
-// }
-  
-const showMyListingsUpdate = async () => {
-    const ans = await getMyListings();
-    setShowVal(ans);
-    AddMyNewListing(ans);
-}
 
-////// display functions. 
-    const ProfileDisplay = () => {
+    const newListing = async () => {
+        const desc = document.getElementById('desc').value;
+        const quantity = document.getElementById('quantity').value;
+        const price = document.getElementById('price').value;
+        try {
+            await contract.methods.makeListing(desc, quantity, price).send({from: address})
+        } catch(err) {
+            // nothing for now
+        }
+    }
+
+//     const showValUpdate = async () => {
+//         const ans = await getData();
+//         setStoredPending(false);
+//         setStoredDone(false);
+
+//         setShowVal(ans);
+//         RecordPush('get', ans);
+//     }
+
+    const buyListing = async (listingID) => {
+        // const listingID = document.getElementById('listingID').value;
+        try {
+            await contract.methods.purchaseListing(listingID).send({from: address})
+        }
+        catch(err) {
+            // nothing for now
+        }
+    }
+
+    const updateMarket = async() => {
+        const marketplace = await contract.methods.viewListings().call();
+        setListing(marketplace);
+    }
+
+// ////// display functions. 
+//     const ProfileDisplay = () => {
+//         return (
+//             <Profile 
+//                 isConnected = {isConnected}
+//                 address = {address} 
+//                 networkType = {network} 
+//                 balance = {balance}
+//             />
+//         )
+//     }
+
+    const StorageDisplay = () => {
         return (
-            <Profile 
+            <Storage 
                 isConnected = {isConnected}
-                address = {address} 
-                networkType = {network} 
-                balance = {balance}
-                carbonCredits = {getCCBalance}
+                makeListingHandle = {newListing} 
+                // showValHandle = {showValUpdate} 
+                // showVal = {showVal} 
+                // storedPending = {storedPending}
+                // storedDone = {storedDone}
             />
         )
     }
 
-    const MarketDisplay = () => {
+    const HistoryDisplay = () => {
         return (
-            <Market 
+            <History 
                 isConnected = {isConnected}
-                recordList = {marketListings}
-                recordLen = {marketlistLen}
-                showMarketHandle = {showMarket} 
-                buyHandle ={purchaseList}
+                recordList = {market}
+                showHistory = {updateMarket}
+                buyHandle = {buyListing}
             />
         )
     }
 
-    const SellDisplay = () => {
-        return (
-            <Sell 
-            
-                isConnected = {isConnected}
-                listNowPending = {ListingPending}
-                listNowDone = {ListingPublished}
-                //onSell={handleSell}
-                // storeInputsHandle = {storedInputs}
-                
-                
-            />
-                
-        )
-    }
-
-    const MyListingsDisplay = () => {
-        return (
-
-            <MyListings  
-
-                isConnected = {isConnected}
-                recordMyListings = {MyListingsRecord}
-                recordMyListingsLen = {MyListingsLen}
-                showMyListingsHandle = {showMyListingsUpdate} 
-
-                ///You need the equivalent of storeValHandle = {storedValUpdate}  in StorageDisplay for the button to work
-                //recordLen = {marketlistLen}
-
-            />
-        )
-    }
 
     return (
         // <BrowserRouter>
             <div className="App">
                 <Routes>
-                    <Route path = "/ee4032project" element = {<Login isHaveMetamask = {haveMetamask} connectTo = {connectWallet} />}></Route>
-                    <Route path = "/ee4032project/profile" element = {<ProfileDisplay/>}></Route>
-                    <Route path = "/ee4032project/Marketplace" element = {<MarketDisplay/>}></Route>
-                    <Route path = "/ee4032project/Sell" element = {<SellDisplay/>}></Route>
-                    <Route path = "/ee4032project/MyListings" element = {<MyListingsDisplay/>}></Route>
+                    <Route path = "/InterfaceDemo" element = {<Login isHaveMetamask = {haveMetamask} connectTo = {connectWallet} />}></Route>
+                    {/* <Route path = "/InterfaceDemo/profile" element = {<ProfileDisplay/>}></Route> */}
+                    <Route path = "/InterfaceDemo/storage" element = {<StorageDisplay/>}></Route>
+                    <Route path = "/InterfaceDemo/history" element = {<HistoryDisplay/>}></Route>
                 </Routes>
             </div>
-        // </BrowserRouter>s
+        // </BrowserRouter>
     );
 }
 
