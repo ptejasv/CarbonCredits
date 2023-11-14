@@ -96,7 +96,7 @@ export default function App() {
         setCreditBalance(credits)
     }
 
-    const buyListing = async (listingID) => {
+    const buyListing = async (listingID, listingPrice) => {
         try {
             await contract.methods.purchaseListing(listingID).send({from: address})
         }
@@ -133,7 +133,7 @@ export default function App() {
 
     const MakeListingDisplay = () => {
         return (
-            <MakeListing
+            <MakeListing 
                 isConnected = {isConnected}
                 makeListingHandle = {newListing} 
                 error = {errorMsg}
@@ -143,11 +143,11 @@ export default function App() {
 
     const MarketDisplay = () => {
         return (
-            <Market
+            <Market 
                 isConnected = {isConnected}
                 recordList = {market}
-                marketRecordLen = {MarketLength}
-                showHistory = {updateMarket}
+                marketRecordLen = {marketLength}
+                showMarket = {updateMarket}
                 buyHandle = {buyListing}
                 error = {errorMsg}
             />

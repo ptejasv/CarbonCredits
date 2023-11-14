@@ -112,9 +112,9 @@ contract CarbonCredits {
         locked = false;
     }
 
-    function purchaseListing(uint id) public noReentrancy validId(id) returns (bool) {
+    function purchaseListing(uint id) public payable noReentrancy validId(id) returns (bool) {
         uint idx = listingIds[id] - 1;
-        (bool sent, bytes memory data) = allListings[idx].owner.call{value: allListings[idx].price}(""); // send ether to listing owner
+        (bool sent, bytes memory data) = allListings[idx].owner.call{value: msg.value}(""); // send ether to listing owner
         allUsers[msg.sender].creditsOwned = allUsers[msg.sender].creditsOwned + allListings[idx].quantity; // transfer credits to purchaser
         allUsers[allListings[idx].owner].creditsOwned = allUsers[allListings[idx].owner].creditsOwned - allListings[idx].quantity; // deduct credits from owner
         allUsers[allListings[idx].owner].creditsListed = allUsers[allListings[idx].owner].creditsListed - allListings[idx].quantity;
