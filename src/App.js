@@ -62,7 +62,7 @@ export default function App() {
             setBalance(bal);
             setIsConnected(true);
 
-            // await contract.methods.registerUser().send({from: address});
+            await contract.methods.registerUser().send({from: address});
             navigate('/CarbonCreditsTrading/profile');
         }
         catch (error){
