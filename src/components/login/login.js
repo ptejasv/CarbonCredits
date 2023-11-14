@@ -1,4 +1,4 @@
-import './login.css';
+    import './login.css';
 import '../../global.css';
 import logo from '../../images/logo.svg';
 
