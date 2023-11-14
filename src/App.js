@@ -238,7 +238,7 @@ export default function App() {
             setStoredVal(inputVal);
             
             try{
-                const detail = await makeListng(inputVal);   // contract deployed. 
+                const detail = await MarketListing(inputVal);   // contract deployed. 
                 RecordPush('store', inputVal, detail);      // recorded. 
             }
             catch(err){
