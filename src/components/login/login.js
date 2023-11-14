@@ -1,6 +1,6 @@
     import './login.css';
 import '../../global.css';
-import logo from '../../images/logo.svg';
+import greenEconomy from '../../images/greenEconomy.png';
 
 export default function Login(props){
 
@@ -39,7 +39,7 @@ export default function Login(props){
 
     return (
         <div className = "login">
-            <img src = {logo} className = "login-logo" alt = "logo" />
+            <img src = {greenEconomy} className = "login-logo" alt = "logo" />
             <h2>
                 23-24 Sem 1 EE4032 <br/>
                 Carbon Credits Trading

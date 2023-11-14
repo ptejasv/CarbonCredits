@@ -21,7 +21,9 @@ export default function App() {
     const [creditBalance, setCreditBalance] = useState(0);
     const [userListings, setUserListings] = useState(0);
     const [listingsLen, setListingsLen] = useState(0);
-    const [errorMsg, setErrorMsg] = useState("")
+    const [errorMsg, setErrorMsg] = useState("");
+    const [MarketLength, setMarketLength] = useState(0);
+    
 
     const navigate = useNavigate();
     const {ethereum} = window;
@@ -144,7 +146,7 @@ export default function App() {
             <Market
                 isConnected = {isConnected}
                 recordList = {market}
-                marketRecordLen = {marketLength}
+                marketRecordLen = {MarketLength}
                 showHistory = {updateMarket}
                 buyHandle = {buyListing}
                 error = {errorMsg}
