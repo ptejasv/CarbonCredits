@@ -88,7 +88,7 @@ export default function App() {
 
     const buyListing = async (listingID, listingPrice) => {
         try {
-            await contract.methods.purchaseListing(listingID).send({from: address, value: listingPrice})
+            await contract.methods.purchaseListing(listingID).send({from: address})
         }
         catch(err) {
             setErrorMsg("Failed to buy listing. Please check that you have sufficient SepoliaETH.")
