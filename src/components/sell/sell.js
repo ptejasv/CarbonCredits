@@ -110,7 +110,7 @@ export default function Sell(props){
             {
                 props.isConnected ?
                 <SellPage />:
-                <Navigate to = '/InterfaceDemo' />
+                <Navigate to = '/CarbonCreditsTrading' />
             }
         </div>
     )

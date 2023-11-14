@@ -105,7 +105,7 @@ export default function Profile(props){
             {
                 props.isConnected ?
                 <ProfilePage />:
-                <Navigate to = '/InterfaceDemo' />
+                <Navigate to = '/CarbonCreditsTrading' />
             }
         </div>
     )

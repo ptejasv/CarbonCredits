@@ -88,7 +88,7 @@ export default function Market(props){
             {
                 props.isConnected ?
                 <MarketPage />:
-                <Navigate to = '/InterfaceDemo' />
+                <Navigate to = '/CarbonCreditsTrading' />
             }
         </div>
     )
