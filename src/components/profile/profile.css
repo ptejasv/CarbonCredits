@@ -1,13 +1,9 @@
 @import "../../global.css";
 
 .profile-background{
-    background-image: url("../../images/bgpic.jpg");
-    background-size: 100%;
-    background-position-x: center;
-
-    position: absolute;
-    height: 100%;
-    width: 100%;
+    text-align: center;
+    background-color: var(--BackgroundUncovered);
+    min-height: 100vh;
     flex-direction: column;
     display: flex;
     align-items: center;

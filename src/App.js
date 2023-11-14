@@ -6,7 +6,7 @@ import Web3 from "web3";
 
 import './App.css';
 import Login from "./components/login/login";
-// import Profile from "./components/profile/profile";
+import Profile from "./components/profile/profile";
 import Storage from "./components/storage/storage";
 import History from "./components/history/history";
 import { CONTRACT_ABI, CONTRACT_ADDRESS } from "./contracts/config";
@@ -23,6 +23,7 @@ export default function App() {
     // const [storedVal, setStoredVal] = useState(0);              // value that is stored right now. 
     // const [showVal, setShowVal] = useState(0);                  // value that is showed on screen. 
     const [market, setListing] = useState(0);
+    const [creditBalance, setCreditBalance] = useState(0);
 
     // const [historyRecord, setHistoryRecord] = useState(null);   // record of history operations. 
     // const [recordLen, setRecordLen] = useState(0);              // length of record. 
@@ -78,8 +79,8 @@ export default function App() {
             setBalance(bal);
             setIsConnected(true);
 
-            await contract.methods.registerUser().send({from: address});
-            navigate('/InterfaceDemo/storage');
+            // await contract.methods.registerUser().send({from: address});
+            navigate('/InterfaceDemo/profile');
         }
         catch (error){
             setIsConnected(false);
@@ -212,6 +213,11 @@ export default function App() {
 //         RecordPush('get', ans);
 //     }
 
+    const fetchCredits = async () => {
+        const credits = await contract.methods.getUserCredits().call({from: address})
+        setCreditBalance(credits)
+    }
+
     const buyListing = async (listingID) => {
         // const listingID = document.getElementById('listingID').value;
         try {
@@ -228,26 +234,23 @@ export default function App() {
     }
 
 // ////// display functions. 
-//     const ProfileDisplay = () => {
-//         return (
-//             <Profile 
-//                 isConnected = {isConnected}
-//                 address = {address} 
-//                 networkType = {network} 
-//                 balance = {balance}
-//             />
-//         )
-//     }
+    const ProfileDisplay = () => {
+        return (
+            <Profile 
+                isConnected = {isConnected}
+                address = {address} 
+                balance = {balance}
+                credits = {creditBalance}
+                showCredits = {fetchCredits}
+            />
+        )
+    }
 
     const StorageDisplay = () => {
         return (
             <Storage 
                 isConnected = {isConnected}
                 makeListingHandle = {newListing} 
-                // showValHandle = {showValUpdate} 
-                // showVal = {showVal} 
-                // storedPending = {storedPending}
-                // storedDone = {storedDone}
             />
         )
     }
@@ -269,7 +272,7 @@ export default function App() {
             <div className="App">
                 <Routes>
                     <Route path = "/InterfaceDemo" element = {<Login isHaveMetamask = {haveMetamask} connectTo = {connectWallet} />}></Route>
-                    {/* <Route path = "/InterfaceDemo/profile" element = {<ProfileDisplay/>}></Route> */}
+                    <Route path = "/InterfaceDemo/profile" element = {<ProfileDisplay/>}></Route>
                     <Route path = "/InterfaceDemo/storage" element = {<StorageDisplay/>}></Route>
                     <Route path = "/InterfaceDemo/history" element = {<HistoryDisplay/>}></Route>
                 </Routes>
