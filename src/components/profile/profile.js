@@ -1,4 +1,6 @@
 import { Navigate } from "react-router-dom";
+import { useEffect } from 'react';
+import {useState} from 'react';
 
 import "./profile.css";
 import "../../global.css";
@@ -6,31 +8,91 @@ import { GlobalToolBar } from "../../global";
 import METAMASK from '../../images/METAMASK.png';
 
 export default function Profile(props){
+    const [len, setLen] = useState(0);
+
+    useEffect(() => {
+        loadData();
+     }, []);
+
+    function loadData() {
+        props.showCredits()
+        props.showListings()
+        setLen(props.allUserListings.length)
+    } 
+
+    const Menu = () => {
+        return (
+            <div className = "history-menu">
+                <div className = "history-listNumber">ID</div>
+                <div className = "history-listAccount">Description</div>
+                <div className = "history-listOperation">Quantity</div>
+                <div className = "history-listValue">Price</div>
+                <div className = "history-listCost">Owner</div>
+            </div>
+        )
+    }
+
+    const RecordDisplay = (propsDisplay) => {
+        const curRecord = propsDisplay.record;
+        return (
+            <div className = "history-elementInner">
+                <div className = "history-listNumber">{curRecord[4]}</div>
+                <div className = "history-listAccount">{curRecord[1]}</div>
+                <div className = "history-listOperation">{curRecord[2]}</div>
+                <div className = "history-listValue">{curRecord[3]}</div>
+                <div className = "history-listCost">{curRecord[0].slice(0, 6)}...(You)</div>
+            </div>
+        )
+    }
+
+    const ListUnitDisplay = (propsUnit) => {
+        const unitIdx = propsUnit.index - 1;
+        return (
+            <div className = "history-element">
+                {
+                    (unitIdx >= 0) && (unitIdx < len) ?
+                    <RecordDisplay record = {props.allUserListings[unitIdx]}/>:
+                    null
+                }
+            </div>
+        )
+    }
 
     const ProfilePage = () => {
+        const rows = []
+        for (let i = 0; i <= len; i++) {
+            rows.push(<ListUnitDisplay index = {i}/>)
+        }
         return (
             
         <div className = "profile-background">
             <div className = "profile">
-                <img src = {METAMASK} alt = "logo" height = "100%"/>
                 <div className = "profile-account">
                     <p>
-                        <b>Profile details</b>
+                        <b>Profile</b>
                     </p>
                     <hr color = "black"/>
                     <p>
                         Address:&nbsp;
                         <span className = "global-message">{props.address}</span>
                         <br/>
-                        Network:&nbsp;
-                        <span className = "global-message">{props.networkType}</span>
+                        Credits owned:&nbsp;
+                        <span className = "global-message">{props.credits}</span>
                         <br/>
-                        Balance:&nbsp;
+                        SepoliaETH balance:&nbsp;
                         <span className = "global-message">{props.balance}</span>
-                        &nbsp;ETH
                     </p>
                 </div>
             </div>
+            <div className = "history">
+                    <h1>Your Listings</h1> 
+                    <div className = "history-menuFramework">
+                        <hr color = "black" width = "100%"/>
+                        <Menu />
+                        <hr color = "black" width = "100%"/>
+                        {rows}
+                    </div>
+                </div>
 
             <GlobalToolBar/>
         </div>
