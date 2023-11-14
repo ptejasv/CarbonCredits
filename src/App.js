@@ -146,7 +146,7 @@ export default function App() {
             <Market 
                 isConnected = {isConnected}
                 recordList = {market}
-                marketRecordLen = {marketLength}
+                marketRecordLen = {MarketLength}
                 showMarket = {updateMarket}
                 buyHandle = {buyListing}
                 error = {errorMsg}

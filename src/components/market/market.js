@@ -59,9 +59,7 @@ export default function Market(props){
             <div className = "market-background">
                 <div className = "market">
                     <h1>Carbon Credits Market</h1> 
-                    <button className = "refresh-market" onClick = {() => props.showMarket()}>
-                        Refresh
-                    </button>
+                    
                     {props.error && <div className="error"> {props.error} </div>}
                     <div className = "market-menuFramework">
                         <hr color = "black" width = "100%"/>
@@ -69,6 +67,9 @@ export default function Market(props){
                         <hr color = "black" width = "100%"/>
                         {rows}
                     </div>
+                    <button className = "refresh-market" onClick = {() => props.showMarket()}>
+                        Refresh
+                    </button>
                 </div>
                 <GlobalToolBar/>
             </div>

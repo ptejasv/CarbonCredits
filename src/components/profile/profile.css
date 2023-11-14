@@ -18,15 +18,14 @@
     
     background-color: var(--BackgroundUncovered);
     height: 27.5%;
-    width: 64%;
+    width: 85%;
     display: flex;
-    align-items: center;
-    justify-content: center;
+    flex-direction: column;
+    padding-bottom: 20px;
 }
 
 .profile-account{
     font-size: 20px;
-    
     height: 100%;
     width: 70%;
     text-align: left;
@@ -50,14 +49,14 @@
 .history{
     text-align: center;
     background-color: var(--BackgroundUncovered);
-    width: 80%;
+    width: 85%;
     flex-direction: column;
     display: flex;
     align-items: center;
     justify-content: center;
 
-    padding-top: 50px;
-    padding-bottom: 50px;
+    /* padding-top: 25px;
+    padding-bottom: 25px; */
 }
 
 .history-menuFramework{
@@ -168,11 +167,35 @@
 }
 
 .refresh-profile {
-    padding-left: 20px;
-    padding-right: 20px;
-    padding-top: 10px;
-    padding-bottom: 10px;
-    font-size: 25px;
-    margin: 10px;
-    margin-bottom: 30px;
+    padding-left: 8px;
+    padding-right: 8px;
+    padding-top: 4px;
+    padding-bottom: 4px;
+    font-size: 14px;
+    margin-top: 20px;
+    margin-bottom: 5px;
+}
+
+.something{
+
+    /* padding-left: 16px; */
+    /* padding-right: 16px; */
+    padding-top: 8px;
+    padding-bottom: 1px;
+    font-size: 40px;
+    margin-top: 10px;
+    margin-bottom: 5px;
+
+}
+
+.something2{
+
+    padding-left: 16px;
+    /* padding-right: 16px; */
+    padding-bottom: 1px;
+    font-size: 40px;
+    margin-top: 20px;
+    margin-bottom: 2px;
+    text-align: left;
+
 }

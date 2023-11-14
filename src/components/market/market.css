@@ -132,13 +132,13 @@
 }
 
 .refresh-market {
-    padding-left: 20px;
-    padding-right: 20px;
-    padding-top: 10px;
-    padding-bottom: 10px;
-    font-size: 25px;
-    margin: 10px;
-    margin-bottom: 30px;
+    padding-left: 16px;
+    padding-right: 16px;
+    padding-top: 8px;
+    padding-bottom: 8px;
+    font-size: 22px;
+    margin-top: 20px;
+    margin-bottom: 5px;
 }
 
 .error {
