@@ -5,17 +5,12 @@ import "../../global.css";
 import { GlobalToolBar } from "../../global";   
 import React, { useState } from 'react';
 
-const [SellInfo, setSellInfo] = useState({price:"", credits:"", description: ""});
+//const [SellInfo, setSellInfo] = useState({price:"", credits:"", description: ""});
 
 export default function Sell(props){
 
     const onSell = (e) => {
-        // Pass the values to the parent component using onSell prop
-        const credits = e.target.name1;
-        const description = e.target.value;
-        setSellInfo( (prev) => {
-            return {...prev, [name1]: value}
-        })        
+        // Pass the values to the parent component using onSell prop 
     }
     
     const SellTitle = () => {
@@ -30,7 +25,6 @@ export default function Sell(props){
             <div className="creditInputContainer">
                 <p> 🌳 to sell: </p>
                 <input
-                    value = {credits}
                     type = "credits" 
                     onChange={onSell}
 
@@ -44,7 +38,6 @@ export default function Sell(props){
             <div className="priceInputContainer">
                 <p>Price 💎 (eth):</p>
                 <input 
-                    value={price}
                     style={{ marginLeft: '5px'}} 
                     type="price" 
                     onChange={onSell}
@@ -58,7 +51,6 @@ export default function Sell(props){
             <div className="priceInputContainer">
             <p> Description:</p>
             <textarea 
-                value={description}
                 type = "description"
                 rows="5" 
                 cols="50" 

@@ -3,20 +3,30 @@ import { Navigate } from "react-router-dom";
 import "./Market.css";
 import "../../global.css";
 import { GlobalToolBar } from "../../global";
+import { useEffect, useState } from "react";
 
 export default function Market(props){
     const displayNum = 10;
+    const[len, setLen] = useState(0);
+
+    useEffect(() =>{ loadData();},[]);
+
 
     const Menu = () => {
         return (
             <div className = "market-menu">
-                <div className = "market-listNumber">#</div>
-                <div className = "market-listCredits">Credits</div>
-                <div className = "market-listPrice">Price</div>
-                <div className = "market-description">Description</div>
+                <div className = "market-listNumber">ID</div>
+                <div className = "market-listCredits">Description</div>
+                <div className = "market-listPrice">Quantity</div>
+                <div className = "market-description">Price</div>
                 <div className = "market-listOwner">Owner</div>
             </div>
         )
+    }
+
+    function loadData() {
+        props.showMarketHandle()
+        setLen(props.recordList.length)
     }
 
 
@@ -25,11 +35,11 @@ export default function Market(props){
         // const recordNum = props.recordLen - curRecord.id;
         return (
             <div className = "market-elementInner">
-                <div className = "market-listNumber">{curRecord.id}</div>
-                <div className = "market-listCredits">{curRecord.operation}</div>
-                <div className = "market-listPrice">{curRecord.value}</div>
-                <div className = "market-description">{curRecord.cost}</div>
-                <div className = "market-listOwner">{curRecord.address}</div>
+                <div className = "market-listNumber">{curRecord[4]}</div>
+                <div className = "market-listCredits">{curRecord[1]}</div>
+                <div className = "market-listPrice">{curRecord[2]}</div>
+                <div className = "market-description">{curRecord[3]}</div>
+                <div className = "market-listOwner">{curRecord[0]}</div>
             </div>
         )
     }
@@ -68,26 +78,19 @@ export default function Market(props){
     // }
 
     const MarketPage = () => {
+        const rows = []
+        for (let i = 0; i <= len; i++){
+            rows.push(<ListUnitDisplay index = {i}/>)
+        }
         return (
             <div className = "market-background">
                 <div className = "market">
                     <h1>Market Listing</h1>
-                    {props.showVal}
                     <div className = "market-menuFramework">
                         <hr color = "black" width = "100%"/>
                         <Menu />
                         <hr color = "black" width = "100%"/>
-                        
-                        <ListUnitDisplay index = {1}/>
-                        <ListUnitDisplay index = {2}/>
-                        <ListUnitDisplay index = {3}/>
-                        <ListUnitDisplay index = {4}/>
-                        <ListUnitDisplay index = {5}/>
-                        <ListUnitDisplay index = {6}/>
-                        <ListUnitDisplay index = {7}/>
-                        <ListUnitDisplay index = {8}/>
-                        <ListUnitDisplay index = {9}/>
-                        <ListUnitDisplay index = {10}/>
+                        {rows}
                     </div>
                 </div>
             <h4 style={ {color: "red"}}>Please ensure that the ID is correct before purchasing.

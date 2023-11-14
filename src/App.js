@@ -29,6 +29,7 @@ export default function App() {
     const [recordLen, setRecordLen] = useState(0);              // length of record. 
     const maxRecordLen = 50;                                    // maximum length of record list. 
 
+    const [marketListings, setMarketListing] = useState(0);
     const [marketRecord, setMarketRecord] = useState(null);       // record of market.
     const [marketlistLen, setListLen] = useState(0);              // length of record.
     const maxListLen = 50;                                        // maximum length of record list. 
@@ -141,8 +142,8 @@ export default function App() {
     }
 
     const showMarketList = async () => {
-        const res = await contract.methods.viewListings(recordLen).call();
-        return res
+        const res = await contract.methods.viewListings().call();
+        setMarketListing(res)
     }
 
     // Get all of a user's listings from BC
@@ -387,7 +388,7 @@ const publishMyListingtoBC = async () => {
 }
 
 const getNewListingID = async () => { 
-    const res = await contract.methods.makeListing(description, credits, price).send({from: address});
+    const res = await contract.methods.makeListing().send({from: address});
     return res;
 }
 
@@ -496,7 +497,7 @@ const showMyListingsUpdate = async () => {
         return (
             <Market 
                 isConnected = {isConnected}
-                recordList = {marketRecord}
+                recordList = {marketListings}
                 recordLen = {marketlistLen}
                 showMarketHandle = {showMarket} 
                 buyHandle ={purchaseList}
@@ -511,7 +512,7 @@ const showMyListingsUpdate = async () => {
                 isConnected = {isConnected}
                 listNowPending = {ListingPending}
                 listNowDone = {ListingPublished}
-                onSell={handleSell}
+                //onSell={handleSell}
                 // storeInputsHandle = {storedInputs}
                 
                 
