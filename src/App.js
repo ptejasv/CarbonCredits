@@ -6,8 +6,8 @@ import Web3 from "web3";
 
 import './App.css';
 import Login from "./components/login/login";
-// import Profile from "./components/profile/profile";
-import Sell from "./components/sell/sell";
+import Profile from "./components/profile/profile";
+import MakeListing from "./components/makelisting/makelisting";
 import Market from "./components/market/market";
 import { CONTRACT_ABI, CONTRACT_ADDRESS } from "./contracts/config";
 
@@ -129,9 +129,9 @@ export default function App() {
         )
     }
 
-    const SellDisplay = () => {
+    const MakeListingDisplay = () => {
         return (
-            <Sell
+            <MakeListing
                 isConnected = {isConnected}
                 makeListingHandle = {newListing} 
                 error = {errorMsg}
@@ -159,8 +159,8 @@ export default function App() {
                 <Routes>
                     <Route path = "/CarbonCreditsTrading" element = {<Login isHaveMetamask = {haveMetamask} connectTo = {connectWallet} />}></Route>
                     <Route path = "/CarbonCreditsTrading/profile" element = {<ProfileDisplay/>}></Route>
-                    <Route path = "/CarbonCreditsTrading/makeListing" element = {<StorageDisplay/>}></Route>
-                    <Route path = "/CarbonCreditsTrading/marketplace" element = {<HistoryDisplay/>}></Route>
+                    <Route path = "/CarbonCreditsTrading/makeListing" element = {<MakeListingDisplay/>}></Route>
+                    <Route path = "/CarbonCreditsTrading/marketplace" element = {<MarketDisplay/>}></Route>
                 </Routes>
             </div>
         // </BrowserRouter>

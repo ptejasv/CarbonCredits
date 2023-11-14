@@ -1,10 +1,10 @@
 import { Navigate } from "react-router-dom";
 
-import "./sell.css";
+import "./makelisting.css";
 import "../../global.css";
 import { GlobalToolBar } from "../../global";
 
-export default function Sell(props){
+export default function MakeListing(props){
 
     const FunctionIntro = () => {
         return (
@@ -53,7 +53,7 @@ export default function Sell(props){
         )
     }
 
-    const SellPage = () => {
+    const MakeListingPage = () => {
         return (
             <div className = "storage-background">
                 <h1>Make Carbon Credits Listing</h1>
@@ -71,7 +71,7 @@ export default function Sell(props){
         <div>
             {
                 props.isConnected ?
-                <SellPage />:
+                <MakeListingPage />:
                 <Navigate to = '/CarbonCreditsTrading' />
             }
         </div>
