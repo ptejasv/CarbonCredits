@@ -7,7 +7,6 @@ import "../../global.css";
 import { GlobalToolBar } from "../../global";
 
 export default function History(props){
-    // const displayNum = 10;
     const [len, setLen] = useState(0);
 
     useEffect(() => {
@@ -41,9 +40,9 @@ export default function History(props){
                 <div className = "history-listAccount">{curRecord[1]}</div>
                 <div className = "history-listOperation">{curRecord[2]}</div>
                 <div className = "history-listValue">{curRecord[3]}</div>
-                <div className = "history-listCost">{curRecord[0].slice(0, 6)}</div>
+                <div className = "history-listCost">{curRecord[0].slice(0, 6)}...</div>
                 <div className = "history-listValue"><button className = "btn" onClick = {() => props.buyHandle(curRecord[4])}>
-                    buy
+                    Buy
                 </button></div>
             </div>
         )

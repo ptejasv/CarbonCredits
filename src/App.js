@@ -7,7 +7,7 @@ import Web3 from "web3";
 import './App.css';
 import Login from "./components/login/login";
 // import Profile from "./components/profile/profile";
-// import Storage from "./components/storage/storage";
+import Storage from "./components/storage/storage";
 import History from "./components/history/history";
 import { CONTRACT_ABI, CONTRACT_ADDRESS } from "./contracts/config";
 
@@ -78,7 +78,8 @@ export default function App() {
             setBalance(bal);
             setIsConnected(true);
 
-            navigate('/InterfaceDemo/history');
+            await contract.methods.registerUser().send({from: address});
+            navigate('/InterfaceDemo/storage');
         }
         catch (error){
             setIsConnected(false);
@@ -191,6 +192,17 @@ export default function App() {
 //         }
 //     }
 
+    const newListing = async () => {
+        const desc = document.getElementById('desc').value;
+        const quantity = document.getElementById('quantity').value;
+        const price = document.getElementById('price').value;
+        try {
+            await contract.methods.makeListing(desc, quantity, price).send({from: address})
+        } catch(err) {
+            // nothing for now
+        }
+    }
+
 //     const showValUpdate = async () => {
 //         const ans = await getData();
 //         setStoredPending(false);
@@ -227,18 +239,18 @@ export default function App() {
 //         )
 //     }
 
-//     const StorageDisplay = () => {
-//         return (
-//             <Storage 
-//                 isConnected = {isConnected}
-//                 storeValHandle = {storedValUpdate} 
-//                 showValHandle = {showValUpdate} 
-//                 showVal = {showVal} 
-//                 storedPending = {storedPending}
-//                 storedDone = {storedDone}
-//             />
-//         )
-//     }
+    const StorageDisplay = () => {
+        return (
+            <Storage 
+                isConnected = {isConnected}
+                makeListingHandle = {newListing} 
+                // showValHandle = {showValUpdate} 
+                // showVal = {showVal} 
+                // storedPending = {storedPending}
+                // storedDone = {storedDone}
+            />
+        )
+    }
 
     const HistoryDisplay = () => {
         return (
@@ -258,7 +270,7 @@ export default function App() {
                 <Routes>
                     <Route path = "/InterfaceDemo" element = {<Login isHaveMetamask = {haveMetamask} connectTo = {connectWallet} />}></Route>
                     {/* <Route path = "/InterfaceDemo/profile" element = {<ProfileDisplay/>}></Route> */}
-                    {/* <Route path = "/InterfaceDemo/storage" element = {<StorageDisplay/>}></Route> */}
+                    <Route path = "/InterfaceDemo/storage" element = {<StorageDisplay/>}></Route>
                     <Route path = "/InterfaceDemo/history" element = {<HistoryDisplay/>}></Route>
                 </Routes>
             </div>
