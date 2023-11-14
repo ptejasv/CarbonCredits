@@ -22,6 +22,7 @@ export default function App() {
     const [creditBalance, setCreditBalance] = useState(0);
     const [userListings, setUserListings] = useState(0);
     const [listingsLen, setListingsLen] = useState(0);
+    const [errorMsg, setErrorMsg] = useState("")
 
     const navigate = useNavigate();
     const {ethereum} = window;
@@ -61,7 +62,7 @@ export default function App() {
             setBalance(bal);
             setIsConnected(true);
 
-            // await contract.methods.registerUser().send({from: address});
+            await contract.methods.registerUser().send({from: address});
             navigate('/CarbonCreditsTrading/profile');
         }
         catch (error){
@@ -73,15 +74,10 @@ export default function App() {
         const desc = document.getElementById('desc').value;
         const quantity = document.getElementById('quantity').value;
         const price = document.getElementById('price').value;
-        if (quantity > 500) {
-            return (
-                <p>Cannot list more than 100 credits!</p>
-            )
-        }
         try {
             await contract.methods.makeListing(desc, quantity, price).send({from: address})
         } catch(err) {
-            // nothing for now
+            setErrorMsg("Failed to make listing. Please check your input fields.")
         }
     }
 
@@ -95,7 +91,7 @@ export default function App() {
             await contract.methods.purchaseListing(listingID).send({from: address})
         }
         catch(err) {
-            // nothing for now
+            setErrorMsg("Failed to buy listing. Please check that you have sufficient SepoliaETH.")
         }
     }
 
@@ -132,6 +128,7 @@ export default function App() {
             <Storage 
                 isConnected = {isConnected}
                 makeListingHandle = {newListing} 
+                error = {errorMsg}
             />
         )
     }
@@ -144,6 +141,7 @@ export default function App() {
                 marketRecordLen = {marketLength}
                 showHistory = {updateMarket}
                 buyHandle = {buyListing}
+                error = {errorMsg}
             />
         )
     }
