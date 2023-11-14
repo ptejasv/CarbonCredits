@@ -29,7 +29,7 @@ export default function Sell(props){
                 <input
                     id="inputVal1"
                     value = {credits}
-                    type = "number" 
+                    type = "text" 
                     onChange={(e) => setCredits(e.target.value)}
 
                 /> 
