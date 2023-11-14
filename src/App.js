@@ -23,8 +23,10 @@ export default function App() {
     // const [storedVal, setStoredVal] = useState(0);              // value that is stored right now. 
     // const [showVal, setShowVal] = useState(0);                  // value that is showed on screen. 
     const [market, setListing] = useState(0);
+    const [marketLength, setMarketLength] = useState(0);
     const [creditBalance, setCreditBalance] = useState(0);
     const [userListings, setUserListings] = useState(0);
+    const [listingsLen, setListingsLen] = useState(0);
 
     // const [historyRecord, setHistoryRecord] = useState(null);   // record of history operations. 
     // const [recordLen, setRecordLen] = useState(0);              // length of record. 
@@ -220,7 +222,6 @@ export default function App() {
     }
 
     const buyListing = async (listingID) => {
-        // const listingID = document.getElementById('listingID').value;
         try {
             await contract.methods.purchaseListing(listingID).send({from: address})
         }
@@ -232,11 +233,13 @@ export default function App() {
     const updateMarket = async() => {
         const marketplace = await contract.methods.viewListings().call();
         setListing(marketplace);
+        setMarketLength(marketplace.length)
     }
 
     const fetchListings = async() => {
         const listings = await contract.methods.viewUserListings().call({from: address})
         setUserListings(listings);
+        setListingsLen(listings.length);
     }
 
 // ////// display functions. 
@@ -250,6 +253,7 @@ export default function App() {
                 showCredits = {fetchCredits}
                 allUserListings = {userListings}
                 showListings = {fetchListings}
+                userListingsLen = {listingsLen}
             />
         )
     }
@@ -268,6 +272,7 @@ export default function App() {
             <History 
                 isConnected = {isConnected}
                 recordList = {market}
+                marketRecordLen = {marketLength}
                 showHistory = {updateMarket}
                 buyHandle = {buyListing}
             />

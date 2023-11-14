@@ -165,3 +165,12 @@
     color: var(--RejectedColor);
 }
 
+.refresh-profile {
+    padding-left: 20px;
+    padding-right: 20px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    font-size: 25px;
+    margin: 10px;
+    margin-bottom: 30px;
+}
