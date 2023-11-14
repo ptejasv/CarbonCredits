@@ -7,7 +7,7 @@ import "../../global.css";
 import { GlobalToolBar } from "../../global";
 
 export default function History(props){
-    const displayNum = 10;
+    // const displayNum = 10;
     const [len, setLen] = useState(0);
 
     useEffect(() => {
@@ -16,7 +16,6 @@ export default function History(props){
 
     function loadData() {
         props.showHistory()
-        // len = props.recordList.length
         setLen(props.recordList.length)
     }
 
@@ -28,6 +27,7 @@ export default function History(props){
                 <div className = "history-listOperation">Quantity</div>
                 <div className = "history-listValue">Price</div>
                 <div className = "history-listCost">Owner</div>
+                <div className = "history-listValue">Buy</div>
             </div>
         )
     }
@@ -37,19 +37,14 @@ export default function History(props){
         // const recordNum = props.recordLen - curRecord.id;
         return (
             <div className = "history-elementInner">
-                {/* <div className = "history-listNumber">{curRecord.id}</div>
-                <div className = "history-listAccount">{curRecord.address}</div>
-                <div className = "history-listOperation">{curRecord.operation}</div>
-                <div className = "history-listValue">{curRecord.value}</div>
-                <div className = "history-listCost">{curRecord.cost}</div> */}
-                {/* <div className = "history-listStatus">
-                    <RecordStatusDisplay record = {curRecord}/>
-                </div> */}
                 <div className = "history-listNumber">{curRecord[4]}</div>
                 <div className = "history-listAccount">{curRecord[1]}</div>
                 <div className = "history-listOperation">{curRecord[2]}</div>
                 <div className = "history-listValue">{curRecord[3]}</div>
-                <div className = "history-listCost">{curRecord[0]}</div>
+                <div className = "history-listCost">{curRecord[0].slice(0, 6)}</div>
+                <div className = "history-listValue"><button className = "btn" onClick = {() => props.buyHandle(curRecord[4])}>
+                    buy
+                </button></div>
             </div>
         )
     }
@@ -59,7 +54,6 @@ export default function History(props){
         return (
             <div className = "history-element">
                 {
-                    // props.recordLen >= index ?
                     (unitIdx >= 0) && (unitIdx < len) ?
                     <RecordDisplay record = {props.recordList[unitIdx]}/>:
                     null

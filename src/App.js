@@ -200,6 +200,16 @@ export default function App() {
 //         RecordPush('get', ans);
 //     }
 
+    const buyListing = async (listingID) => {
+        // const listingID = document.getElementById('listingID').value;
+        try {
+            await contract.methods.purchaseListing(listingID).send({from: address})
+        }
+        catch(err) {
+            // nothing for now
+        }
+    }
+
     const updateMarket = async() => {
         const marketplace = await contract.methods.viewListings().call();
         setListing(marketplace);
@@ -236,6 +246,7 @@ export default function App() {
                 isConnected = {isConnected}
                 recordList = {market}
                 showHistory = {updateMarket}
+                buyHandle = {buyListing}
             />
         )
     }
