@@ -23,7 +23,7 @@
     width: 65%;
     height: 100%;
     font-size: 20px;
-    text-align: left;
+    text-align: center;
     padding-right: 10px;
     color: var(--MessageColorUncovered);
 }

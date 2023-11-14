@@ -32,8 +32,6 @@
     color: var(--MessageColorUncovered);
 }
 
-@import "../../global.css";
-
 .history-background{
     text-align: center;
     background-color: var(--BackgroundUncovered);

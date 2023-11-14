@@ -7,17 +7,7 @@ import "../../global.css";
 import { GlobalToolBar } from "../../global";
 
 export default function History(props){
-    // const [len, setLen] = useState(0);
-    // useEffect(() => {
-    //     loadData();
-    //  }, []);
-
-    // function loadData() {
-    //     props.showHistory()
-    //     // setLen(props.recordList.length)
-    //     len = props.recordList.length
-    // }
-
+    
     const Menu = () => {
         return (
             <div className = "history-menu">

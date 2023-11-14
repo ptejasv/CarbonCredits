@@ -8,18 +8,7 @@ import { GlobalToolBar } from "../../global";
 import METAMASK from '../../images/METAMASK.png';
 
 export default function Profile(props){
-    // const [len, setLen] = useState(0);
-
-    // useEffect(() => {
-    //     loadData();
-    //  }, []);
-
-    // function loadData() {
-    //     props.showCredits()
-    //     props.showListings()
-    //     setLen(props.allUserListings.length)
-    // } 
-
+    
     const Menu = () => {
         return (
             <div className = "history-menu">

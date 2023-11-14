@@ -6,22 +6,19 @@ import { GlobalToolBar } from "../../global";
 
 export default function Storage(props){
 
-    // const FunctionIntro = () => {
-    //     return (
-    //         <div className = "storage-intro">
-    //             <p>
-    //                 &emsp;This is an introduction to this simple demo of applying blockchain contracts via web interface. 
-    //                 Here a contract is applied for storing and checking value. 
-    //                 The contract file can be found at "~/src/contracts/SimpleStorage.sol". 
-    //                 <br/>
-    //                 &emsp;Similar to what you see on REMIX, 
-    //                 the functionality of the contract can be implemented with the buttons to the right. 
-    //                 A value will be stored by filling in a number and clicking "store". 
-    //                 The value can then be read by clicking "get". 
-    //             </p>
-    //         </div>
-    //     )
-    // }
+    const FunctionIntro = () => {
+        return (
+            <div className = "storage-intro">
+                <p>
+                    Make your carbon credit listing here.
+                    <br />
+                    Enter the details about the type of credits and how they were acquired in the "description" field. Enter the price and quantity of credits (this must be less than or equal to the number of credits you have after other listings you've made). 
+                    <br />
+                    Your listing will be visible to everyone with this application.
+                </p>
+            </div>
+        )
+    }
 
     const StoreValPanel = () => {
         return (
@@ -38,55 +35,19 @@ export default function Storage(props){
                 <input width = "30px" type = "number" id = "price"></input>
                 <br />
                 <div className = "storage-storeBox">
-                    {/* <button className = "btn" onClick = {props.storeValHandle}>
-                        store
-                    </button> */}
                     <button className = "btn" onClick = {() => props.makeListingHandle()}>
                         Make Listing
                     </button>
-                    {/* {
-                        props.storedPending ?
-                        <span>
-                            {
-                                props.storedDone ?
-                                <span>Done! </span>:
-                                <span>Pending... </span>
-                            }
-                        </span> : 
-                        <span>
-                            {
-                                props.storedDone ?
-                                <span>Rejected! </span>:
-                                <span>Please try again. </span>
-                            }
-                        </span>
-                    } */}
                 </div>
             </div>
         )
     }
-
-    // const GetValPanel = () => {
-    //     return (
-    //         <div>
-    //             Click 'get' to check the stored value:&nbsp;
-    //             <span className = "global-message">
-    //                 {props.showVal}
-    //             </span>
-    //             <br />
-    //             <button className = "btn" onClick = {props.showValHandle}>
-    //                 get
-    //             </button>
-    //         </div>
-    //     )
-    // }
 
     const FunctionPanel = () => {
         return (
             <div className = "storage-box">
                 <StoreValPanel/>
                 <br/>
-                {/* <GetValPanel/> */}
             </div>
         )
     }
@@ -95,8 +56,8 @@ export default function Storage(props){
         return (
             <div className = "storage-background">
                 <h1>Make Carbon Credits Listing</h1>
+                <FunctionIntro/>
                 <div className = "storage">
-                    {/* <FunctionIntro/> */}
                     <FunctionPanel/>
                 </div>
 
