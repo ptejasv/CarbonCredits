@@ -47,6 +47,7 @@ export default function Profile(props){
     }
 
     const ProfilePage = () => {
+        props.showCredits();
         const rows = []
         for (let i = 0; i <= props.userListingsLen; i++) {
             rows.push(<ListUnitDisplay index = {i}/>)
