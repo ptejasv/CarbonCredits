@@ -73,7 +73,7 @@ export default function Profile(props){
                 </div>
             </div>
             <div className = "history">
-                    <h1>Your Listings</h1> 
+                    <h1>My Listings</h1> 
                     <button className = "refresh-profile" onClick = {() => props.showListings()}>
                         Refresh
                     </button>
