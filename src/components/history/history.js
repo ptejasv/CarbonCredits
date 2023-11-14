@@ -57,6 +57,7 @@ export default function History(props){
                     <RecordDisplay record = {props.recordList[unitIdx]}/>:
                     null
                 }
+            
             </div>
         )
     }
@@ -77,7 +78,6 @@ export default function History(props){
                         {rows}
                     </div>
                 </div>
-                    <h1>Test</h1>
                 <GlobalToolBar/>
             </div>
         )
