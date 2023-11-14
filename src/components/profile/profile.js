@@ -1,6 +1,4 @@
 import { Navigate } from "react-router-dom";
-import { useEffect } from 'react';
-import {useState} from 'react';
 
 import "./profile.css";
 import "../../global.css";
@@ -8,7 +6,7 @@ import { GlobalToolBar } from "../../global";
 import METAMASK from '../../images/METAMASK.png';
 
 export default function Profile(props){
-    
+
     const Menu = () => {
         return (
             <div className = "history-menu">

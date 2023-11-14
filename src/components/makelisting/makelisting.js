@@ -1,14 +1,14 @@
 import { Navigate } from "react-router-dom";
 
-import "./storage.css";
+import "./makelisting.css";
 import "../../global.css";
 import { GlobalToolBar } from "../../global";
 
-export default function Storage(props){
+export default function MakeListing(props){
 
     const FunctionIntro = () => {
         return (
-            <div className = "storage-intro">
+            <div className = "make-listing-intro">
                 <p>
                     Make your carbon credit listing here.
                     <br />
@@ -20,7 +20,7 @@ export default function Storage(props){
         )
     }
 
-    const StoreValPanel = () => {
+    const MakeListingPanel = () => {
         return (
             <div>
                 
@@ -34,7 +34,7 @@ export default function Storage(props){
                 Enter price of credits: &nbsp;&nbsp;
                 <input width = "30px" type = "number" id = "price"></input>
                 <br />
-                <div className = "storage-storeBox">
+                <div className = "make-listing-storeBox">
                     <button className = "btn" onClick = {() => props.makeListingHandle()}>
                         Make Listing
                     </button>
@@ -46,19 +46,19 @@ export default function Storage(props){
 
     const FunctionPanel = () => {
         return (
-            <div className = "storage-box">
-                <StoreValPanel/>
+            <div className = "make-listing-box">
+                <MakeListingPanel/>
                 <br/>
             </div>
         )
     }
 
-    const StoragePage = () => {
+    const MakeListingPage = () => {
         return (
-            <div className = "storage-background">
+            <div className = "make-listing-background">
                 <h1>Make Carbon Credits Listing</h1>
                 <FunctionIntro/>
-                <div className = "storage">
+                <div className = "make-listing">
                     <FunctionPanel/>
                 </div>
 
@@ -71,7 +71,7 @@ export default function Storage(props){
         <div>
             {
                 props.isConnected ?
-                <StoragePage />:
+                <MakeListingPage />:
                 <Navigate to = '/CarbonCreditsTrading' />
             }
         </div>

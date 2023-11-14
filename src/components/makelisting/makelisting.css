@@ -1,6 +1,6 @@
 @import "../../global.css";
 
-.storage-background{
+.make-listing-background{
     text-align: center;
     background-color: var(--BackgroundUncovered);
     min-height: 100vh;
@@ -10,7 +10,7 @@
     justify-content: center;
 }
 
-.storage{
+.make-listing{
     text-align: center;
     background-color: var(--BackgroundUncovered);
     width: 80%;
@@ -19,7 +19,7 @@
     justify-content: center;
 }
 
-.storage-intro{
+.make-listing-intro{
     width: 65%;
     height: 100%;
     font-size: 20px;
@@ -28,13 +28,13 @@
     color: var(--MessageColorUncovered);
 }
 
-.storage-vertLine{
+.make-listing-vertLine{
     height: 100%;
     width: 1px;
     background-color: var(--BackgroundCovered);
 }
 
-.storage-box{
+.make-listing-box{
     height: 100%;
     flex-direction: column;
     text-align: left;
@@ -43,7 +43,7 @@
     color: var(--MessageColorUncovered);
 }
 
-.storage-storeBox{
+.make-listing-storeBox{
     text-align: left;
     font-size: 15px;
     color: var(--KeyMessageColor);
@@ -51,7 +51,7 @@
     text-align: center;
 }
 
-.storage-getBox{
+.make-listing-getBox{
     text-align: left;
     font-size: 15px;
     color: var(--MessageColorUncovered);

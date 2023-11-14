@@ -1,22 +1,20 @@
 import { Navigate } from "react-router-dom";
-import { useEffect } from 'react';
-import {useState} from 'react';
 
-import "./history.css";
+import "./market.css";
 import "../../global.css";
 import { GlobalToolBar } from "../../global";
 
-export default function History(props){
+export default function Market(props){
 
     const Menu = () => {
         return (
-            <div className = "history-menu">
-                <div className = "history-listNumber">ID</div>
-                <div className = "history-listAccount">Description</div>
-                <div className = "history-listOperation">Quantity</div>
-                <div className = "history-listValue">Price</div>
-                <div className = "history-listCost">Owner</div>
-                <div className = "history-listValue">Buy</div>
+            <div className = "market-menu">
+                <div className = "market-listNumber">ID</div>
+                <div className = "market-listAccount">Description</div>
+                <div className = "market-listOperation">Quantity</div>
+                <div className = "market-listValue">Price</div>
+                <div className = "market-listCost">Owner</div>
+                <div className = "market-listValue">Buy</div>
             </div>
         )
     }
@@ -24,13 +22,13 @@ export default function History(props){
     const RecordDisplay = (propsDisplay) => {
         const curRecord = propsDisplay.record;
         return (
-            <div className = "history-elementInner">
-                <div className = "history-listNumber">{curRecord[4]}</div>
-                <div className = "history-listAccount">{curRecord[1]}</div>
-                <div className = "history-listOperation">{curRecord[2]}</div>
-                <div className = "history-listValue">{curRecord[3]}</div>
-                <div className = "history-listCost">{curRecord[0].slice(0, 6)}...</div>
-                <div className = "history-listValue"><button className = "btn" onClick = {() => props.buyHandle(curRecord[4])}>
+            <div className = "market-elementInner">
+                <div className = "market-listNumber">{curRecord[4]}</div>
+                <div className = "market-listAccount">{curRecord[1]}</div>
+                <div className = "market-listOperation">{curRecord[2]}</div>
+                <div className = "market-listValue">{curRecord[3]}</div>
+                <div className = "market-listCost">{curRecord[0].slice(0, 6)}...</div>
+                <div className = "market-listValue"><button className = "btn" onClick = {() => props.buyHandle(curRecord[4], curRecord[3])}>
                     Buy
                 </button></div>
             </div>
@@ -40,7 +38,7 @@ export default function History(props){
     const ListUnitDisplay = (propsUnit) => {
         const unitIdx = propsUnit.index;
         return (
-            <div className = "history-element">
+            <div className = "market-element">
                 {
                     (unitIdx >= 0) && (unitIdx < props.marketRecordLen) ?
                     <RecordDisplay record = {props.recordList[unitIdx]}/>:
@@ -50,20 +48,20 @@ export default function History(props){
         )
     }
 
-    const HistoryPage = () => {
+    const MarketPage = () => {
         const rows = []
         for (let i = 0; i < props.marketRecordLen; i++) {
             rows.push(<ListUnitDisplay index = {i}/>)
         }
         return (
-            <div className = "history-background">
-                <div className = "history">
+            <div className = "market-background">
+                <div className = "market">
                     <h1>Carbon Credits Market</h1> 
-                    <button className = "refresh-market" onClick = {() => props.showHistory()}>
+                    <button className = "refresh-market" onClick = {() => props.showMarket()}>
                         Refresh
                     </button>
                     {props.error && <div className="error"> {props.error} </div>}
-                    <div className = "history-menuFramework">
+                    <div className = "market-menuFramework">
                         <hr color = "black" width = "100%"/>
                         <Menu />
                         <hr color = "black" width = "100%"/>
@@ -80,7 +78,7 @@ export default function History(props){
         <div>
             {
                 props.isConnected ?
-                <HistoryPage />:
+                <MarketPage />:
                 <Navigate to = '/CarbonCreditsTrading' />
             }
         </div>

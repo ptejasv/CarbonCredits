@@ -7,8 +7,8 @@ import Web3 from "web3";
 import './App.css';
 import Login from "./components/login/login";
 import Profile from "./components/profile/profile";
-import Storage from "./components/storage/storage";
-import History from "./components/history/history";
+import MakeListing from "./components/makelisting/makelisting";
+import Market from "./components/market/market";
 import { CONTRACT_ABI, CONTRACT_ADDRESS } from "./contracts/config";
 
 export default function App() {
@@ -62,7 +62,7 @@ export default function App() {
             setBalance(bal);
             setIsConnected(true);
 
-            await contract.methods.registerUser().send({from: address});
+            // await contract.methods.registerUser().send({from: address});
             navigate('/CarbonCreditsTrading/profile');
         }
         catch (error){
@@ -86,9 +86,9 @@ export default function App() {
         setCreditBalance(credits)
     }
 
-    const buyListing = async (listingID) => {
+    const buyListing = async (listingID, listingPrice) => {
         try {
-            await contract.methods.purchaseListing(listingID).send({from: address})
+            await contract.methods.purchaseListing(listingID).send({from: address, value: listingPrice})
         }
         catch(err) {
             setErrorMsg("Failed to buy listing. Please check that you have sufficient SepoliaETH.")
@@ -123,9 +123,9 @@ export default function App() {
         )
     }
 
-    const StorageDisplay = () => {
+    const MakeListingDisplay = () => {
         return (
-            <Storage 
+            <MakeListing 
                 isConnected = {isConnected}
                 makeListingHandle = {newListing} 
                 error = {errorMsg}
@@ -133,13 +133,13 @@ export default function App() {
         )
     }
 
-    const HistoryDisplay = () => {
+    const MarketDisplay = () => {
         return (
-            <History 
+            <Market 
                 isConnected = {isConnected}
                 recordList = {market}
                 marketRecordLen = {marketLength}
-                showHistory = {updateMarket}
+                showMarket = {updateMarket}
                 buyHandle = {buyListing}
                 error = {errorMsg}
             />
@@ -153,8 +153,8 @@ export default function App() {
                 <Routes>
                     <Route path = "/CarbonCreditsTrading" element = {<Login isHaveMetamask = {haveMetamask} connectTo = {connectWallet} />}></Route>
                     <Route path = "/CarbonCreditsTrading/profile" element = {<ProfileDisplay/>}></Route>
-                    <Route path = "/CarbonCreditsTrading/makeListing" element = {<StorageDisplay/>}></Route>
-                    <Route path = "/CarbonCreditsTrading/marketplace" element = {<HistoryDisplay/>}></Route>
+                    <Route path = "/CarbonCreditsTrading/makeListing" element = {<MakeListingDisplay/>}></Route>
+                    <Route path = "/CarbonCreditsTrading/marketplace" element = {<MarketDisplay/>}></Route>
                 </Routes>
             </div>
         // </BrowserRouter>

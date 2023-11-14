@@ -1,6 +1,6 @@
 @import "../../global.css";
 
-.history-background{
+.market-background{
     text-align: center;
     background-color: var(--BackgroundUncovered);
     min-height: 100vh;
@@ -11,7 +11,7 @@
     justify-content: center;
 }
 
-.history{
+.market{
     text-align: center;
     background-color: var(--BackgroundUncovered);
     width: 80%;
@@ -24,7 +24,7 @@
     padding-bottom: 50px;
 }
 
-.history-menuFramework{
+.market-menuFramework{
     width: 100%;
     flex-direction: column;
     display: flex;
@@ -32,21 +32,21 @@
     justify-content: center;
 }
 
-.history-menu{
+.market-menu{
     width: 100%;
     display: flex;
     align-items: center;
     justify-content: center;
 }
 
-.history-element{
+.market-element{
     width: 100%;
     display: flex;
     align-items: center;
     justify-content: center;
 }
 
-.history-elementInner{
+.market-elementInner{
     width: 100%;
     display: flex;
     padding-top: 5px;
@@ -55,7 +55,7 @@
 }
 
 
-.history-listNumber{
+.market-listNumber{
     font-size: 20px;
     width: 5%;
     text-align: center;
@@ -63,14 +63,14 @@
     background-color: var(--BackgroundMasked);
 }
 
-.history-listAccount{
+.market-listAccount{
     font-size: 20px;
     width: 44%;
     text-align: center;
     color: var(--MessageColorUncovered);
 }
 
-.history-listOperation{
+.market-listOperation{
     font-size: 20px;
     width: 10%;
     text-align: center;
@@ -78,14 +78,14 @@
     background-color: var(--BackgroundMasked);
 }
 
-.history-listValue{
+.market-listValue{
     font-size: 20px;
     width: 14%;
     text-align: center;
     color: var(--MessageColorUncovered);
 }
 
-.history-listCost{
+.market-listCost{
     font-size: 20px;
     width: 20%;
     text-align: center;
@@ -93,21 +93,21 @@
     background-color: var(--BackgroundMasked);
 }
 
-.history-listMenuStatus{
+.market-listMenuStatus{
     font-size: 20px;
     width: 7%;
     text-align: center;
     color: var(--MessageColorUncovered);
 }
 
-.history-listStatus{
+.market-listStatus{
     width: 7%;
     display: flex;
     justify-content: right;
     color: var(--MessageColorUncovered);
 }
 
-.history-approved{
+.market-approved{
     font-size: 20px;
     width: 90%;
     text-align: center;
@@ -115,7 +115,7 @@
     color: var(--ApprovedColor);
 }
 
-.history-invalid{
+.market-invalid{
     font-size: 20px;
     width: 90%;
     text-align: center;
@@ -123,7 +123,7 @@
     color: var(--InvalidColor);
 }
 
-.history-rejected{
+.market-rejected{
     font-size: 20px;
     width: 90%;
     text-align: center;
