@@ -21,7 +21,6 @@ export default function Market(props){
 
     const RecordDisplay = (propsDisplay) => {
         const curRecord = propsDisplay.record;
-        // const recordNum = props.recordLen - curRecord.id;
         return (
             <div className = "market-elementInner">
                 <div className = "market-listNumber">{curRecord[4]}</div>
@@ -45,7 +44,6 @@ export default function Market(props){
                     <RecordDisplay record = {props.recordList[unitIdx]}/>:
                     null
                 }
-            
             </div>
         )
     }

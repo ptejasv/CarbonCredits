@@ -34,7 +34,7 @@ export default function Profile(props){
     }
 
     const ListUnitDisplay = (propsUnit) => {
-        const unitIdx = propsUnit.index - 1;
+        const unitIdx = propsUnit.index;
         return (
             <div className = "history-element">
                 {
@@ -49,7 +49,7 @@ export default function Profile(props){
     const ProfilePage = () => {
         props.showCredits();
         const rows = []
-        for (let i = 0; i <= props.userListingsLen; i++) {
+        for (let i = 0; i < props.userListingsLen; i++) {
             rows.push(<ListUnitDisplay index = {i}/>)
         }
         return (
@@ -57,12 +57,8 @@ export default function Profile(props){
         <div className = "profile-background">
             <div className = "profile">
                 <div className = "profile-account">
-                    {/* <p> */}
-                        <div className = "something"> <img src= {fox} width="40" height="40" />  Profile </div>   
-                        <hr color = "black"/>
-                    {/* </p> */}
-                    
-                    {/* <p> */}
+                        <div className = "fox-icon"> <img src= {fox} width="40" height="40" />  Profile </div>   
+                        <hr color = "black"/>                    
                         🏠 Address:&nbsp;
                         <span className = "global-message">{props.address.slice(0, 10)}.....</span>
                         <br/>
@@ -70,27 +66,26 @@ export default function Profile(props){
                         <span className = "global-message">{props.credits}</span>
                         <br/>
                         💎 Balance (Eth):&nbsp;
-                        <span className = "global-message">{props.balance}</span>
-                    {/* </p> */}
+                        <span className = "global-message">{props.balance.slice(0, 5)}</span>
                 </div> 
             </div> 
              
             <div className = "profile">
-            <div className = "something2"> <img src= {list} width="40" height="40" /> My Listings </div> 
+                <div className = "listings-header"> <img src= {list} width="40" height="40" /> My Listings </div> 
 
-                <div className = "history-menuFramework">
-                <br/>
-                    <hr color = "black" width = "100%"/>
-                    <Menu />
-                    <hr color = "black" width = "100%"/>
-                    {rows}
+                    <div className = "history-menuFramework">
+                    <br/>
+                        <hr color = "black" width = "100%"/>
+                        <Menu />
+                        <hr color = "black" width = "100%"/>
+                        {rows}
 
-                    <button className = "refresh-profile" onClick = {() => props.showListings()}>
-                    Refresh
-                    </button>
-                    <GlobalToolBar/>
-                </div>
+                        <button className = "refresh-profile" onClick = {() => props.showListings()}>
+                        Refresh
+                        </button>
+                    </div>
             </div>
+            <GlobalToolBar/>
         </div>
             
         )

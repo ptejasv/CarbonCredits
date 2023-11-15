@@ -35,7 +35,7 @@ export default function MakeListing(props){
                 <input width = "30px" type = "number" id = "price"></input>
                 <br />
                 <div className = "make-listing-storeBox">
-                    <button className = "btn" onClick = {() => props.makeListingHandle()}>
+                    <button className = "make-listing-btn" onClick = {() => props.makeListingHandle()}>
                         Make Listing
                     </button>
                     {props.error && <div className="error"> {props.error} </div>}

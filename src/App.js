@@ -18,12 +18,11 @@ export default function App() {
     const [isConnected, setIsConnected] = useState(false);      // check if is connected to MetaMask account. 
 
     const [market, setListing] = useState(0);
+    const [marketLength, setMarketLength] = useState(0);
     const [creditBalance, setCreditBalance] = useState(0);
     const [userListings, setUserListings] = useState(0);
     const [listingsLen, setListingsLen] = useState(0);
-    const [errorMsg, setErrorMsg] = useState("");
-    const [MarketLength, setMarketLength] = useState(0);
-    
+    const [errorMsg, setErrorMsg] = useState("")
 
     const navigate = useNavigate();
     const {ethereum} = window;
@@ -79,17 +78,11 @@ export default function App() {
             await contract.methods.makeListing(desc, quantity, price).send({from: address})
         } catch(err) {
             setErrorMsg("Failed to make listing. Please check your input fields.")
+            setTimeout(function(){
+                setErrorMsg("");
+           },5000);
         }
     }
-
-//     const showValUpdate = async () => {
-//         const ans = await getData();
-//         setStoredPending(false);
-//         setStoredDone(false);
-
-//         setShowVal(ans);
-//         RecordPush('get', ans);
-//     }
 
     const fetchCredits = async () => {
         const credits = await contract.methods.getUserCredits().call({from: address})
@@ -117,6 +110,7 @@ export default function App() {
     const fetchListings = async() => {
         const listings = await contract.methods.viewUserListings().call({from: address})
         setUserListings(listings);
+        setListingsLen(listings.length);
     }
 
 // ////// display functions. 
@@ -130,6 +124,7 @@ export default function App() {
                 showCredits = {fetchCredits}
                 allUserListings = {userListings}
                 showListings = {fetchListings}
+                userListingsLen = {listingsLen}
             />
         )
     }
@@ -149,7 +144,7 @@ export default function App() {
             <Market 
                 isConnected = {isConnected}
                 recordList = {market}
-                marketRecordLen = {MarketLength}
+                marketRecordLen = {marketLength}
                 showMarket = {updateMarket}
                 buyHandle = {buyListing}
                 error = {errorMsg}
