@@ -72,7 +72,7 @@ export default function MakeListing(props){
             {
                 props.isConnected ?
                 <MakeListingPage />:
-                <Navigate to = '/CarbonCreditsTrading' />
+                <Navigate to = '/CarbonCredits' />
             }
         </div>
     )
