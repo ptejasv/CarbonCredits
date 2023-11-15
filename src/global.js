@@ -14,11 +14,11 @@ export const TopbarColor = '#61dafb';
 export const GlobalToolBar = () => {
     return (
         <div className = "global-toolbar">
-            <Link to = "/CarbonCreditsTrading/profile">Profile</Link>
+            <Link to = "/CarbonCredits/profile">Profile</Link>
             &nbsp;|&nbsp;
-            <Link to = "/CarbonCreditsTrading/makeListing">Make Listing</Link>
+            <Link to = "/CarbonCredits/makeListing">Make Listing</Link>
             &nbsp;|&nbsp;
-            <Link to = "/CarbonCreditsTrading/marketplace">Marketplace</Link>
+            <Link to = "/CarbonCredits/marketplace">Marketplace</Link>
         </div>
     )
 }
