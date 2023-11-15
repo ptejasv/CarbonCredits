@@ -1,7 +1,7 @@
 {
   "name": "carbon-credits",
   "version": "0.1.0",
-  "homepage": "/CarbonCredits",
+  "homepage": "https://ptejasv.github.io/CarbonCredits",
   "private": true,
   "dependencies": {
     "@testing-library/jest-dom": "^5.16.5",
