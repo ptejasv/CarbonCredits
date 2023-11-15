@@ -1,9 +1,14 @@
 
 This project is presented as the interface demo for EE4032 Blockchain Engineering of NUS, and this repository serves as both the demo and instructions for students to start their own projects. Detailed instructions for starters are included in the ```instructions``` folder. 
-# Getting Started with Create React App
-# Test by Kah Sheng
-# Test 2
+# Getting Started with Carbon Credits Web 
+# Instructions:
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+1. Clone Repository / Download Zip to a Local Folder
+2. Install react-router-dom
+3. Run the application with 'npm start'
+4. Click the text to log in with Metamask
+5. Click the same text again and allow the transaction for us to check user status
+6. Now you can view your profile page, make new listings and buy listings from the marketplace. 
 
 ## Available Scripts
 
