@@ -22,8 +22,11 @@ export default function App() {
     const [creditBalance, setCreditBalance] = useState(0);
     const [userListings, setUserListings] = useState(0);
     const [listingsLen, setListingsLen] = useState(0);
-    const [makeListingErr, setMakeListingErr] = useState("")
-    const [buyErr, setBuyErr] = useState("")
+    const [errMakeListing, setErrMakeListing] = useState("")
+    const [errBuy, setErrBuy] = useState("")
+    const [pendingLogin, setPendingLogin] = useState(false)
+    const [statusMake, setStatusMake] = useState("")
+    const [statusBuy, setStatusBuy] = useState("")
 
     const navigate = useNavigate();
     const {ethereum} = window;
@@ -63,7 +66,9 @@ export default function App() {
             setBalance(bal);
             setIsConnected(true);
 
-            // await contract.methods.registerUser().send({from: address});
+            setPendingLogin(true)
+            await contract.methods.registerUser().send({ from: address});
+            setPendingLogin(false)
             navigate('/CarbonCredits/profile');
         }
         catch (error){
@@ -75,13 +80,28 @@ export default function App() {
         const desc = document.getElementById('desc').value;
         const quantity = document.getElementById('quantity').value;
         const price = document.getElementById('price').value;
-        try {
-            await contract.methods.makeListing(desc, quantity, price).send({from: address})
-        } catch(err) {
-            setMakeListingErr("Failed to make listing. Please check your input fields.")
+        setStatusMake("")
+
+        if ((desc == "") || (quantity < 1) || (price < 1)) {
+            setErrMakeListing("Failed to make listing. Please check your input fields.")
             setTimeout(function(){
-                setMakeListingErr("");
+                setErrMakeListing("");
            },10000);
+        } else {
+            setStatusMake("Making your listing...")
+            try {
+                await contract.methods.makeListing(desc, quantity, price).send({from: address})
+                setStatusMake("Done! Your listing will be visible after refreshing the marketplace.")
+                setTimeout(function(){
+                    setStatusMake("");
+                },10000);
+            } catch(err) {
+                setErrMakeListing("Failed to make listing. Please check your input fields.")
+                setStatusMake("")
+                setTimeout(function(){
+                    setErrMakeListing("");
+            },10000);
+            }
         }
     }
 
@@ -91,13 +111,19 @@ export default function App() {
     }
 
     const buyListing = async (listingID, listingPrice) => {
+        setStatusBuy("Purchasing listing ".concat(listingID.concat("...")))
         try {
             await contract.methods.purchaseListing(listingID).send({from: address, value: listingPrice * 10000000000000000})
+            setStatusBuy("Purchased!")
+            setTimeout(function(){
+                setStatusBuy("");
+            },10000);
         }
         catch(err) {
-            setBuyErr("Failed to buy listing. Please check that you have sufficient SepoliaETH.")
+            setErrBuy("Failed to buy listing. Please check that you have sufficient SepoliaETH.")
+            setStatusBuy("")
             setTimeout(function(){
-                setBuyErr("");
+                setErrBuy("");
            },10000);
         }
     }
@@ -135,7 +161,8 @@ export default function App() {
             <MakeListing 
                 isConnected = {isConnected}
                 makeListingHandle = {newListing} 
-                error = {makeListingErr}
+                error = {errMakeListing}
+                status = {statusMake}
             />
         )
     }
@@ -148,7 +175,8 @@ export default function App() {
                 marketRecordLen = {marketLength}
                 showMarket = {updateMarket}
                 buyHandle = {buyListing}
-                error = {buyErr}
+                error = {errBuy}
+                status = {statusBuy}
             />
         )
     }
@@ -158,7 +186,7 @@ export default function App() {
         // <BrowserRouter>
             <div className="App">
                 <Routes>
-                    <Route path = "/CarbonCredits" element = {<Login isHaveMetamask = {haveMetamask} connectTo = {connectWallet} />}></Route>
+                    <Route path = "/CarbonCredits" element = {<Login isHaveMetamask = {haveMetamask} connectTo = {connectWallet} pending = {pendingLogin} />}></Route>
                     <Route path = "/CarbonCredits/profile" element = {<ProfileDisplay/>}></Route>
                     <Route path = "/CarbonCredits/makeListing" element = {<MakeListingDisplay/>}></Route>
                     <Route path = "/CarbonCredits/marketplace" element = {<MarketDisplay/>}></Route>

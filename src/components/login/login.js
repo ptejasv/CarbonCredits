@@ -53,6 +53,7 @@ export default function Login(props){
                 <LoginMetamask /> :
                 <NoMetamask />
             }
+            {props.pending && <p> Logging you in... </p>}
         </div>
     )
 }

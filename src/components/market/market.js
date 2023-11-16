@@ -61,6 +61,7 @@ export default function Market(props){
                         Refresh
                     </button>
                     {props.error && <div className="error"> {props.error} </div>}
+                    {props.status && <p className="buy-status"> {props.status} </p>}
                     <div className = "market-menuFramework">
                         <hr color = "black" width = "100%"/>
                         <Menu />

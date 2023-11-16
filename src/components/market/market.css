@@ -151,3 +151,7 @@
 .error {
     color: red;
 }
+
+.buy-status {
+    color: green;
+}

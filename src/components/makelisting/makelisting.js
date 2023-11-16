@@ -14,7 +14,7 @@ export default function MakeListing(props){
                     <br />
                     Enter the details about the type of credits and how they were acquired in the "description" field. 
                     <br />
-                    Enter the price and quantity of credits (this must be less than or equal to the number of credits you have after other listings you've made). The price should be in 0.01 ETH.
+                    Enter the price and quantity of credits (this must be less than or equal to the number of credits you have after other listings you've made). The price should be in 0.01
                     <br />
                     Your listing will be visible to everyone with this application.
                 </p>
@@ -41,6 +41,7 @@ export default function MakeListing(props){
                         Make Listing
                     </button>
                     {props.error && <div className="error"> {props.error} </div>}
+                    {props.status && <p className="make-status"> {props.status} </p>}
                 </div>
             </div>
         )
