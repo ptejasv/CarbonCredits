@@ -67,7 +67,7 @@ export default function App() {
             setIsConnected(true);
 
             setPendingLogin(true)
-            await contract.methods.registerUser().send({ from: address});
+            // await contract.methods.registerUser().send({ from: address});
             setPendingLogin(false)
             navigate('/CarbonCredits/profile');
         }
