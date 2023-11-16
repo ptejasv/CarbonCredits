@@ -3,6 +3,7 @@ import { Navigate } from "react-router-dom";
 import "./market.css";
 import "../../global.css";
 import { GlobalToolBar } from "../../global";
+import market from '../../images/market.png';
 
 export default function Market(props){
 
@@ -14,7 +15,7 @@ export default function Market(props){
                 <div className = "market-listOperation">Quantity</div>
                 <div className = "market-listValue">Price(x0.01 ETH)</div>
                 <div className = "market-listCost">Owner</div>
-                <div className = "market-listBuy">Buy</div>
+                <div className = "market-listBuy">&emsp;</div>
             </div>
         )
     }
@@ -56,7 +57,8 @@ export default function Market(props){
         return (
             <div className = "market-background">
                 <div className = "market">
-                    <h1>Carbon Credits Market</h1> 
+                    <div> <img src= {market} width="150" height="150" /> </div>
+                    <h1> Market </h1> 
                     <button className = "refresh-market" onClick = {() => props.showMarket()}>
                         Refresh
                     </button>

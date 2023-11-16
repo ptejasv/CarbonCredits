@@ -28,7 +28,7 @@ export default function Profile(props){
                 <div className = "history-listAccount">{curRecord[1]}</div>
                 <div className = "history-listOperation">{curRecord[2]}</div>
                 <div className = "history-listValue">{curRecord[3]}</div>
-                <div className = "history-listCost">(You)</div>
+                <div className = "history-listCost">You</div>
             </div>
         )
     }

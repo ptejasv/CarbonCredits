@@ -3,21 +3,15 @@ import { Navigate } from "react-router-dom";
 import "./makelisting.css";
 import "../../global.css";
 import { GlobalToolBar } from "../../global";
+import tree from '../../images/forest (1).png';
 
 export default function MakeListing(props){
 
     const FunctionIntro = () => {
         return (
-            <div className = "make-listing-intro">
-                <p>
-                    Make your carbon credit listing here.
-                    <br />
-                    Enter the details about the type of credits and how they were acquired in the "description" field. 
-                    <br />
-                    Enter the price and quantity of credits (this must be less than or equal to the number of credits you have after other listings you've made). The price should be in 0.01
-                    <br />
-                    Your listing will be visible to everyone with this application.
-                </p>
+            <div> <img src= {tree} width="200" height="200" /> 
+                <div className = "make-listing-intro">
+                </div>
             </div>
         )
     }
@@ -27,18 +21,18 @@ export default function MakeListing(props){
             <div>
                 
                 <br />
-                Enter credits description: &nbsp;&nbsp;
+                Enter a description: &nbsp;&nbsp;
                 <input width = "30px" type = "text" id = "desc"></input>
                 <br />
                 Enter number of credits: &nbsp;&nbsp; 
                 <input width = "30px" type = "number" id = "quantity"></input>
                 <br />
-                Enter price of credits: &nbsp;&nbsp;
+                Enter price (x0.01Eth): &nbsp;&nbsp;
                 <input width = "30px" type = "number" id = "price"></input>
                 <br />
                 <div className = "make-listing-storeBox">
                     <button className = "make-listing-btn" onClick = {() => props.makeListingHandle()}>
-                        Make Listing
+                        List Now
                     </button>
                     {props.error && <div className="error"> {props.error} </div>}
                     {props.status && <p className="make-status"> {props.status} </p>}
@@ -59,8 +53,9 @@ export default function MakeListing(props){
     const MakeListingPage = () => {
         return (
             <div className = "make-listing-background">
-                <h1>Make Carbon Credits Listing</h1>
+                
                 <FunctionIntro/>
+                <h1>Make a Listing!</h1>
                 <div className = "make-listing">
                     <FunctionPanel/>
                 </div>
