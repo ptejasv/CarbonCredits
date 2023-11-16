@@ -66,7 +66,7 @@ export default function Profile(props){
                         <span className = "global-message">{props.credits}</span>
                         <br/>
                         💎 Balance (Eth):&nbsp;
-                        <span className = "global-message">{props.balance.slice(0, 5)}</span>
+                        <span className = "global-message">{props.balance.slice(0, 10)}</span>
                 </div> 
             </div> 
              
