@@ -12,9 +12,9 @@ export default function Market(props){
                 <div className = "market-listNumber">ID</div>
                 <div className = "market-listAccount">Description</div>
                 <div className = "market-listOperation">Quantity</div>
-                <div className = "market-listValue">Price</div>
+                <div className = "market-listValue">Price(x0.01 ETH)</div>
                 <div className = "market-listCost">Owner</div>
-                <div className = "market-listValue">Buy</div>
+                <div className = "market-listBuy">Buy</div>
             </div>
         )
     }
@@ -28,7 +28,7 @@ export default function Market(props){
                 <div className = "market-listOperation">{curRecord[2]}</div>
                 <div className = "market-listValue">{curRecord[3]}</div>
                 <div className = "market-listCost">{curRecord[0].slice(0, 6)}...</div>
-                <div className = "market-listValue"><button className = "btn" onClick = {() => props.buyHandle(curRecord[4], curRecord[0], curRecord[3])}>
+                <div className = "market-listBuy"><button className = "btn" onClick = {() => props.buyHandle(curRecord[4], curRecord[3])}>
                     Buy
                 </button></div>
             </div>
@@ -57,7 +57,9 @@ export default function Market(props){
             <div className = "market-background">
                 <div className = "market">
                     <h1>Carbon Credits Market</h1> 
-                    
+                    <button className = "refresh-market" onClick = {() => props.showMarket()}>
+                        Refresh
+                    </button>
                     {props.error && <div className="error"> {props.error} </div>}
                     <div className = "market-menuFramework">
                         <hr color = "black" width = "100%"/>
@@ -65,9 +67,6 @@ export default function Market(props){
                         <hr color = "black" width = "100%"/>
                         {rows}
                     </div>
-                    <button className = "refresh-market" onClick = {() => props.showMarket()}>
-                        Refresh
-                    </button>
                 </div>
                 <GlobalToolBar/>
             </div>

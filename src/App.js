@@ -22,7 +22,8 @@ export default function App() {
     const [creditBalance, setCreditBalance] = useState(0);
     const [userListings, setUserListings] = useState(0);
     const [listingsLen, setListingsLen] = useState(0);
-    const [errorMsg, setErrorMsg] = useState("")
+    const [makeListingErr, setMakeListingErr] = useState("")
+    const [buyErr, setBuyErr] = useState("")
 
     const navigate = useNavigate();
     const {ethereum} = window;
@@ -62,7 +63,7 @@ export default function App() {
             setBalance(bal);
             setIsConnected(true);
 
-            await contract.methods.registerUser().send({from: address});
+            // await contract.methods.registerUser().send({from: address});
             navigate('/CarbonCredits/profile');
         }
         catch (error){
@@ -77,10 +78,10 @@ export default function App() {
         try {
             await contract.methods.makeListing(desc, quantity, price).send({from: address})
         } catch(err) {
-            setErrorMsg("Failed to make listing. Please check your input fields.")
+            setMakeListingErr("Failed to make listing. Please check your input fields.")
             setTimeout(function(){
-                setErrorMsg("");
-           },5000);
+                setMakeListingErr("");
+           },10000);
         }
     }
 
@@ -89,15 +90,15 @@ export default function App() {
         setCreditBalance(credits)
     }
 
-    const buyListing = async (listingID, listingOwner, listingPrice) => {
+    const buyListing = async (listingID, listingPrice) => {
         try {
             await contract.methods.purchaseListing(listingID).send({from: address, value: listingPrice * 10000000000000000})
         }
         catch(err) {
-            setErrorMsg("Failed to buy listing. Please check that you have sufficient SepoliaETH.")
+            setBuyErr("Failed to buy listing. Please check that you have sufficient SepoliaETH.")
             setTimeout(function(){
-                setErrorMsg("");
-           },5000);
+                setBuyErr("");
+           },10000);
         }
     }
 
@@ -134,7 +135,7 @@ export default function App() {
             <MakeListing 
                 isConnected = {isConnected}
                 makeListingHandle = {newListing} 
-                error = {errorMsg}
+                error = {makeListingErr}
             />
         )
     }
@@ -147,7 +148,7 @@ export default function App() {
                 marketRecordLen = {marketLength}
                 showMarket = {updateMarket}
                 buyHandle = {buyListing}
-                error = {errorMsg}
+                error = {buyErr}
             />
         )
     }

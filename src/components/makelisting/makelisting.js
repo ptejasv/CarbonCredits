@@ -12,7 +12,9 @@ export default function MakeListing(props){
                 <p>
                     Make your carbon credit listing here.
                     <br />
-                    Enter the details about the type of credits and how they were acquired in the "description" field. Enter the price and quantity of credits (this must be less than or equal to the number of credits you have after other listings you've made). 
+                    Enter the details about the type of credits and how they were acquired in the "description" field. 
+                    <br />
+                    Enter the price and quantity of credits (this must be less than or equal to the number of credits you have after other listings you've made). The price should be in 0.01 ETH.
                     <br />
                     Your listing will be visible to everyone with this application.
                 </p>
