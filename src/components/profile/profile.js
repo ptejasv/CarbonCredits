@@ -71,10 +71,11 @@ export default function Profile(props){
             </div> 
              
             <div className = "profile">
-                <div className = "listings-header"> <img src= {list} width="40" height="40" /> My Listings </div> 
-                    <button className = "refresh-profile" onClick = {() => props.showListings()}>
+                <button className = "refresh-profile" onClick = {() => props.showListings()}>
                             Refresh
-                    </button>
+                </button>
+                <div className = "listings-header"> <img src= {list} width="40" height="40" /> My Listings </div> 
+                    
                     <div className = "history-menuFramework">
                         <br/>
                         <hr color = "black" width = "100%"/>
