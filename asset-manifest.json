@@ -1,19 +1,21 @@
 {
   "files": {
     "main.css": "/CarbonCredits/static/css/main.9aebb9b5.css",
-    "main.js": "/CarbonCredits/static/js/main.d9e501e2.js",
+    "main.js": "/CarbonCredits/static/js/main.39330aae.js",
     "static/js/787.4bbbb79f.chunk.js": "/CarbonCredits/static/js/787.4bbbb79f.chunk.js",
     "static/media/bgpic.jpg": "/CarbonCredits/static/media/bgpic.4c406bbef1c5783a43e5.jpg",
     "static/media/greenEconomy.png": "/CarbonCredits/static/media/greenEconomy.79935689e8b0acd06289.png",
+    "static/media/forest (1).png": "/CarbonCredits/static/media/forest (1).e61c3a80666680c26afb.png",
     "static/media/fox.png": "/CarbonCredits/static/media/fox.78b52943755c744eed2a.png",
+    "static/media/market.png": "/CarbonCredits/static/media/market.12ee965014e42d811c7f.png",
     "static/media/list.png": "/CarbonCredits/static/media/list.fa4f041f8356db1ccd3b.png",
     "index.html": "/CarbonCredits/index.html",
     "main.9aebb9b5.css.map": "/CarbonCredits/static/css/main.9aebb9b5.css.map",
-    "main.d9e501e2.js.map": "/CarbonCredits/static/js/main.d9e501e2.js.map",
+    "main.39330aae.js.map": "/CarbonCredits/static/js/main.39330aae.js.map",
     "787.4bbbb79f.chunk.js.map": "/CarbonCredits/static/js/787.4bbbb79f.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.9aebb9b5.css",
-    "static/js/main.d9e501e2.js"
+    "static/js/main.39330aae.js"
   ]
 }
